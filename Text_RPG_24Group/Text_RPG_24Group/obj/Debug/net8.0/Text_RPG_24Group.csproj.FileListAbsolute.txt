@@ -1,0 +1,14 @@
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\Text_RPG_24Group.exe
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\Text_RPG_24Group.deps.json
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\Text_RPG_24Group.runtimeconfig.json
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\Text_RPG_24Group.dll
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\Text_RPG_24Group.pdb
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.GeneratedMSBuildEditorConfig.editorconfig
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.AssemblyInfoInputs.cache
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.AssemblyInfo.cs
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.csproj.CoreCompileInputs.cache
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.dll
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\refint\Text_RPG_24Group.dll
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.pdb
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.genruntimeconfig.cache
+D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\ref\Text_RPG_24Group.dll
