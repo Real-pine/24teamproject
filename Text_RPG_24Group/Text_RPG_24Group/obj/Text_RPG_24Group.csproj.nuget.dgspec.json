@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#Basic\\Text_RPG_24Group\\Text_RPG_24Group\\Text_RPG_24Group.csproj": {}
+    "E:\\Work(Program)\\textrpg팀프로젝트\\24teamproject\\Text_RPG_24Group\\Text_RPG_24Group\\Text_RPG_24Group.csproj": {}
   },
   "projects": {
-    "D:\\C#Basic\\Text_RPG_24Group\\Text_RPG_24Group\\Text_RPG_24Group.csproj": {
+    "E:\\Work(Program)\\textrpg팀프로젝트\\24teamproject\\Text_RPG_24Group\\Text_RPG_24Group\\Text_RPG_24Group.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#Basic\\Text_RPG_24Group\\Text_RPG_24Group\\Text_RPG_24Group.csproj",
+        "projectUniqueName": "E:\\Work(Program)\\textrpg팀프로젝트\\24teamproject\\Text_RPG_24Group\\Text_RPG_24Group\\Text_RPG_24Group.csproj",
         "projectName": "Text_RPG_24Group",
-        "projectPath": "D:\\C#Basic\\Text_RPG_24Group\\Text_RPG_24Group\\Text_RPG_24Group.csproj",
-        "packagesPath": "C:\\Users\\BaekSeungWoo\\.nuget\\packages\\",
-        "outputPath": "D:\\C#Basic\\Text_RPG_24Group\\Text_RPG_24Group\\obj\\",
+        "projectPath": "E:\\Work(Program)\\textrpg팀프로젝트\\24teamproject\\Text_RPG_24Group\\Text_RPG_24Group\\Text_RPG_24Group.csproj",
+        "packagesPath": "C:\\Users\\crewg\\.nuget\\packages\\",
+        "outputPath": "E:\\Work(Program)\\textrpg팀프로젝트\\24teamproject\\Text_RPG_24Group\\Text_RPG_24Group\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\BaekSeungWoo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\crewg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -60,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
