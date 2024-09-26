@@ -15,7 +15,6 @@ namespace Text_RPG_24Group
 
         static void SetData()
         {
-            player = new CharacterCustom(1, "Chad", "전사", 10, 5, 100, 10000);
             itemDb = new Item[]
             {
             new Item("수련자의 갑옷", 1, 5,"수련에 도움을 주는 갑옷입니다. ",1000),
