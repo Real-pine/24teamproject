@@ -3,8 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Text_RPG_24Group;
+
+
+class Poition
+{
+    public string Name { get; }
+    public int Type { get; }
+    public int Value { get; }
+    public string Desc { get; }
+    public int Price { get; }
+
+    public Poition(string name, int type, int value, string desc)
+    {
+        Name = name;
+        Type = type;
+        Value = value;
+        Desc = desc;
+
+    }
+}
 class Item
 {
     public string Name { get; }
@@ -29,6 +49,8 @@ class Item
         Desc = desc;
         Price = price;
     }
+
+    
 
     public string ItemInfoText()
     {

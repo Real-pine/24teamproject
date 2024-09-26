@@ -6,7 +6,7 @@ namespace Text_RPG_24Group
         private static CharacterCustom player;
         private static Item[] itemDb;
         private static Monster[] monsterDb;
-
+        private static Poition[] poitionDb;
         static void Main(string[] args)
         {
             SetData();
@@ -16,6 +16,7 @@ namespace Text_RPG_24Group
 
         static void SetData()
         {
+
             itemDb = new Item[]
             {
             new Item("수련자의 갑옷", 1, 5,"수련에 도움을 주는 갑옷입니다. ",1000),
@@ -34,6 +35,15 @@ namespace Text_RPG_24Group
             new Monster("악마","고대부터 존재했던 것",10,20,5,50,1000),
 
           };
+
+            poitionDb = new Poition[]
+            {
+            new Poition("레드포션", 1, 5,"hp를 30 회복합니다. "),
+           
+            };
+
+
+
         }
 
         static void StartDisplay()
