@@ -267,9 +267,49 @@ namespace Text_RPG_24Group
 
         static void DisplayQuestUI()
         {
-
+            Console.WriteLine("Quest!!\r\n\r\n1. 마을을 위협하는 미니언 처치\r\n2. 장비를 장착해보자\r\n3. 더욱 더 강해지기!\r\n\r\n\r\n원하시는 퀘스트를 선택해주세요.\r\n>>");
+            int input = CheckInput(1, 3);
+            Console.Clear();
+            switch (input)
+            {
+                case 1:
+                    DisplayQuestUI1(1);//수정 필요
+                    break;
+                case 2:
+                    DisplayQuestUI2();
+                    break;
+                case 3:
+                    DisplayQuestUI3();
+                    break;
+                default:
+                    break;
+            }
         }
-
+        static void DisplayQuestUI1(int killNum)// 미니언 5마리 처지 저장공간//보상아이템을 멀 줄지 
+        {
+             Console.WriteLine("Quest!!\r\n\r\n마을을 위협하는 미니언 처치\r\n\r\n이봐! 마을 근처에 슬라임들이 너무 많아졌다고 생각하지 않나?\r\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\r\n모험가인 자네가 좀 처치해주게!\r\n\r\n");
+            Console.WriteLine($"- 미니언 5마리 처치 (0/5)\r\n\r\n- 보상- \r\n\t쓸만한 방패 x 1\r\n\t5G\r\n\r\n");
+             Console.WriteLine($"1. 수락\r\n2. 거절\r\n원하시는 행동을 입력해주세요.\r\n>>");
+            int input = CheckInput(1, 2);
+            if (input == 1) { Console.WriteLine("퀘스트 수락 로직 구현"); }
+                 else { DisplayQuestUI(); }
+        }
+        static void DisplayQuestUI2()// 무기방어구 장착 저장공간//보상아이템을 멀 줄지 
+        {
+            Console.WriteLine("Quest!!\r\n\r\n장비를 장착해보자\r\n\r\n이봐! 좋은 모험가라면 좋은 장비를 써야하는 법...\r\n장비를 장착하면 던전을 조금 더 쉽게 공략하지!\r\n한번 장비를 껴봐!\r\n\r\n");
+            Console.WriteLine($"- 무기와 방어구 장착 (0/1)(0/1)\r\n\r\n- 보상- \r\n\t쓸만한 방패 x 1\r\n\t50G\r\n\r\n1. 수락\r\n2. 거절\r\n원하시는 행동을 입력해주세요.\r\n>>");
+            int input = CheckInput(1, 2);
+            if (input == 1) { Console.WriteLine("퀘스트 수락 로직 구현"); }
+            else { DisplayQuestUI(); }
+        }
+        static void DisplayQuestUI3()// 스켈레톤 5마리 처지 저장공간//보상아이템을 멀 줄지 
+        {
+            Console.WriteLine("Quest!!\r\n\r\n더욱 더 강해지기\r\n\r\n이봐! 진정한 모험가는 수련을 해야된다네...\r\n스켈레톤 처치를 부탁하네!\r\n\r\n");
+            Console.WriteLine($"- 스켈레톤 3마리 처치 (0/3)\r\n\r\n- 보상- \r\n\t쓸만한 방패 x 1\r\n\t50G\r\n\r\n1. 수락\r\n2. 거절\r\n원하시는 행동을 입력해주세요.\r\n>>");
+            int input = CheckInput(1, 2);
+            if (input == 1) { Console.WriteLine("퀘스트 수락 로직 구현"); }
+            else { DisplayQuestUI(); }
+        }
         static int CheckInput(int min, int max)
         {
             int result;
