@@ -42,8 +42,17 @@ namespace Text_RPG_24Group
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine("\n원하시는 이름을 설정해주세요.");
 
-            player.Name = Console.ReadLine();
+            string characterName = Console.ReadLine();//이름 입력
 
+            Console.WriteLine("직업을 선택해주세요.");
+            Console.WriteLine("\n\n1. 전사");
+            Console.WriteLine("2. 마법사");
+            Console.WriteLine("3. 도적");
+
+            int selectedJob = int.Parse(Console.ReadLine());//직업선택
+
+            //캐릭터생성
+            CharacterCustom player = new CharacterCustom(characterName, selectedJob);
         }
 
         static void DisplayMainUI()
