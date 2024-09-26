@@ -7,13 +7,22 @@ using System.Threading.Tasks;
 namespace Text_RPG_24Group;
 class CharacterCustom
 {
-    public int Level { get; }
-    public string Name { get; set;}
-    public string Job { get; }
-    public int Atk { get; }
-    public int Def { get; }
-    public int Hp { get; }
+    public int Level { get; private set;}
+    public string Name { get; }
+    public JobType Job { get; private set; }
+    public int Atk { get; private set; }
+    public int Def { get; private set; }
+    public int Hp { get; private set; }
     public int Gold { get; private set; }
+    public int Experience {  get; private set; } //현재 경험치
+    public int[] ExpToNextLev = { 10, 35, 65, 100 }; //4레벨까지 요구경험치테이블
+
+    public enum JobType //직업선택을 위해 enum으로 넘버링
+    {
+        Warrior = 1,
+        Mage = 2,
+        Rogue = 3
+    }
 
     public int ExtraAtk { get; private set; }
     public int ExtraDef { get; private set; }
@@ -29,15 +38,67 @@ class CharacterCustom
         }
     }
 
-    public CharacterCustom(int level, string name, string job, int atk, int def, int hp, int gold)
+    public CharacterCustom(string name, int jobNumber)
     {
-        Level = level;
+        Level = 1; // 시작레벨
         Name = name;
-        Job = job;
-        Atk = atk;
-        Def = def;
-        Hp = hp;
-        Gold = gold;
+        Experience = 0; //시작경험치
+        Gold = 1500; //시작골드
+        Job = (JobType)jobNumber;
+
+        switch (Job) 
+        { 
+            case JobType.Warrior:
+                Atk = 10;
+                Def = 15;
+                Hp = 140;
+                break;
+            case JobType.Mage:
+                Atk = 15;
+                Def = 8;
+                Hp = 100;
+                break;
+            case JobType.Rogue:
+                Atk = 12;
+                Def = 12;
+                Hp = 120;
+                break;
+        }
+    }
+    //경험치 획득 메서드
+    public void GainExperience(int exp)
+    {
+        Experience += exp;
+        Console.WriteLine($"경험치{exp}를 획득했습니다.");
+        Console.WriteLine($"현재 경험치: {Experience}/{GetExpToNextLev()}");
+
+        while (Experience >= GetExpToNextLev())
+        {
+            LevelUp();
+        }
+    }
+    //레벨업 메서드
+    public void LevelUp()
+    {
+        Experience -= GetExpToNextLev(); //경험치통 초기화
+        Level++;
+        Console.WriteLine($"레벨업! {Name}의 현재 레벨은 {Level}입니다.");
+
+        Atk += 1;
+        Def += 1;
+        Hp += 20;
+    }
+    //현재 레벨에서 다음 레벨까지 필요한 경험치 
+    public int GetExpToNextLev()
+    {
+        if (Level <= 4)
+        {
+            return ExpToNextLev[Level - 1];
+        }
+        else //5레벨 부터 요구경험치 50씩증가
+        {
+            return ExpToNextLev[ExpToNextLev.Length - 1] + 50*(Level - 4); 
+        }
     }
 
     public void DisplayCharacterInfo()
