@@ -5,6 +5,7 @@ namespace Text_RPG_24Group
     {
         private static CharacterCustom player;
         private static Item[] itemDb;
+        private static Monster[] monsterDb;
 
         static void Main(string[] args)
         {
@@ -24,6 +25,15 @@ namespace Text_RPG_24Group
             new Item("청동 도끼", 0, 5,"어디선가 사용됐던거 같은 도끼입니다. ",1500),
             new Item("스파르타의 창", 0, 7,"스파르타의 전사들이 사용했다는 전설의 창입니다. ",2500)
             };
+            monsterDb = new Monster[]//이름, 이야기, 레벨, 공격, 방어, 체력, 돈
+           {
+            new Monster("슬라임","몬스터 중에서도 가장 약한 몹이다.",1,5,0,5,50),//레벨, 공격, 방어, 체력, 돈
+            new Monster("고블린","욕심이 많고 주로 약탈을 일삼는다.",2,10,0,10,100),
+            new Monster("스켈레톤","뼈로 이루어진 고대 사람이였던 것",3,10,0,15,150),
+            new Monster("골램","자연적인 현상에의해 돌에 생명력이 들어갔다.",5,5,10,20,200),
+            new Monster("악마","고대부터 존재했던 것",10,20,5,50,1000),
+
+           };
         }
 
         static void DisplayMainUI()
