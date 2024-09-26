@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace Text_RPG_24Group;
 class CharacterCustom
 {
-    public int Level { get; private set; }
-    public string Name { get; }
-    public JobType Job { get; private set; }
-    public int Atk { get; private set; }
-    public int Def { get; private set; }
-    public int Hp { get; private set; }
+    public int Level { get; }
+    public string Name { get; set;}
+    public string Job { get; }
+    public int Atk { get; }
+    public int Def { get; }
+    public int Hp { get; }
     public int Gold { get; private set; }
 
     public int ExtraAtk { get; private set; }
@@ -20,51 +20,24 @@ class CharacterCustom
 
     private List<Item> Inventory = new List<Item>();
     private List<Item> EquipList = new List<Item>();
-    
-    public enum JobType
-    {
-        Warrior = 1,
-        Mage = 2,
-        Rogue = 3
-    }
 
-    public CharacterCustom(string name, int jobNumber)
-    {
-        Name = name;
-        Level = 1;
-        Gold = 1500;
-        Job = (JobType)jobNumber; //jobType할당을 위함 
-       
-        //Job에 따른 스탯 초기화
-        switch (Job)
-        {
-            case JobType.Warrior:
-                Atk = 8;
-                Def = 15;
-                Hp = 150;
-                break;
-
-            case JobType.Mage:
-                Atk = 15;
-                Def = 8;
-                Hp = 100;
-                break;
-            
-            case JobType.Rogue:
-                Atk = 12;
-                Def = 12;
-                Hp = 120;
-                break;
-        }
-
-    }
-     
     public int InventoryCount
     {
         get
         {
             return Inventory.Count;
         }
+    }
+
+    public CharacterCustom(int level, string name, string job, int atk, int def, int hp, int gold)
+    {
+        Level = level;
+        Name = name;
+        Job = job;
+        Atk = atk;
+        Def = def;
+        Hp = hp;
+        Gold = gold;
     }
 
     public void DisplayCharacterInfo()
