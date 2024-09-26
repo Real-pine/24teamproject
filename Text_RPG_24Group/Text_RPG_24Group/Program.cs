@@ -8,6 +8,7 @@ namespace Text_RPG_24Group
         private static Monster[] monsterDb;
         private static Battle[] playerBattleDb;
         private static Battle[] monsterBattleDb;
+        private static Poition[] poitionDb;
 
         static void Main(string[] args)
         {
@@ -50,6 +51,12 @@ namespace Text_RPG_24Group
                 new Battle("휘두르기", "느리지만 강력한 공격에 맞았다.", 5),
                 new Battle("점액 뿌리기", "지독한 저주에 걸렸다.", 20),
             };
+            poitionDb = new Poition[]
+           {
+            new Poition("레드포션", 1, 5,"hp를 30 회복합니다. "),
+
+           };
+
         }
 
         static void StartDisplay()
