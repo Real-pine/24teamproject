@@ -9,12 +9,13 @@ namespace Text_RPG_24Group
         static void Main(string[] args)
         {
             SetData();
+            StartDisplay();
             DisplayMainUI();
         }
 
         static void SetData()
         {
-            player = new CharacterCustom(1, "Chad", 0, 10, 5, 100, 10000);
+            player = new CharacterCustom(1, "Chad", "전사", 10, 5, 100, 10000);
             itemDb = new Item[]
             {
             new Item("수련자의 갑옷", 1, 5,"수련에 도움을 주는 갑옷입니다. ",1000),
@@ -24,6 +25,16 @@ namespace Text_RPG_24Group
             new Item("청동 도끼", 0, 5,"어디선가 사용됐던거 같은 도끼입니다. ",1500),
             new Item("스파르타의 창", 0, 7,"스파르타의 전사들이 사용했다는 전설의 창입니다. ",2500)
             };
+        }
+
+        static void StartDisplay()
+        {
+
+            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
+            Console.WriteLine("\n원하시는 이름을 설정해주세요.");
+
+            player.Name = Console.ReadLine();
+
         }
 
         static void DisplayMainUI()

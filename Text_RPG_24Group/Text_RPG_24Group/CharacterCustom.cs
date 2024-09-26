@@ -8,7 +8,7 @@ namespace Text_RPG_24Group;
 class CharacterCustom
 {
     public int Level { get; }
-    public string Name { get; }
+    public string Name { get; set;}
     public string Job { get; }
     public int Atk { get; }
     public int Def { get; }
