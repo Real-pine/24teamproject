@@ -20,3 +20,10 @@ C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_2
 C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.dll
 C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\refint\Text_RPG_24Group.dll
 C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.pdb
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\Text_RPG_24Group.exe
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\Text_RPG_24Group.deps.json
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\Text_RPG_24Group.runtimeconfig.json
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\Text_RPG_24Group.dll
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\Text_RPG_24Group.pdb
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.genruntimeconfig.cache
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\ref\Text_RPG_24Group.dll
