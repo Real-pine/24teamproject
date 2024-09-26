@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Text_RPG_24Group")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b71bf32f4778419c35407231521f7a237107507d")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7bf12d00eafc03f733fdbe4da809866e0cd4ddfd")]
->>>>>>> Features_Monster
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed1296bb07f382de41db85df21da89709f24d157")]
 [assembly: System.Reflection.AssemblyProductAttribute("Text_RPG_24Group")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Text_RPG_24Group")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
