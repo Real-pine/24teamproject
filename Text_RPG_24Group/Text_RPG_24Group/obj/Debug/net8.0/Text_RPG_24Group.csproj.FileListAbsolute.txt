@@ -12,3 +12,11 @@ D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\refint\Text_RPG_24
 D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.pdb
 D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.genruntimeconfig.cache
 D:\C#Basic\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\ref\Text_RPG_24Group.dll
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.AssemblyInfoInputs.cache
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.AssemblyInfo.cs
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.csproj.CoreCompileInputs.cache
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.sourcelink.json
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.dll
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\refint\Text_RPG_24Group.dll
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.pdb
