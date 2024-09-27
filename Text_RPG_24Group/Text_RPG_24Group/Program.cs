@@ -39,9 +39,9 @@ namespace Text_RPG_24Group
           };
             playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬 벨류, 타겟 수
             {
-                new Battle(player.Job, "기본공격", "적을 공격합니다.", 1, 1),
-                new Battle(player.Job, "강공격", "적을 강하게 공격합니다.", 2, 1),
-                new Battle(player.Job, "연속공격", "적을 랜덤으로 공격합니다.", 3, 2),
+                new Battle(player.Job, "기본공격", "적을 공격합니다.", 1, player.Atk),
+                new Battle(player.Job, "강공격", "적을 강하게 공격합니다.", 1, player.Atk),
+                new Battle(player.Job, "연속공격", "적을 랜덤으로 공격합니다.", 2, player.Atk),
             };
             monsterBattleDb = new Battle[] // 이름, 설명, 데미지
             {
