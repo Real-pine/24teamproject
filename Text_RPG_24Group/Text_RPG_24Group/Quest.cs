@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -33,10 +34,10 @@ namespace Text_RPG_24Group
             switch (input)
             {
                 case 1:
-                    QuestDisplay(Program.questDb[0],0);
+                    QuestDisplay(Program.questDb[0],0,1);
                     break;
                 case 2:
-                    QuestDisplay(Program.questDb[1], 1);
+                    QuestDisplay(Program.questDb[1], 1, 1);
                     break;
                 case 3:
                     //DisplayQuestUI1(Program.questDb[2],1);
@@ -46,10 +47,10 @@ namespace Text_RPG_24Group
             }
         }
 
-        static void QuestDisplay(Quest quest,int num)// 무기방어구 장착 저장공간//보상아이템을 멀 줄지 
+        static void QuestDisplay(Quest quest,int num,int itemNum)// quest 퀘스트, num 몇번퀘스트(1~3),itemNum(보상을 줄 아이템 인덱스)
         {
             int input;
-            GetQuestTxt(quest, num);
+            GetQuestTxt(quest, num,itemNum);
             if (quest.QuestStart == false)
             {
                 Console.WriteLine($"1. 수락\r\n2. 거절\r\n원하시는 행동을 입력해주세요.\r\n>>");
@@ -73,29 +74,46 @@ namespace Text_RPG_24Group
                     if(input==1)
                     {
                         Console.WriteLine("보상을 받는 로직 구현");
-                        Program.player.Gold += quest.Gold;
-
+                        QuestReward(quest, num, itemNum);
                     }
                     QuestMain();
                 }
             }            
         }      
-        static void GetQuestTxt(Quest quest, int indexnum)
+        static void QuestReward(Quest quest,int num,int itemNum)
+        {
+            Item targetItem = Program.itemDb[itemNum];
+            if (Program.player.HasItem(targetItem))
+            {
+                Console.WriteLine("이미 아이템이 있어서 그 아이템 가격만큼 골드로 지불");
+                Program.player.Gold += targetItem.Price;
+            }
+            else
+            {
+
+            }
+            Program.player.Gold += quest.Gold;
+        }
+        static void GetQuestTxt(Quest quest, int indexnum,int itemNum)
         {
             Console.Clear();
+            Item targetItem = Program.itemDb[itemNum];
             switch (indexnum)
             {
                 case 0:// 몬스터 5마리 Goal1
+                    if(quest.Goal1 >=5) quest.QuestClear = true;
                     Console.WriteLine("Quest!!\r\n\r\n마을을 위협하는 미니언 처치\r\n\r\n이봐! 마을 근처에 슬라임들이 너무 많아졌다고 생각하지 않나?\r\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\r\n모험가인 자네가 좀 처치해주게!\r\n\r\n");
-                    Console.WriteLine($"- 미니언 5마리 처치 ({quest.Goal1}/5)\r\n\r\n- 보상- \r\n\t쓸만한 방패 x 1\r\n\t{quest.Gold}G\r\n\r\n");
+                    Console.WriteLine($"- 미니언 5마리 처치 ({quest.Goal1}/5)\r\n\r\n- 보상- \r\n\t{targetItem.Name} x 1\r\n\t{quest.Gold}G\r\n\r\n");
                     break;
                 case 1:// 무기, 방어구 장착 Goal1, Goal2
+                    if (quest.Goal1 >= 1 && quest.Goal2 >=1) quest.QuestClear = true;
                     Console.WriteLine("Quest!!\r\n\r\n장비를 장착해보자\r\n\r\n이봐! 좋은 모험가라면 좋은 장비를 써야하는 법...\r\n장비를 장착하면 던전을 조금 더 쉽게 공략하지!\r\n한번 장비를 껴봐!\r\n\r\n");
-                    Console.WriteLine($"- 무기와 방어구 장착 ({quest.Goal1}/1)({quest.Goal2}/1)\r\n\r\n- 보상- \r\n\t쓸만한 방패 x 1\r\n\t{quest.Gold}\r\n\r\n");
+                    Console.WriteLine($"- 무기와 방어구 장착 ({quest.Goal1}/1)({quest.Goal2}/1)\r\n\r\n- 보상- \r\n\t{targetItem.Name} x 1\r\n\t{quest.Gold}\r\n\r\n");
                     break;
                 case 2:// 몬스터 50마리 Goal1
+                    if (quest.Goal1 >= 50) quest.QuestClear = true;
                     Console.WriteLine("Quest!!\r\n\r\n더욱 더 강해지기!\r\n\r\n이봐! 마을 근처에 슬라임들이 너무 많아졌다고 생각하지 않나?\r\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\r\n모험가인 자네가 좀 처치해주게!\r\n\r\n");
-                    Console.WriteLine($"- 미니언 5마리 처치 ({quest.Goal1}/5)\r\n\r\n- 보상- \r\n\t쓸만한 방패 x 1\r\n\t{quest.Gold}\r\n\r\n");
+                    Console.WriteLine($"- 미니언 50마리 처치 ({quest.Goal1}/50)\r\n\r\n- 보상- \r\n\t{targetItem.Name} x 1\r\n\t{quest.Gold}\r\n\r\n");
                     break;
                 default:
                     break;
