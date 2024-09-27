@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Text_RPG_24Group
 {
-     public class Program
+    public class Program
     {
         public static CharacterCustom player;
         public static Item[] itemDb;
@@ -51,7 +51,7 @@ namespace Text_RPG_24Group
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
 
-            
+
             itemDb = new Item[]
             {
             new Item("수련자의 갑옷", 1, 5,"수련에 도움을 주는 갑옷입니다. ",1000),
@@ -89,7 +89,7 @@ namespace Text_RPG_24Group
                 new Quest(100,0,0,false,false),
                 new Quest(200,0,0,false,false)
             };
-<<<<<<< HEAD
+
             mapDb = new DungeonMap[]
    {
         new DungeonMap(new int[,]
@@ -121,14 +121,8 @@ namespace Text_RPG_24Group
         })
    };
         }
-
-
         public static void DisplayMainUI()
-=======
-        }
 
-        static void DisplayMainUI()
->>>>>>> (Feat)Battle27-1
         {
             Console.Clear();
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
