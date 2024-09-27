@@ -25,7 +25,7 @@ class Poition
 
     }
 }
-class Item
+public class Item
 {
     public string Name { get; }
     public int Type { get; }

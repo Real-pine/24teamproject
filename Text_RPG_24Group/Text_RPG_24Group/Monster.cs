@@ -26,6 +26,6 @@ namespace Text_RPG_24Group
             MonsterHp = hp;
             MonsterGold = Gold;
         }
-        private List<Monster> MonsterList = new List<Monster>();
+        //private List<Monster> MonsterList = new List<Monster>();
     }
 }
