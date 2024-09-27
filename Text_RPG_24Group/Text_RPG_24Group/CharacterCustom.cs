@@ -63,11 +63,7 @@ public class SaveLoadSystem
 }
 public class CharacterCustom
 {
-<<<<<<< HEAD
-    public int Level { get; private set; }
-=======
     public int Level { get;  set;}
->>>>>>> (Feat)potion/27-1
     public string Name { get; set; }
     public JobType Job { get;  set; }
     public int Atk { get; set; }

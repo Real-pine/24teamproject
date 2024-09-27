@@ -146,14 +146,9 @@ namespace Text_RPG_24Group
 
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-<<<<<<< HEAD
 
-            int result = CheckInput(1, 5);
-
-
-=======
             int result = CheckInput(1, 9);
->>>>>>> (Feat)potion/27-1
+
             switch (result)
             {
                 case 1:
