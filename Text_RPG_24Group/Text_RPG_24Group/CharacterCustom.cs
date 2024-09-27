@@ -149,9 +149,8 @@ public class CharacterCustom
         return EquipList.Contains(item);
     }
 
-    public void BuyItem(Item item)
+    public void GetItem(Item item)
     {
-        Gold -= item.Price;
         Inventory.Add(item);
     }
 

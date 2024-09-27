@@ -28,19 +28,22 @@ namespace Text_RPG_24Group
         public static void QuestMain()
         {
             Console.Clear();
-            Console.WriteLine("Quest!!\r\n\r\n1. 마을을 위협하는 미니언 처치\r\n2. 장비를 장착해보자\r\n3. 더욱 더 강해지기!\r\n\r\n\r\n원하시는 퀘스트를 선택해주세요.\r\n>>");
-            int input = Program.CheckInput(1, 3);
+            Console.WriteLine("Quest!!\r\n\r\n0. 돌아가기\r\n1. 마을을 위협하는 미니언 처치\r\n2. 장비를 장착해보자\r\n3. 더욱 더 강해지기!\r\n\r\n\r\n원하시는 퀘스트를 선택해주세요.\r\n>>");
+            int input = Program.CheckInput(0, 3);
             Console.Clear();
             switch (input)
             {
+                case 0:
+                    Program.DisplayMainUI();
+                    break;
                 case 1:
-                    QuestDisplay(Program.questDb[0],0,1);
+                    QuestDisplay(Program.questDb[0],0,1);// 퀘스트데이터베이스, 퀘스트타입번호, 보상무기인덱스 번호
                     break;
                 case 2:
                     QuestDisplay(Program.questDb[1], 1, 1);
                     break;
                 case 3:
-                    //DisplayQuestUI1(Program.questDb[2],1);
+                    QuestDisplay(Program.questDb[2],2,2);
                     break;
                 default:
                     break;
@@ -73,8 +76,7 @@ namespace Text_RPG_24Group
                     input = Program.CheckInput(1, 2);
                     if(input==1)
                     {
-                        Console.WriteLine("보상을 받는 로직 구현");
-                        QuestReward(quest, num, itemNum);
+                        QuestReward(quest, num, itemNum);//보상을 받는 로직 구현
                     }
                     QuestMain();
                 }
@@ -82,17 +84,27 @@ namespace Text_RPG_24Group
         }      
         static void QuestReward(Quest quest,int num,int itemNum)
         {
+            Console.Clear();
+            quest.QuestStart=false;
+            quest.QuestClear = false;
+            quest.Goal1 = 0;
+            quest.Goal2 = 0;
+            Console.WriteLine("\r\n\r\n보상을 획득하였습니다!\r\n\r\n");
+            Program.player.Gold += quest.Gold;
+                Console.WriteLine($"획득한 골드 : {quest.Gold}G\r\n\r\n");
             Item targetItem = Program.itemDb[itemNum];
             if (Program.player.HasItem(targetItem))
             {
-                Console.WriteLine("이미 아이템이 있어서 그 아이템 가격만큼 골드로 지불");
+                Console.WriteLine($"이미 아이템이 존재하여 골드로 대체됩니다! : {targetItem.Price}G\r\n\r\n");
                 Program.player.Gold += targetItem.Price;
             }
             else
             {
-
+                Console.WriteLine($"아이템 획득 : {targetItem.Name}");
+                Program.player.GetItem(targetItem);
             }
-            Program.player.Gold += quest.Gold;
+            Console.WriteLine("2. 돌아가기\r\n\r\n원하시는 행동을 입력해주세요.\r\n>>");
+            int input = Program.CheckInput(1, 2);
         }
         static void GetQuestTxt(Quest quest, int indexnum,int itemNum)
         {

@@ -13,12 +13,13 @@ namespace Text_RPG_24Group
         private static Poition potion;
         private static string characterName;
         private static int selectedJob;
-
+        private static DungeonMap[] mapDb;
 
         static void Main(string[] args)
         {
-            StartDisplay();
             SetData();
+            Stage.PlayerMove(1, 1, mapDb[2]);//
+            StartDisplay();
             DisplayMainUI();
         }
         public static void StartDisplay()
@@ -50,6 +51,7 @@ namespace Text_RPG_24Group
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
 
+            
             itemDb = new Item[]
             {
             new Item("수련자의 갑옷", 1, 5,"수련에 도움을 주는 갑옷입니다. ",1000),
@@ -100,16 +102,45 @@ namespace Text_RPG_24Group
 
             questDb = new Quest[]//돈보상, 목표1,목표2,시작불값,클리어불값
             {
-                new Quest(50,0,0,false,false),
+                new Quest(50,5,0,false,false),
                 new Quest(100,0,0,false,false),
                 new Quest(200,0,0,false,false)
 
             };
-
+            mapDb = new DungeonMap[]
+   {
+        new DungeonMap(new int[,]
+        {
+            { 1, 3, 1, 1, 1, 1 }, //1벽, 2적,3마을
+            { 1, 0, 0, 0, 0, 1 },
+            { 1, 1, 1, 1, 0, 1 },
+            { 1, 2, 0, 1, 0, 1 },
+            { 1, 0, 0, 2, 0, 1 },
+            { 1, 1, 1, 1, 1, 1 }
+        }),
+        new DungeonMap(new int[,]
+        {
+            { 1, 3, 1, 1, 1, 1 },
+            { 1, 0, 0, 1, 0, 1 },
+            { 1, 1, 2, 1, 0, 1 },
+            { 1, 0, 0, 1, 0, 1 },
+            { 1, 0, 0, 2, 0, 1 },
+            { 1, 1, 1, 1, 1, 1 }
+        }),
+        new DungeonMap(new int[,]
+        {
+            { 1, 3, 1, 1, 1, 1 },
+            { 1, 0, 1, 0, 2, 1 },
+            { 1, 0, 1, 0, 0, 1 },
+            { 1, 0, 1, 2, 0, 1 },
+            { 1, 0, 2, 0, 0, 1 },
+            { 1, 1, 1, 1, 1, 1 }
+        })
+   };
         }
 
 
-        static void DisplayMainUI()
+        public static void DisplayMainUI()
         {
             Console.Clear();
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
@@ -326,7 +357,8 @@ namespace Text_RPG_24Group
                         if (player.Gold >= targetItem.Price)
                         {
                             Console.WriteLine("구매를 완료했습니다.");
-                            player.BuyItem(targetItem);
+                            player.Gold -= targetItem.Price;
+                            player.GetItem(targetItem);
                         }
                         else
                         {
