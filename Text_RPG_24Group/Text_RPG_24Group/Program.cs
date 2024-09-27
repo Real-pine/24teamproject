@@ -67,11 +67,11 @@ namespace Text_RPG_24Group
             new Monster("골램","자연적인 현상에의해 돌에 생명력이 들어갔다.",5,5,10,20,200),
             new Monster("악마","고대부터 존재했던 것",10,20,5,50,1000),
           };
-            playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬 벨류, 타겟 수, 스킬 구분
+            playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬 벨류, 타겟 수, 공격력, 마력, 스킬 구분
             {
-                new Battle(player.Job, 1, "적을 공격합니다.", 1, 1, player.Atk, false),
-                new Battle(player.Job, 2, "적을 강하게 공격합니다.", 2, 1, player.Atk, true),
-                new Battle(player.Job, 3, "적을 랜덤으로 공격합니다.",  1.5f, 2, player.Atk, true),
+                new Battle(player.Job, 1, "적을 공격합니다.", 1, 1, player.Atk, 0, false),
+                new Battle(player.Job, 2, "적을 강하게 공격합니다.", 2, 1, player.Atk, 10, true),
+                new Battle(player.Job, 3, "적을 랜덤으로 공격합니다.",  1.5f, 2, player.Atk, 15, true),
             };
             monsterBattleDb = new Battle[] // 이름, 설명, 데미지
             {
