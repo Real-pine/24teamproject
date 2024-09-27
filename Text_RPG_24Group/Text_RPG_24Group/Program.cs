@@ -1,4 +1,8 @@
 ﻿using System;
+using Newtonsoft.Json;
+
+
+
 namespace Text_RPG_24Group
 {
      public class Program
@@ -25,14 +29,15 @@ namespace Text_RPG_24Group
         {
 
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
-            Console.WriteLine("\n원하시는 이름을 설정해주세요.");
+            Console.WriteLine("\n원하시는 이름을 설정해주세요.\n");
 
             characterName = Console.ReadLine();//이름 입력
 
+            Console.Clear();
             Console.WriteLine("직업을 선택해주세요.");
             Console.WriteLine("\n\n1. 전사");
             Console.WriteLine("2. 마법사");
-            Console.WriteLine("3. 도적");
+            Console.WriteLine("3. 도적\n");
 
             selectedJob = int.Parse(Console.ReadLine());//직업선택
             if (string.IsNullOrEmpty(characterName))
@@ -120,9 +125,14 @@ namespace Text_RPG_24Group
             Console.WriteLine("3. 상점");
             Console.WriteLine("4. 퀘스트");
             Console.WriteLine("5. 회복의 방");
+            Console.WriteLine("7. 저장된 파일");
+            Console.WriteLine("8. 저장하기");
+            Console.WriteLine("9. 불러오기");
+
+
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            int result = CheckInput(1, 5);
+            int result = CheckInput(1, 9);
             switch (result)
             {
                 case 1:
@@ -139,6 +149,16 @@ namespace Text_RPG_24Group
                     break;
                 case 5:
                     DiplayPotionUI();
+                    break;
+                case 7:
+                    ListSaves();
+                    break;
+
+                case 8:
+                    Save();
+                    break;
+                case 9:
+                    Load();
                     break;
             }
         }
@@ -387,7 +407,7 @@ namespace Text_RPG_24Group
 
         static void DisplayDungeonUI()
         {
-
+            Console.WriteLine($"Level: {player.Level}, Exp: {player.Job}, Hp: {player.Hp}, Gold: {player.Gold}");
         }
 
         public static int CheckInput(int min, int max)
@@ -403,6 +423,34 @@ namespace Text_RPG_24Group
                         return result;
                 }
                 Console.WriteLine("잘못된 입력입니다!!!!");
+            }
+        }
+
+        static void ListSaves()
+        {
+            SaveLoadSystem.ListSaves();
+            Console.ReadLine();
+            DisplayMainUI();
+
+        }
+        static void Save()
+        {
+            Console.Write("저장할 파일 이름을 입력하세요: ");
+            string saveName = Console.ReadLine();
+            SaveLoadSystem.SaveCharacter(player, saveName);
+            DisplayMainUI();
+        }
+
+        static void Load()
+        {
+            Console.Write("불러올 파일 이름을 입력하세요: ");
+            string saveName = Console.ReadLine();
+            player = SaveLoadSystem.LoadCharacter(saveName);
+            if (player != null)
+            {
+                Console.WriteLine($"Level: {player.Level}, Exp: {player.Job}, Hp: {player.Hp}, Gold: {player.Gold},Inventory:{player.Inventory}");
+                DisplayMainUI();
+
             }
         }
     }

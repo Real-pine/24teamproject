@@ -10,9 +10,9 @@ namespace Text_RPG_24Group;
 
 public class Poition
 {
-    public string Name { get; set; }
-    public int Value { get; set; }
-    public string Desc { get; set; }
+    public string Name { get;}
+    public int Value { get; }
+    public string Desc { get;}
     public int Count { get; set; }
 
     public Poition(string name, int value, string desc,int count)

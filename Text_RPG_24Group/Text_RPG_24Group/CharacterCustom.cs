@@ -1,17 +1,73 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Text_RPG_24Group;
+
+public class SaveLoadSystem
+{
+    private static string saveDirectory = "Saves";
+
+    static SaveLoadSystem()
+    {
+        if (!Directory.Exists(saveDirectory))
+        {
+            Directory.CreateDirectory(saveDirectory);
+        }
+    }
+
+    public static void SaveCharacter(CharacterCustom character, string saveName)
+    {
+        string filePath = Path.Combine(saveDirectory, saveName + ".json");
+        string json = JsonConvert.SerializeObject(character, Formatting.Indented);
+        File.WriteAllText(filePath, json);
+        Console.WriteLine($"캐릭터 데이터를 {saveName}에 저장했습니다.");
+    }
+
+    public static CharacterCustom LoadCharacter(string saveName)
+    {
+        string filePath = Path.Combine(saveDirectory, saveName + ".json");
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            CharacterCustom character = JsonConvert.DeserializeObject<CharacterCustom>(json);
+            Console.WriteLine($"캐릭터 데이터를 {saveName}에서 불러왔습니다.");
+            return character;
+        }
+        else
+        {
+            Console.WriteLine($"{saveName}에 저장된 데이터가 없습니다.");
+            return null;
+        }
+    }
+
+    public static void ListSaves()
+    {
+        string[] files = Directory.GetFiles(saveDirectory, "*.json");
+        if (files.Length > 0)
+        {
+            Console.WriteLine("저장된 파일 목록:");
+            foreach (string file in files)
+            {
+                Console.WriteLine(Path.GetFileNameWithoutExtension(file));
+            }
+        }
+        else
+        {
+            Console.WriteLine("저장된 파일이 없습니다.");
+        }
+    }
+}
 public class CharacterCustom
 {
-    public int Level { get; private set;}
+    public int Level { get;  set;}
     public string Name { get; set; }
-    public JobType Job { get; private set; }
-    public int Atk { get; private set; }
-    public int Def { get; private set; }
+    public JobType Job { get;  set; }
+    public int Atk { get; set; }
+    public int Def { get; set; }
     public int Hp { get; set; }
     public int Gold { get; set; }
     public int Experience {  get; private set; } //현재 경험치
@@ -27,8 +83,8 @@ public class CharacterCustom
     public int ExtraAtk { get; private set; }
     public int ExtraDef { get; private set; }
 
-    private List<Item> Inventory = new List<Item>();
-    private List<Item> EquipList = new List<Item>();
+    public List<Item> Inventory = new List<Item>();
+    public List<Item> EquipList = new List<Item>();
 
     public int InventoryCount
     {
