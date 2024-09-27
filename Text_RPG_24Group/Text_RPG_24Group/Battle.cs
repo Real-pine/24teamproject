@@ -23,15 +23,46 @@ namespace Text_RPG_24Group
 
         public static int damage;
 
-        public Battle(int job, string name, string desc, double value,int targetCount, int atk, bool skillType )
+        public static string[] name = { "기본공격", "강공격", "연속공격" };
+        public static string[] desc = { "적을 공격합니다.", "적을 강하게 공격합니다.", "적을 랜덤으로 공격합니다." };
+        public static double[] value = { 1, 2, 1.5f };
+        public static int[] targetCount = { 1, 1, 2 };
+        public static int[] atk = { 10, 15, 12 };
+        public static bool[] skaill = { false, true, true };
+
+        public Battle(CharacterCustom.JobType job, string name, string desc, double value,int targetCount, int atk, bool skillType )
         {
-            Type = job;
-            Name = name;
-            Desc = desc;
-            Value1 = value;
-            Value2 = targetCount;
-            Value3 = atk;
-            isSkill = skillType;
+            //Name = name;
+            //Desc = desc;
+            //Value1 = value;
+            //Value2 = targetCount;
+            //Value3 = atk;
+            //isSkill = skillType;
+
+            //Name = name; // 이름
+            //Desc = desc; // 설명
+
+            //switch (job)
+            //{
+            //    case (CharacterCustom.JobType)1:
+            //        Type = value1 * akkackValue[skillNumber]; // 직업별 공격력
+            //        Value1 = Type * skillValue[skillNumber]; // 직업별 스킬 공격력
+            //        Value2 = targetCount[value2]; // 타겟 수
+            //        Value3 = value3; // 마력
+            //        break;
+            //    case (CharacterCustom.JobType)2:
+            //        Type = value1 * akkackValue[skillNumber]; // 직업별 공격력
+            //        Value1 = Type * skillValue[skillNumber]; // 직업별 스킬 공격력
+            //        Value2 = targetCount[value2]; // 타겟 수
+            //        Value3 = value3; // 마력
+            //        break;
+            //    case (CharacterCustom.JobType)3:
+            //        Type = value1 * akkackValue[skillNumber]; // 직업별 공격력
+            //        Value1 = Type * skillValue[skillNumber]; // 직업별 스킬 공격력
+            //        Value2 = targetCount[value2]; // 타겟 수
+            //        Value3 = value3; // 마력
+            //        break;
+            //}
         }
 
         public string DisplayTypeText
