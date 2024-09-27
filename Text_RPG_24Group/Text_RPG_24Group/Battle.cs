@@ -106,10 +106,14 @@ namespace Text_RPG_24Group
             {
                 Random random = new Random();
 
+                int err = random.Next(-1, 2);
+
+                int errDamange = (Value3 / 10) * err;
+
                 int critical = random.Next(0, 100);
 
                 if (critical <= 15)
-                    damage = (int)Math.Round(Value3 * 1.6f);
+                    damage = (int)Math.Round((Value3 + errDamange) * 1.6f);
                 else
                     damage = Value3;
 
