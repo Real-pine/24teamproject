@@ -10,24 +10,43 @@ namespace Text_RPG_24Group
         private static Battle[] monsterBattleDb;
         private static Poition[] poitionDb;
         public static Quest[] questDb;
-
         private static Poition potion;
+        private static string characterName;
+        private static int selectedJob;
 
 
         static void Main(string[] args)
         {
-            SetData();
             StartDisplay();
+            SetData();
             DisplayMainUI();
+        }
+        public static void StartDisplay()
+        {
+
+            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
+            Console.WriteLine("\n원하시는 이름을 설정해주세요.");
+
+            characterName = Console.ReadLine();//이름 입력
+
+            Console.WriteLine("직업을 선택해주세요.");
+            Console.WriteLine("\n\n1. 전사");
+            Console.WriteLine("2. 마법사");
+            Console.WriteLine("3. 도적");
+
+            selectedJob = int.Parse(Console.ReadLine());//직업선택
+            if (string.IsNullOrEmpty(characterName))
+            {
+                Console.WriteLine("이름을 다시 입력해주세요.");
+                characterName = Console.ReadLine();
+            }
         }
 
         protected static void SetData()
         {
             //캐릭터생성
-            string characterName = "";
-            int selectedJob = 0;
-            CharacterCustom player = new CharacterCustom(characterName, selectedJob);
 
+            player = new CharacterCustom(characterName, selectedJob);
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
 
@@ -87,22 +106,6 @@ namespace Text_RPG_24Group
 
         }
 
-        static void StartDisplay()
-        {
-
-            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
-            Console.WriteLine("\n원하시는 이름을 설정해주세요.");
-
-            string characterName = Console.ReadLine();//이름 입력
-
-            Console.WriteLine("직업을 선택해주세요.");
-            Console.WriteLine("\n\n1. 전사");
-            Console.WriteLine("2. 마법사");
-            Console.WriteLine("3. 도적");
-
-            int selectedJob = int.Parse(Console.ReadLine());//직업선택
-
-        }
 
         static void DisplayMainUI()
         {
@@ -143,6 +146,13 @@ namespace Text_RPG_24Group
             Console.Clear();
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+
+            if (player == null)
+            {
+                Console.WriteLine("플레이어 객체가 null입니다. 먼저 캐릭터를 생성하세요.");
+                DisplayMainUI(); // 메인 메뉴로 돌아가게 함
+                return;
+            }
 
             player.DisplayCharacterInfo();
 
