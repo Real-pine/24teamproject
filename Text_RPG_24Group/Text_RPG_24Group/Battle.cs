@@ -21,6 +21,8 @@ namespace Text_RPG_24Group
 
         public bool isSkill = false;
 
+        public static int damage;
+
 
         public Battle(CharacterCustom.JobType job, string name, string desc, double value,int targetCount, int atk, bool skillType )
         {
@@ -116,7 +118,6 @@ namespace Text_RPG_24Group
         {
             get
             {
-                int damage = 1;
                 Random random = new Random();
 
                 int err = random.Next(-1, 2);
