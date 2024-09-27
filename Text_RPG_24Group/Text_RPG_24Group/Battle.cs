@@ -3,30 +3,77 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Text_RPG_24Group.CharacterCustom;
 
 namespace Text_RPG_24Group
 {
     internal class Battle
     {
-        public string Name { get; }
-        public int Type { get; }
-        public int Value1 { get; }
-        public int Value2 { get; }
-        public int Value3 { get; }
-        public string Desc { get; }
+        public int Type { get; private set; } // 직업
+        // int input = CheckInput(1, 3);
+        // playerBattleDb[player.Job * 3 - input].PlayerSkillInfoText();
+        // 이런식으로 스킬을 쓰면 되려나
+        public string Name { get; private set; } // 스킬 이름
+        public double Value1 { get; private set; } // 스킬 벨류
+        public int Value2 { get; private set; } // 타겟 수
+        public int Value3 { get; private set; } // 공격력
+        public string Desc { get; private set; } // 스킬 설명
 
-        public static int[] skillJobType = { 0, 1, 2, 3 }; // 1: 전사, 2: 마법사, 3. 도적
-        public static int[] akkackValue = { 0, 3, 1, 2 }; // 기본 데미지 값
-        public static int[] skillValue = { 0, 1, 3, 2 }; // 스킬 데미지 값
-        public static int[] targetCount = { 0, 1, 2 }; // 타겟 수
+        public bool isSkill = false;
 
+<<<<<<< HEAD
         public Battle(CharacterCustom.JobType job, string name, string tell, int skillNumber, int value1, int value2, int value3)
-        {
-            Name = name; // 이름
-            Desc = tell; // 설명
+=======
+        public static int damage;
 
-            switch (job)
+        public static string[] name = { "기본공격", "강공격", "연속공격" };
+        public static string[] desc = { "적을 공격합니다.", "적을 강하게 공격합니다.", "적을 랜덤으로 공격합니다." };
+        public static double[] value = { 1, 2, 1.5f };
+        public static int[] targetCount = { 1, 1, 2 };
+        public static int[] atk = { 10, 15, 12 };
+        public static bool[] skaill = { false, true, true };
+
+        public Battle(CharacterCustom.JobType job, string name, string desc, double value,int targetCount, int atk, bool skillType )
+>>>>>>> origin/(Feat)Battle/27
+        {
+            //Name = name;
+            //Desc = desc;
+            //Value1 = value;
+            //Value2 = targetCount;
+            //Value3 = atk;
+            //isSkill = skillType;
+
+            //Name = name; // 이름
+            //Desc = desc; // 설명
+
+            //switch (job)
+            //{
+            //    case (CharacterCustom.JobType)1:
+            //        Type = value1 * akkackValue[skillNumber]; // 직업별 공격력
+            //        Value1 = Type * skillValue[skillNumber]; // 직업별 스킬 공격력
+            //        Value2 = targetCount[value2]; // 타겟 수
+            //        Value3 = value3; // 마력
+            //        break;
+            //    case (CharacterCustom.JobType)2:
+            //        Type = value1 * akkackValue[skillNumber]; // 직업별 공격력
+            //        Value1 = Type * skillValue[skillNumber]; // 직업별 스킬 공격력
+            //        Value2 = targetCount[value2]; // 타겟 수
+            //        Value3 = value3; // 마력
+            //        break;
+            //    case (CharacterCustom.JobType)3:
+            //        Type = value1 * akkackValue[skillNumber]; // 직업별 공격력
+            //        Value1 = Type * skillValue[skillNumber]; // 직업별 스킬 공격력
+            //        Value2 = targetCount[value2]; // 타겟 수
+            //        Value3 = value3; // 마력
+            //        break;
+            //}
+        }
+
+        public string DisplayTypeText
+        {
+            get
             {
+<<<<<<< HEAD
                 case (CharacterCustom.JobType)1:
                     Type = value1 * akkackValue[skillNumber]; // 직업별 공격력
                     Value1 = Type * skillValue[skillNumber]; // 직업별 스킬 공격력
@@ -45,10 +92,37 @@ namespace Text_RPG_24Group
                     Value2 = targetCount[value2]; // 타겟 수
                     Value3 = value3; // 마력
                     break;
+=======
+                return Value2 == 2 ? $" * {Value2}명의" : "한명의";
+>>>>>>> origin/(Feat)Battle/27
             }
         }
 
-        private List<Battle> playerSkillList = new List<Battle>();
+        public string PlayerSkillInfoText()
+        {
+            return $"{Name}\n\t공격력 * {Value1}로 {DisplayTypeText}{Desc}";
+            // 기본 공격
+            //  공격력 * 1로 한명의 적을 공격합니다.
+        }
+
+        public string PlayerAttacknfoText()
+        {
+            Random random = new Random();
+
+            int avoid = random.Next(0, 100);
+            // ↓ 스킬은 회피할 수 없습니다.
+            string attacktext;
+
+            if (isSkill)
+                attacktext = $"을(를) 맞췄습니다. [데미지 : {Damage}]";
+            // 을(를) 맞췄습니다. [데미지 : 16] - 치명타 공격!!
+            else
+                attacktext = avoid <= 10 ? $"을(를) 맞췄습니다. [데미지 : {Damage}]"
+                : "을(를) 공격했지만 아무일도 일어나지 않았습니다.";
+            // 회피시 : 하지만 아무일도 일어나지 않았습니다.
+
+            return attacktext;
+        }
 
         public int MonsterAtk { get; private set; }
 
@@ -56,9 +130,37 @@ namespace Text_RPG_24Group
         {
             Name = name;
             Desc = tell;
-            Value1 = atk;
+            Value3 = atk;
         }
 
-        private List<Battle> MonsterSkillList = new List<Battle>();
+        public string MonsterSkillInfoText()
+        {
+            Random random = new Random();
+
+            int avoid = random.Next(0, 100);
+
+            return avoid <= 10 ? $"{Name}\n{Desc} - {Damage}" 
+                : $"{Name}\n을(를) 공격했지만 아무일도 일어나지 않았습니다.";
+        }
+
+        private string Damage
+        {
+            get
+            {
+                Random random = new Random();
+
+                int err = random.Next(-1, 2);
+                int errDamange = (Value3 / 10) * err;
+
+                int critical = random.Next(0, 100);
+                if (critical <= 15)
+                    damage = (int)Math.Round((Value3 + errDamange) * 1.6f);
+                else
+                    damage = Value3 + errDamange;
+
+                return critical <= 15 ? $"[데미지] : {damage} - 치명타 공격!!"
+                    : $"[데미지 : {Value3}]";
+            }
+        }
     }
 }

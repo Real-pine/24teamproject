@@ -43,11 +43,23 @@ namespace Text_RPG_24Group
             new Monster("악마","고대부터 존재했던 것",10,20,5,50,1000),
 
           };
-            playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬, 스킬 데미지, 타겟 수, 마력
+            playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬 벨류, 타겟 수, 스킬 구분
             {
+<<<<<<< HEAD
                 //new Battle(player.Job, "기본공격", "하나의 적을 공격합니다.", 1, player.Atk, 1, 0),
                 //new Battle(player.Job, "강공격", "하나의 적을 강하게 공격합니다.", 2, player.Atk, 1, 10),
                 //new Battle(player.Job, "연속공격", "2명의 적을 랜덤으로 공격합니다.", 3, player.Atk, 2, 15),
+=======
+                //new Battle(1, "기본공격", "적을 공격합니다.", 1, 1, 10, false),
+                //new Battle(1, "깊게 베기", "적을 강하게 공격합니다.", 2, 1, 10, true),
+                //new Battle(1, "연속공격", "적을 랜덤으로 공격합니다.",  1.5f, 2, 10, true),
+                //new Battle(2, "기본공격", "적을 공격합니다.", 1, 1, 15, false),
+                //new Battle(2, "폭발", "적을 강하게 공격합니다.", 2, 1, 15, true),
+                //new Battle(2, "전기 사슬", "적을 랜덤으로 공격합니다.",  1.5f, 2, 15, true),
+                //new Battle(3, "기본공격", "적을 공격합니다.", 1, 1, 12, false),
+                //new Battle(3, "암습", "적을 강하게 공격합니다.", 2, 1, 12, true),
+                //new Battle(3, "수리검 던지기", "적을 랜덤으로 공격합니다.",  1.5f, 2, 12, true),
+>>>>>>> origin/(Feat)Battle/27
             };
             monsterBattleDb = new Battle[] // 이름, 설명, 데미지
             {
@@ -55,7 +67,7 @@ namespace Text_RPG_24Group
                 new Battle("돌맹이 던지기", "단단한 돌에 맞았다.", 10),
                 new Battle("끌어안기", "뼈조각에 찔렸다.", 10),
                 new Battle("휘두르기", "느리지만 강력한 공격에 맞았다.", 5),
-                new Battle("점액 뿌리기", "지독한 저주에 걸렸다.", 20),
+                new Battle("저주", "지독한 저주에 걸렸다.", 20),
             };
             poitionDb = new Poition[]
            {
