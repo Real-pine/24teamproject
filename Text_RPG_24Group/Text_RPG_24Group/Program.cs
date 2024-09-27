@@ -1,14 +1,15 @@
 ﻿using System;
 namespace Text_RPG_24Group
 {
-    class Program
+     public class Program
     {
-        private static CharacterCustom player;
-        private static Item[] itemDb;
+        public static CharacterCustom player;
+        public static Item[] itemDb;
         private static Monster[] monsterDb;
         private static Battle[] playerBattleDb;
         private static Battle[] monsterBattleDb;
         private static Poition[] poitionDb;
+        public static Quest[] questDb;
 
         static void Main(string[] args)
         {
@@ -17,7 +18,7 @@ namespace Text_RPG_24Group
             DisplayMainUI();
         }
 
-        static void SetData()
+        protected static void SetData()
         {
             itemDb = new Item[]
             {
@@ -39,9 +40,9 @@ namespace Text_RPG_24Group
           };
             playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬, 스킬 데미지, 타겟 수, 마력
             {
-                new Battle(player.Job, "기본공격", "하나의 적을 공격합니다.", 1, player.Atk, 1, 0),
-                new Battle(player.Job, "강공격", "하나의 적을 강하게 공격합니다.", 2, player.Atk, 1, 10),
-                new Battle(player.Job, "연속공격", "2명의 적을 랜덤으로 공격합니다.", 3, player.Atk, 2, 15),
+                //new Battle(player.Job, "기본공격", "하나의 적을 공격합니다.", 1, player.Atk, 1, 0),
+                //new Battle(player.Job, "강공격", "하나의 적을 강하게 공격합니다.", 2, player.Atk, 1, 10),
+                //new Battle(player.Job, "연속공격", "2명의 적을 랜덤으로 공격합니다.", 3, player.Atk, 2, 15),
             };
             monsterBattleDb = new Battle[] // 이름, 설명, 데미지
             {
@@ -56,6 +57,14 @@ namespace Text_RPG_24Group
             new Poition("레드포션", 1, 5,"hp를 30 회복합니다. "),
 
            };
+            questDb = new Quest[]//돈보상, 목표1,목표2,시작불값,클리어불값
+            {
+                new Quest(50,0,0,false,false),
+                new Quest(100,0,0,false,false),
+                new Quest(200,0,0,false,false)
+
+            };
+            
 
         }
 
@@ -87,11 +96,12 @@ namespace Text_RPG_24Group
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 인벤토리");
             Console.WriteLine("3. 상점");
+            Console.WriteLine("4. 퀘스트");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
 
-            int result = CheckInput(1, 3);
+            int result = CheckInput(1, 4);
 
             switch (result)
             {
@@ -105,6 +115,9 @@ namespace Text_RPG_24Group
 
                 case 3:
                     DisplayShopUI();
+                    break;
+                case 4:
+                    Quest.QuestMain();
                     break;
             }
         }
@@ -307,52 +320,7 @@ namespace Text_RPG_24Group
 
         }
 
-        static void DisplayQuestUI()
-        {
-            Console.WriteLine("Quest!!\r\n\r\n1. 마을을 위협하는 미니언 처치\r\n2. 장비를 장착해보자\r\n3. 더욱 더 강해지기!\r\n\r\n\r\n원하시는 퀘스트를 선택해주세요.\r\n>>");
-            int input = CheckInput(1, 3);
-            Console.Clear();
-            switch (input)
-            {
-                case 1:
-                    DisplayQuestUI1(1);//수정 필요
-                    break;
-                case 2:
-                    DisplayQuestUI2();
-                    break;
-                case 3:
-                    DisplayQuestUI3();
-                    break;
-                default:
-                    break;
-            }
-        }
-        static void DisplayQuestUI1(int killNum)// 미니언 5마리 처지 저장공간//보상아이템을 멀 줄지 
-        {
-             Console.WriteLine("Quest!!\r\n\r\n마을을 위협하는 미니언 처치\r\n\r\n이봐! 마을 근처에 슬라임들이 너무 많아졌다고 생각하지 않나?\r\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\r\n모험가인 자네가 좀 처치해주게!\r\n\r\n");
-            Console.WriteLine($"- 미니언 5마리 처치 (0/5)\r\n\r\n- 보상- \r\n\t쓸만한 방패 x 1\r\n\t5G\r\n\r\n");
-             Console.WriteLine($"1. 수락\r\n2. 거절\r\n원하시는 행동을 입력해주세요.\r\n>>");
-            int input = CheckInput(1, 2);
-            if (input == 1) { Console.WriteLine("퀘스트 수락 로직 구현"); }
-                 else { DisplayQuestUI(); }
-        }
-        static void DisplayQuestUI2()// 무기방어구 장착 저장공간//보상아이템을 멀 줄지 
-        {
-            Console.WriteLine("Quest!!\r\n\r\n장비를 장착해보자\r\n\r\n이봐! 좋은 모험가라면 좋은 장비를 써야하는 법...\r\n장비를 장착하면 던전을 조금 더 쉽게 공략하지!\r\n한번 장비를 껴봐!\r\n\r\n");
-            Console.WriteLine($"- 무기와 방어구 장착 (0/1)(0/1)\r\n\r\n- 보상- \r\n\t쓸만한 방패 x 1\r\n\t50G\r\n\r\n1. 수락\r\n2. 거절\r\n원하시는 행동을 입력해주세요.\r\n>>");
-            int input = CheckInput(1, 2);
-            if (input == 1) { Console.WriteLine("퀘스트 수락 로직 구현"); }
-            else { DisplayQuestUI(); }
-        }
-        static void DisplayQuestUI3()// 스켈레톤 5마리 처지 저장공간//보상아이템을 멀 줄지 
-        {
-            Console.WriteLine("Quest!!\r\n\r\n더욱 더 강해지기\r\n\r\n이봐! 진정한 모험가는 수련을 해야된다네...\r\n스켈레톤 처치를 부탁하네!\r\n\r\n");
-            Console.WriteLine($"- 스켈레톤 3마리 처치 (0/3)\r\n\r\n- 보상- \r\n\t쓸만한 방패 x 1\r\n\t50G\r\n\r\n1. 수락\r\n2. 거절\r\n원하시는 행동을 입력해주세요.\r\n>>");
-            int input = CheckInput(1, 2);
-            if (input == 1) { Console.WriteLine("퀘스트 수락 로직 구현"); }
-            else { DisplayQuestUI(); }
-        }
-        static int CheckInput(int min, int max)
+        public static int CheckInput(int min, int max)
         {
             int result;
             while (true)
