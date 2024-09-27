@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Text_RPG_24Group
 {
-    internal class DungeonPlay
+    class DungeonPlay
     {
+
     }
 }

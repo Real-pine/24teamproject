@@ -20,26 +20,26 @@ namespace Text_RPG_24Group
         public static int[] skillValue = { 0, 1, 3, 2 }; // 스킬 데미지 값
         public static int[] targetCount = { 0, 1, 2 }; // 타겟 수
 
-        public Battle(string job, string name, string tell, int skillNumber, int value1, int value2, int value3)
+        public Battle(CharacterCustom.JobType job, string name, string tell, int skillNumber, int value1, int value2, int value3)
         {
             Name = name; // 이름
             Desc = tell; // 설명
 
             switch (job)
             {
-                case "전사":
+                case (CharacterCustom.JobType)1:
                     Type = value1 * akkackValue[skillNumber]; // 직업별 공격력
                     Value1 = Type * skillValue[skillNumber]; // 직업별 스킬 공격력
                     Value2 = targetCount[value2]; // 타겟 수
                     Value3 = value3; // 마력
                     break;
-                case "마법사":
+                case (CharacterCustom.JobType)2:
                     Type = value1 * akkackValue[skillNumber]; // 직업별 공격력
                     Value1 = Type * skillValue[skillNumber]; // 직업별 스킬 공격력
                     Value2 = targetCount[value2]; // 타겟 수
                     Value3 = value3; // 마력
                     break;
-                case "도적":
+                case (CharacterCustom.JobType)3:
                     Type = value1 * akkackValue[skillNumber]; // 직업별 공격력
                     Value1 = Type * skillValue[skillNumber]; // 직업별 스킬 공격력
                     Value2 = targetCount[value2]; // 타겟 수

@@ -8,7 +8,7 @@ namespace Text_RPG_24Group;
 public class CharacterCustom
 {
     public int Level { get; private set;}
-    public string Name { get; }
+    public string Name { get; set; }
     public JobType Job { get; private set; }
     public int Atk { get; private set; }
     public int Def { get; private set; }
@@ -37,7 +37,7 @@ public class CharacterCustom
             return Inventory.Count;
         }
     }
-
+    //캐릭터 생성자
     public CharacterCustom(string name, int jobNumber)
     {
         Level = 1; // 시작레벨
