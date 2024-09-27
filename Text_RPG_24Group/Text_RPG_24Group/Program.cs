@@ -66,27 +66,13 @@ namespace Text_RPG_24Group
             new Monster("스켈레톤","뼈로 이루어진 고대 사람이였던 것",3,10,0,15,150),
             new Monster("골램","자연적인 현상에의해 돌에 생명력이 들어갔다.",5,5,10,20,200),
             new Monster("악마","고대부터 존재했던 것",10,20,5,50,1000),
-
           };
-
             playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬 벨류, 타겟 수, 스킬 구분
             {
-                new Battle(player.Job, "기본공격", "적을 공격합니다.", 1, 1, 10, false),
-                new Battle(player.Job, "깊게 베기", "적을 강하게 공격합니다.", 2, 1, 10, true),
-                new Battle(player.Job, "연속공격", "적을 랜덤으로 공격합니다.",  1.5f, 2, 10, true),
-
-                //new battle(1, "기본공격", "적을 공격합니다.", 1, 1, 10, false),
-                //new battle(1, "깊게 베기", "적을 강하게 공격합니다.", 2, 1, 10, true),
-                //new battle(1, "연속공격", "적을 랜덤으로 공격합니다.",  1.5f, 2, 10, true),
-                //new battle(2, "기본공격", "적을 공격합니다.", 1, 1, 15, false),
-                //new battle(2, "폭발", "적을 강하게 공격합니다.", 2, 1, 15, true),
-                //new battle(2, "전기 사슬", "적을 랜덤으로 공격합니다.",  1.5f, 2, 15, true),
-                //new battle(3, "기본공격", "적을 공격합니다.", 1, 1, 12, false),
-                //new battle(3, "암습", "적을 강하게 공격합니다.", 2, 1, 12, true),
-                //new battle(3, "수리검 던지기", "적을 랜덤으로 공격합니다.",  1.5f, 2, 12, true),
+                new Battle(player.Job, 1, "적을 공격합니다.", 1, 1, player.Atk, false),
+                new Battle(player.Job, 2, "적을 강하게 공격합니다.", 2, 1, player.Atk, true),
+                new Battle(player.Job, 3, "적을 랜덤으로 공격합니다.",  1.5f, 2, player.Atk, true),
             };
-          
-
             monsterBattleDb = new Battle[] // 이름, 설명, 데미지
             {
                 new Battle("점액 뿌리기", "산성 점액에 의해 화상을 약간 입었다.", 5),
@@ -95,17 +81,13 @@ namespace Text_RPG_24Group
                 new Battle("휘두르기", "느리지만 강력한 공격에 맞았다.", 5),
                 new Battle("저주", "지독한 저주에 걸렸다.", 20),
             };
-
             questDb = new Quest[]//돈보상, 목표1,목표2,시작불값,클리어불값
             {
                 new Quest(50,0,0,false,false),
                 new Quest(100,0,0,false,false),
                 new Quest(200,0,0,false,false)
-
             };
-
         }
-
 
         static void DisplayMainUI()
         {
@@ -120,7 +102,10 @@ namespace Text_RPG_24Group
             Console.WriteLine("5. 회복의 방");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
+
             int result = CheckInput(1, 5);
+
+
             switch (result)
             {
                 case 1:
