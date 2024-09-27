@@ -9,42 +9,29 @@ namespace Text_RPG_24Group
 {
     internal class Battle
     {
+        public int Type { get; private set; } // 직업
+        // int input = CheckInput(1, 3);
+        // playerBattleDb[player.Job * input].PlayerSkillInfoText();
+        // 이런식으로 스킬을 써야 할거 같아요
         public string Name { get; private set; } // 스킬 이름
-        public int Value1 { get; private set; } // 스킬 벨류
+        public double Value1 { get; private set; } // 스킬 벨류
         public int Value2 { get; private set; } // 타겟 수
         public int Value3 { get; private set; } // 공격력
         public string Desc { get; private set; } // 스킬 설명
 
-        private static bool isSkill = false;
+        public bool isSkill = false;
 
-        private static int damage;
+        public static int damage;
 
-        public Battle(JobType job, string name, string tell, int targetCount, int atk)
+        public Battle(int job, string name, string desc, double value,int targetCount, int atk, bool skill )
         {
+            Type = job;
             Name = name;
-            Desc = tell;
-
-            switch ((int)job)
-            {
-                case 1:
-                    Value1 = 1;
-                    Value2 = targetCount;
-                    Value3 = atk * Value1;
-                    isSkill = false;
-                    break;
-                case 2:
-                    Value1 = 3;
-                    Value2 = targetCount;
-                    Value3 = atk * Value1;
-                    isSkill = true;
-                    break;
-                case 3:
-                    Value1 = 2;
-                    Value2 = targetCount;
-                    Value3 = atk * Value1;
-                    isSkill = true;
-                    break;
-            }
+            Desc = desc;
+            Value1 = value;
+            Value2 = targetCount;
+            Value3 = atk;
+            isSkill = skill;
         }
 
         public string DisplayTypeText
@@ -107,15 +94,13 @@ namespace Text_RPG_24Group
                 Random random = new Random();
 
                 int err = random.Next(-1, 2);
-
                 int errDamange = (Value3 / 10) * err;
 
                 int critical = random.Next(0, 100);
-
                 if (critical <= 15)
                     damage = (int)Math.Round((Value3 + errDamange) * 1.6f);
                 else
-                    damage = Value3;
+                    damage = Value3 + errDamange;
 
                 return critical <= 15 ? $"[데미지] : {damage} - 치명타 공격!!"
                     : $"[데미지 : {Value3}]";
