@@ -41,7 +41,7 @@ namespace Text_RPG_24Group
             {
                 new Battle(1, "기본공격", "적을 공격합니다.", 1, 1, 10, false),
                 new Battle(1, "깊게 베기", "적을 강하게 공격합니다.", 2, 1, 10, true),
-                new Battle(1, "연속 베기", "적을 랜덤으로 공격합니다.",  1.5f, 2, 10, true),
+                new Battle(1, "연속공격", "적을 랜덤으로 공격합니다.",  1.5f, 2, 10, true),
                 new Battle(2, "기본공격", "적을 공격합니다.", 1, 1, 15, false),
                 new Battle(2, "폭발", "적을 강하게 공격합니다.", 2, 1, 15, true),
                 new Battle(2, "전기 사슬", "적을 랜덤으로 공격합니다.",  1.5f, 2, 15, true),

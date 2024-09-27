@@ -10,6 +10,9 @@ namespace Text_RPG_24Group
     internal class Battle
     {
         public int Type { get; private set; } // 직업
+        // int input = CheckInput(1, 3);
+        // playerBattleDb[player.Job * 3 - input].PlayerSkillInfoText();
+        // 이런식으로 스킬을 쓰면 되려나
         public string Name { get; private set; } // 스킬 이름
         public double Value1 { get; private set; } // 스킬 벨류
         public int Value2 { get; private set; } // 타겟 수
@@ -20,7 +23,7 @@ namespace Text_RPG_24Group
 
         public static int damage;
 
-        public Battle(int job, string name, string desc, double value,int targetCount, int atk, bool skill )
+        public Battle(int job, string name, string desc, double value,int targetCount, int atk, bool skillType )
         {
             Type = job;
             Name = name;
@@ -28,7 +31,7 @@ namespace Text_RPG_24Group
             Value1 = value;
             Value2 = targetCount;
             Value3 = atk;
-            isSkill = skill;
+            isSkill = skillType;
         }
 
         public string DisplayTypeText
