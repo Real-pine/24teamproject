@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 namespace Text_RPG_24Group;
 public class CharacterCustom
 {
-    public int Level { get; private set;}
+    public int Level { get; private set; }
     public string Name { get; set; }
     public JobType Job { get; private set; }
     public int Atk { get; private set; }
     public int Def { get; private set; }
     public int Hp { get; set; }
+    public int MaxHp { get; private set; }
     public int Gold { get; set; }
-    public int Experience {  get; private set; } //현재 경험치
+    public int Experience { get; private set; } //현재 경험치
     public int[] ExpToNextLev = { 10, 35, 65, 100 }; //4레벨까지 요구경험치테이블
 
     public enum JobType //직업선택을 위해 enum으로 넘버링
@@ -45,26 +46,28 @@ public class CharacterCustom
         Experience = 0; //시작경험치
         Gold = 1500; //시작골드
         Job = (JobType)jobNumber;
+        Hp = MaxHp; // 현재HP를 최대HP로 초기화
 
 
-        switch (Job) 
-        { 
+        switch (Job)
+        {
             case JobType.Warrior:
                 Atk = 10;
                 Def = 15;
-                Hp = 140;
+                MaxHp = 140;
                 break;
             case JobType.Mage:
                 Atk = 15;
                 Def = 8;
-                Hp = 100;
+                MaxHp = 100;
                 break;
             case JobType.Rogue:
                 Atk = 12;
                 Def = 12;
-                Hp = 120;
+                MaxHp = 120;
                 break;
         }
+
     }
     //경험치 획득 메서드
     public void GainExperience(int exp)
@@ -87,7 +90,7 @@ public class CharacterCustom
 
         Atk += 1;
         Def += 1;
-        Hp += 20;
+        MaxHp += 20;
     }
     //현재 레벨에서 다음 레벨까지 필요한 경험치 
     public int GetExpToNextLev()
@@ -98,7 +101,7 @@ public class CharacterCustom
         }
         else //5레벨 부터 요구경험치 50씩증가
         {
-            return ExpToNextLev[ExpToNextLev.Length - 1] + 50*(Level - 4); 
+            return ExpToNextLev[ExpToNextLev.Length - 1] + 50 * (Level - 4);
         }
     }
 
@@ -108,7 +111,7 @@ public class CharacterCustom
         Console.WriteLine($"{Name} {{ {Job} }}");
         Console.WriteLine(ExtraAtk == 0 ? $"공격력 : {Atk}" : $"공격력 : {Atk + ExtraAtk} (+{ExtraAtk})");
         Console.WriteLine(ExtraDef == 0 ? $"방어력 : {Def}" : $"방어력 : {Def + ExtraDef} (+{ExtraDef})");
-        Console.WriteLine($"체력 : {Hp}");
+        Console.WriteLine($"체력 : {Hp}/{MaxHp}");
         Console.WriteLine($"Gold : {Gold} G");
     }
 
@@ -158,4 +161,7 @@ public class CharacterCustom
     {
         return Inventory.Contains(item);
     }
+
+
+    
 }
