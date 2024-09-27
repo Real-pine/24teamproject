@@ -124,11 +124,6 @@ namespace Text_RPG_24Group
         }
         public static void DisplayMainUI()
 
-<<<<<<< HEAD
-=======
-
-        public static void DisplayMainUI()
->>>>>>> NewDungeon27
         {
             Console.Clear();
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");

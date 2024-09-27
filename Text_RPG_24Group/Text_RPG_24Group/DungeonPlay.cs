@@ -108,7 +108,7 @@ namespace Text_RPG_24Group
 
             //출현 몬스터중에 랜덤선택메서드 or 선택 메서드
             Console.WriteLine($"\n\n{player.Name}의 기본공격!");
-            battle.PlayerAttacknfoText();
+            battle.PlayerAttackInfoText();
 
             //Console.WriteLine("해당몬스터");
             //Console.WriteLine($"Hp {xx} -> {xx - battle.Damage}");

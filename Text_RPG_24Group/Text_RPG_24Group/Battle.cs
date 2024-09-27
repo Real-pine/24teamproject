@@ -70,21 +70,13 @@ namespace Text_RPG_24Group
 
         public string PlayerSkillInfoText() //스킬설명메서드
         {
-<<<<<<< HEAD
+
             return $" {Name}\n - 공격력 * {Value}로 {DisplayTypeText}{Desc}";
             // 기본 공격
             //  공격력 * 1로 한명의 적을 공격합니다.
         }
 
-        public string PlayerAttacInfoText()
-=======
-            return $"{Name}\n\t공격력 * {Value1}로 {DisplayTypeText}{Desc}";
-            // 기본 공격(모든 데미지)
-            //  공격력 * 1로 한명의 적을 공격합니다.
-        }
-
-        public string PlayerAttacknfoText() //데미지표시메서드
->>>>>>> NewDungeon27
+        public string PlayerAttackInfoText() //데미지표시메서드
         {
             Random random = new Random();
 
