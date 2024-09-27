@@ -10,9 +10,6 @@ namespace Text_RPG_24Group
     internal class Battle
     {
         public int Type { get; private set; } // 직업
-        // int input = CheckInput(1, 3);
-        // playerBattleDb[player.Job * input].PlayerSkillInfoText();
-        // 이런식으로 스킬을 써야 할거 같아요
         public string Name { get; private set; } // 스킬 이름
         public double Value1 { get; private set; } // 스킬 벨류
         public int Value2 { get; private set; } // 타겟 수
