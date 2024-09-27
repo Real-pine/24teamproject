@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Text_RPG_24Group;
-class CharacterCustom
+public class CharacterCustom
 {
     public int Level { get; private set;}
     public string Name { get; }
     public JobType Job { get; private set; }
     public int Atk { get; private set; }
     public int Def { get; private set; }
-    public int Hp { get; private set; }
-    public int Gold { get; private set; }
+    public int Hp { get; set; }
+    public int Gold { get;  set; }
     public int Experience {  get; private set; } //현재 경험치
     public int[] ExpToNextLev = { 10, 35, 65, 100 }; //4레벨까지 요구경험치테이블
 

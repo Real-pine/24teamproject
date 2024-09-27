@@ -3,12 +3,12 @@ namespace Text_RPG_24Group
 {
     class Program
     {
-        private static CharacterCustom player;
+        private static CharacterCustom player = new CharacterCustom("",0);
+        private static Poition potion;
         private static Item[] itemDb;
         private static Monster[] monsterDb;
         private static Battle[] playerBattleDb;
         private static Battle[] monsterBattleDb;
-        private static Poition[] poitionDb;
 
         static void Main(string[] args)
         {
@@ -19,6 +19,9 @@ namespace Text_RPG_24Group
 
         static void SetData()
         {
+
+            potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
+
             itemDb = new Item[]
             {
             new Item("수련자의 갑옷", 1, 5,"수련에 도움을 주는 갑옷입니다. ",1000),
@@ -37,12 +40,7 @@ namespace Text_RPG_24Group
             new Monster("악마","고대부터 존재했던 것",10,20,5,50,1000),
 
           };
-            playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬, 스킬 데미지, 타겟 수, 마력
-            {
-                new Battle(player.Job, "기본공격", "하나의 적을 공격합니다.", 1, player.Atk, 1, 0),
-                new Battle(player.Job, "강공격", "하나의 적을 강하게 공격합니다.", 2, player.Atk, 1, 10),
-                new Battle(player.Job, "연속공격", "2명의 적을 랜덤으로 공격합니다.", 3, player.Atk, 2, 15),
-            };
+          
             monsterBattleDb = new Battle[] // 이름, 설명, 데미지
             {
                 new Battle("점액 뿌리기", "산성 점액에 의해 화상을 약간 입었다.", 5),
@@ -51,11 +49,7 @@ namespace Text_RPG_24Group
                 new Battle("휘두르기", "느리지만 강력한 공격에 맞았다.", 5),
                 new Battle("점액 뿌리기", "지독한 저주에 걸렸다.", 20),
             };
-            poitionDb = new Poition[]
-           {
-            new Poition("레드포션", 1, 5,"hp를 30 회복합니다. "),
-
-           };
+            
 
         }
 
@@ -87,11 +81,13 @@ namespace Text_RPG_24Group
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 인벤토리");
             Console.WriteLine("3. 상점");
+            Console.WriteLine("5. 회복의 방");
+
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
 
-            int result = CheckInput(1, 3);
+            int result = CheckInput(1, 5);
 
             switch (result)
             {
@@ -105,6 +101,10 @@ namespace Text_RPG_24Group
 
                 case 3:
                     DisplayShopUI();
+                    break;
+
+                case 5:
+                    DiplayPotionUI();
                     break;
             }
         }
@@ -301,6 +301,49 @@ namespace Text_RPG_24Group
                     break;
             }
         }
+
+        static void DiplayPotionUI()
+        {
+            Console.Clear();
+            Console.WriteLine("회복의 방.");
+            Console.WriteLine("\n포션을 사용하면 체력을 30 회복 할 수 있습니다."+"(남은포션 :" +potion.Count+")");
+            Console.WriteLine("\n0. 나가기");
+            Console.WriteLine("1. 회복하기");
+            Console.WriteLine("\n원하시는 행동을 입력해주세요.");
+
+            int result = CheckInput(0, 1);
+
+            switch (result)
+            {
+                case 0:
+                    DisplayMainUI();
+                    break;
+
+                case 1:
+
+                    if (potion.Count > 0)
+                    {
+                        potion.Count--;
+                        player.Hp += 30;
+                        Console.WriteLine("\nHP가 30 회복되었습니다.");
+                        DiplayPotionUI();
+                    }
+
+
+                    else
+
+                    Console.WriteLine("포션의 수가 부족합니다.");
+                    DiplayPotionUI();
+
+                    break;
+
+            }
+
+
+
+        }
+
+
 
         static void DisplayDungeonUI()
         {
