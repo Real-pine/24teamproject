@@ -45,21 +45,21 @@ namespace Text_RPG_24Group
           };
             playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬 벨류, 타겟 수, 스킬 구분
             {
-<<<<<<< HEAD
+
                 //new Battle(player.Job, "기본공격", "하나의 적을 공격합니다.", 1, player.Atk, 1, 0),
                 //new Battle(player.Job, "강공격", "하나의 적을 강하게 공격합니다.", 2, player.Atk, 1, 10),
                 //new Battle(player.Job, "연속공격", "2명의 적을 랜덤으로 공격합니다.", 3, player.Atk, 2, 15),
-=======
-                //new Battle(1, "기본공격", "적을 공격합니다.", 1, 1, 10, false),
-                //new Battle(1, "깊게 베기", "적을 강하게 공격합니다.", 2, 1, 10, true),
-                //new Battle(1, "연속공격", "적을 랜덤으로 공격합니다.",  1.5f, 2, 10, true),
-                //new Battle(2, "기본공격", "적을 공격합니다.", 1, 1, 15, false),
-                //new Battle(2, "폭발", "적을 강하게 공격합니다.", 2, 1, 15, true),
-                //new Battle(2, "전기 사슬", "적을 랜덤으로 공격합니다.",  1.5f, 2, 15, true),
-                //new Battle(3, "기본공격", "적을 공격합니다.", 1, 1, 12, false),
-                //new Battle(3, "암습", "적을 강하게 공격합니다.", 2, 1, 12, true),
-                //new Battle(3, "수리검 던지기", "적을 랜덤으로 공격합니다.",  1.5f, 2, 12, true),
->>>>>>> origin/(Feat)Battle/27
+
+                //new battle(1, "기본공격", "적을 공격합니다.", 1, 1, 10, false),
+                //new battle(1, "깊게 베기", "적을 강하게 공격합니다.", 2, 1, 10, true),
+                //new battle(1, "연속공격", "적을 랜덤으로 공격합니다.",  1.5f, 2, 10, true),
+                //new battle(2, "기본공격", "적을 공격합니다.", 1, 1, 15, false),
+                //new battle(2, "폭발", "적을 강하게 공격합니다.", 2, 1, 15, true),
+                //new battle(2, "전기 사슬", "적을 랜덤으로 공격합니다.",  1.5f, 2, 15, true),
+                //new battle(3, "기본공격", "적을 공격합니다.", 1, 1, 12, false),
+                //new battle(3, "암습", "적을 강하게 공격합니다.", 2, 1, 12, true),
+                //new battle(3, "수리검 던지기", "적을 랜덤으로 공격합니다.",  1.5f, 2, 12, true),
+
             };
             monsterBattleDb = new Battle[] // 이름, 설명, 데미지
             {
