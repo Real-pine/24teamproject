@@ -19,6 +19,11 @@ namespace Text_RPG_24Group
 
         static void SetData()
         {
+            //캐릭터생성
+            string characterName = "";
+            int selectedJob = 0;
+            CharacterCustom player = new CharacterCustom(characterName, selectedJob);
+
             itemDb = new Item[]
             {
             new Item("수련자의 갑옷", 1, 5,"수련에 도움을 주는 갑옷입니다. ",1000),
@@ -74,8 +79,6 @@ namespace Text_RPG_24Group
 
             int selectedJob = int.Parse(Console.ReadLine());//직업선택
 
-            //캐릭터생성
-            CharacterCustom player = new CharacterCustom(characterName, selectedJob);
         }
 
         static void DisplayMainUI()

@@ -37,7 +37,7 @@ class CharacterCustom
             return Inventory.Count;
         }
     }
-
+    //캐릭터 생성자
     public CharacterCustom(string name, int jobNumber)
     {
         Level = 1; // 시작레벨
