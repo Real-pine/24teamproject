@@ -3,7 +3,6 @@ namespace Text_RPG_24Group
 {
      public class Program
     {
-<<<<<<< HEAD
         public static CharacterCustom player;
         public static Item[] itemDb;
         private static Monster[] monsterDb;
@@ -11,14 +10,9 @@ namespace Text_RPG_24Group
         private static Battle[] monsterBattleDb;
         private static Poition[] poitionDb;
         public static Quest[] questDb;
-=======
-        private static CharacterCustom player = new CharacterCustom("",0);
+
         private static Poition potion;
-        private static Item[] itemDb;
-        private static Monster[] monsterDb;
-        private static Battle[] playerBattleDb;
-        private static Battle[] monsterBattleDb;
->>>>>>> (Feat)potion/27
+
 
         static void Main(string[] args)
         {
@@ -29,15 +23,14 @@ namespace Text_RPG_24Group
 
         protected static void SetData()
         {
-<<<<<<< HEAD
+
             //캐릭터생성
             string characterName = "";
             int selectedJob = 0;
             CharacterCustom player = new CharacterCustom(characterName, selectedJob);
-=======
+
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
->>>>>>> (Feat)potion/27
 
             itemDb = new Item[]
             {
@@ -57,7 +50,7 @@ namespace Text_RPG_24Group
             new Monster("악마","고대부터 존재했던 것",10,20,5,50,1000),
 
           };
-<<<<<<< HEAD
+
             playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬 벨류, 타겟 수, 스킬 구분
             {
 
@@ -76,9 +69,8 @@ namespace Text_RPG_24Group
                 //new battle(3, "수리검 던지기", "적을 랜덤으로 공격합니다.",  1.5f, 2, 12, true),
 
             };
-=======
           
->>>>>>> (Feat)potion/27
+
             monsterBattleDb = new Battle[] // 이름, 설명, 데미지
             {
                 new Battle("점액 뿌리기", "산성 점액에 의해 화상을 약간 입었다.", 5),
@@ -87,12 +79,7 @@ namespace Text_RPG_24Group
                 new Battle("휘두르기", "느리지만 강력한 공격에 맞았다.", 5),
                 new Battle("저주", "지독한 저주에 걸렸다.", 20),
             };
-<<<<<<< HEAD
-            poitionDb = new Poition[]
-           {
-            new Poition("레드포션", 1, 5,"hp를 30 회복합니다. "),
 
-           };
             questDb = new Quest[]//돈보상, 목표1,목표2,시작불값,클리어불값
             {
                 new Quest(50,0,0,false,false),
@@ -100,9 +87,6 @@ namespace Text_RPG_24Group
                 new Quest(200,0,0,false,false)
 
             };
-=======
->>>>>>> (Feat)potion/27
-            
 
         }
 
@@ -132,43 +116,27 @@ namespace Text_RPG_24Group
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 인벤토리");
             Console.WriteLine("3. 상점");
-<<<<<<< HEAD
             Console.WriteLine("4. 퀘스트");
-=======
             Console.WriteLine("5. 회복의 방");
-
->>>>>>> (Feat)potion/27
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-
-
-<<<<<<< HEAD
-            int result = CheckInput(1, 4);
-=======
             int result = CheckInput(1, 5);
->>>>>>> (Feat)potion/27
-
             switch (result)
             {
                 case 1:
                     DisplayStatUI();
                     break;
-
                 case 2:
                     DisplayInventoryUI();
                     break;
-
                 case 3:
                     DisplayShopUI();
                     break;
-<<<<<<< HEAD
                 case 4:
                     Quest.QuestMain();
-=======
-
+                    break;
                 case 5:
                     DiplayPotionUI();
->>>>>>> (Feat)potion/27
                     break;
             }
         }
@@ -388,11 +356,10 @@ namespace Text_RPG_24Group
                     if (potion.Count > 0)
                     {
                         potion.Count--;
-                        player.Hp += 30;
+                        Program.player.Hp += 30;
                         Console.WriteLine("\nHP가 30 회복되었습니다.");
                         DiplayPotionUI();
                     }
-
 
                     else
 
