@@ -67,14 +67,14 @@ namespace Text_RPG_24Group
             }
         }
 
-        public string PlayerSkillInfoText()
+        public string PlayerSkillInfoText() //스킬설명메서드
         {
             return $"{Name}\n\t공격력 * {Value1}로 {DisplayTypeText}{Desc}";
-            // 기본 공격
+            // 기본 공격(모든 데미지)
             //  공격력 * 1로 한명의 적을 공격합니다.
         }
 
-        public string PlayerAttacknfoText()
+        public string PlayerAttacknfoText() //데미지표시메서드
         {
             Random random = new Random();
 
@@ -102,7 +102,7 @@ namespace Text_RPG_24Group
             Value3 = atk;
         }
 
-        public string MonsterSkillInfoText()
+        public string MonsterSkillInfoText() //몬스터가 플레이어공격시 출력메서드
         {
             Random random = new Random();
 

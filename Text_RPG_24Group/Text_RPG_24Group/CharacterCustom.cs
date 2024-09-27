@@ -163,12 +163,6 @@ public class CharacterCustom
         return Inventory.Contains(item);
     }
 
-    //캐릭터 체력 감소 메서드
-    public void TakeDamage(int damage)
-    {
-        Hp -= damage;
-        if (Hp < 0) Hp = 0;
-        Console.WriteLine($"{Name}은(는) {damage}의 데미지를 받았습니다.");
-    }
+
     
 }

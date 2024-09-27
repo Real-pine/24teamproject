@@ -11,6 +11,7 @@ namespace Text_RPG_24Group
         private static Poition[] poitionDb;
         public static Quest[] questDb;
         private static Poition potion;
+        
         private static string characterName;
         private static int selectedJob;
 
@@ -109,7 +110,7 @@ namespace Text_RPG_24Group
         }
 
 
-        static void DisplayMainUI()
+        public static void DisplayMainUI()
         {
             Console.Clear();
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
