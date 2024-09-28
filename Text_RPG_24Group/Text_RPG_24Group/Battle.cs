@@ -37,7 +37,7 @@ namespace Text_RPG_24Group
         public static string[] name3 = { "", "기본공격", "암습", "수리검 던지기" };
 
         public Battle(JobType job, int InName, string InDesc, double InValue, int InTargetCount, int InAttack, int InSpell, bool InSkill)
-        {
+        { // 플레이어
             Type = (int)job;
             Desc = InDesc;
             Value = InValue;
@@ -60,7 +60,7 @@ namespace Text_RPG_24Group
             }
         }
 
-        public string DisplayTypeText
+        public string DisplayTypeText // PlayerSkillInfoText에 사용
         {
             get
             {
@@ -70,7 +70,6 @@ namespace Text_RPG_24Group
 
         public string PlayerSkillInfoText() //스킬설명메서드
         {
-
             return $" {Name}\n - 공격력 * {Value}로 {DisplayTypeText}{Desc}";
             // 기본 공격
             //  공격력 * 1로 한명의 적을 공격합니다.
@@ -81,24 +80,22 @@ namespace Text_RPG_24Group
             Random random = new Random();
 
             int avoid = random.Next(0, 100);
-
+            // 회피 확률
             string attacktext;
 
             if (isSkill)
-                attacktext = $" 을(를) 맞췄습니다.{Damage}";
+                attacktext = $" 을(를) 맞췄습니다.{damageText}";
             // 을(를) 맞췄습니다. [데미지 : 16] - 치명타 공격!!
             else
-                attacktext = avoid <= 10 ? $" 을(를) 맞췄습니다. {Damage}"
+                attacktext = avoid <= 10 ? $" 을(를) 맞췄습니다. {damageText}"
                 : " 을(를) 공격했지만 아무일도 일어나지 않았습니다.";
             // 회피시 : 하지만 아무일도 일어나지 않았습니다.
 
             return attacktext;
         }
 
-        public int MonsterAtk { get; private set; }
-
         public Battle(string name, string tell, int atk)
-        {
+        { // 몬스터
             Name = name;
             Desc = tell;
             Power = atk;
@@ -110,7 +107,7 @@ namespace Text_RPG_24Group
 
             int avoid = random.Next(0, 100);
 
-            return avoid <= 10 ? $"{Name}\n{Desc} - {Damage}" 
+            return avoid <= 10 ? $"{Name}\n{Desc} - {damageText}" 
                 : $" {Name}\n을(를) 공격했지만 아무일도 일어나지 않았습니다.";
         }
 
@@ -122,7 +119,7 @@ namespace Text_RPG_24Group
             // 현재 모두 0이라 능력치엔 변화 없음
         }
 
-        private string Damage
+        private string damageText
         {
             get
             {
