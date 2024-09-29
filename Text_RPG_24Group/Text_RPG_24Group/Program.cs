@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Numerics;
+using static Text_RPG_24Group.CharacterCustom;
 using Newtonsoft.Json;
+using System.Threading;
 
 
 
@@ -22,9 +25,9 @@ namespace Text_RPG_24Group
 
         static void Main(string[] args)
         {
-            SetData();
-            Stage.PlayerMove(1, 1, mapDb[2]);//
             StartDisplay();
+            SetData();
+            Stage.PlayerMove(1, 1, mapDb[2]);
             DisplayMainUI();
         }
         public static void StartDisplay()
@@ -52,7 +55,6 @@ namespace Text_RPG_24Group
         protected static void SetData()
         {
             //캐릭터생성
-
             player = new CharacterCustom(characterName, selectedJob);
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
@@ -142,7 +144,6 @@ namespace Text_RPG_24Group
             Console.WriteLine("7. 저장된 파일");
             Console.WriteLine("8. 저장하기");
             Console.WriteLine("9. 불러오기");
-
 
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
