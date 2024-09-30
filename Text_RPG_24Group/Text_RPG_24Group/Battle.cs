@@ -159,11 +159,7 @@ namespace Text_RPG_24Group
             }
         }
 
-<<<<<<< HEAD
         public void ResultWin(int monsterCount)
-=======
-        public string PlayerSkillInfoText() //스킬상세설명메서드
->>>>>>> (New)Dungeon30
         {
             Console.WriteLine("Battle!! - Result");
             Console.WriteLine("\n");
@@ -176,11 +172,7 @@ namespace Text_RPG_24Group
             // 던전 입장 전 HP? 마지막 전투 HP?
         }
 
-<<<<<<< HEAD
         public void ResultLose()
-=======
-        public string PlayerAttackInfoText() //스킬일떄만?기본공격둘다? 데미지출력메서드
->>>>>>> (New)Dungeon30
         {
             Console.WriteLine("Battle!! - Result");
             Console.WriteLine("\n");

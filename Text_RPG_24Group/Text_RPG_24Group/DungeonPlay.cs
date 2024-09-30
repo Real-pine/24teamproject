@@ -180,19 +180,12 @@ namespace Text_RPG_24Group
             Console.WriteLine("\n\nBattle !!");
             Console.WriteLine($"{player.Name}의 페이즈");
 
-<<<<<<< HEAD
-            //출현 몬스터중에 랜덤선택메서드 or 선택 메서드
-
-            
-=======
             //출현몬스터 표시
 
             Console.WriteLine("\n\n{내정보}");
             Console.WriteLine($"LV.{player.Level} {player.Name}");
             Console.WriteLine($"HP : {player.Hp}/{player.MaxHp}");
             //Console.WriteLine($"MP : {player.MP}/{player.MaxMP}"); <<마나
->>>>>>> (New)Dungeon30
-
             Console.WriteLine("\n\n0. 다음");
             int result = Program.CheckInput(0, 0);
 
