@@ -11,14 +11,6 @@ public class SaveLoadSystem
 {
     private static string saveDirectory = "Saves";
 
-    static SaveLoadSystem()
-    {
-        if (!Directory.Exists(saveDirectory))
-        {
-            Directory.CreateDirectory(saveDirectory);
-        }
-    }
-
     public static void SaveCharacter(CharacterCustom character, string saveName)
     {
         string filePath = Path.Combine(saveDirectory, saveName + ".json");
@@ -60,7 +52,32 @@ public class SaveLoadSystem
             Console.WriteLine("저장된 파일이 없습니다.");
         }
     }
+
+    public static void DeleteSaveFile(string saveName)
+    {
+        string filePath = Path.Combine(saveDirectory, saveName + ".json");
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                File.Delete(filePath);
+                Console.WriteLine("파일이 성공적으로 삭제되었습니다.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"파일 삭제 중 오류가 발생했습니다: {ex.Message}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("삭제할 파일이 존재하지 않습니다.");
+        }
+    }
 }
+
+
+
+
 public class CharacterCustom
 {
     public int Level { get;  set;}
@@ -69,7 +86,9 @@ public class CharacterCustom
     public int Atk { get; set; }
     public int Def { get; set; }
     public int Hp { get; set; }
-    public int MaxHp { get; private set; }
+    public int MaxHp { get; set; }
+
+
     public int Gold { get; set; }
     public int Experience { get; private set; } //현재 경험치
     public int[] ExpToNextLev = { 10, 35, 65, 100 }; //4레벨까지 요구경험치테이블
