@@ -75,6 +75,8 @@ public class CharacterCustom
     public int Experience { get; private set; } //현재 경험치
     public int[] ExpToNextLev = { 10, 35, 65, 100 }; //4레벨까지 요구경험치테이블
 
+    public int[] stat = { 0, 0, 0 };
+
     public enum JobType //직업선택을 위해 enum으로 넘버링
     {
         Warrior = 1,
@@ -124,7 +126,6 @@ public class CharacterCustom
                 MaxHp = 120;
                 break;
         }
-
     }
     //경험치 획득 메서드
     public void GainExperience(int exp)

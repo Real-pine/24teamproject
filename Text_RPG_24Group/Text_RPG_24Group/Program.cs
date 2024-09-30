@@ -13,7 +13,7 @@ namespace Text_RPG_24Group
         public static CharacterCustom player;
         public static Item[] itemDb;
         private static Monster[] monsterDb;
-        private static Battle[] playerBattleDb;
+        public static Battle[] playerBattleDb;
         private static Battle[] monsterBattleDb;
         private static Poition[] poitionDb;
         public static Quest[] questDb;

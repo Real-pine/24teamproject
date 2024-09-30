@@ -18,15 +18,12 @@ namespace Text_RPG_24Group
         public double Value { get; private set; } // 스킬 벨류
         public int TargetCount { get; private set; } // 타겟 수
         public int Power { get; set; } // 공격력
-
         public int Spell { get; set; } // 마력
         public string Desc { get; private set; } // 스킬 설명
 
-        public bool isSkill = false;
-
-        public int damage;
-
+        public int damage { get; set; }
         public int MonsterAtk { get; private set; }
+        public bool isSkill = false;
 
         static int abilityDamage = 0;
         static int abilityCriticalChance = 0;
@@ -63,7 +60,6 @@ namespace Text_RPG_24Group
         public string PlayerSkillInfoText() //스킬설명메서드
         {
             string TargetCountText = TargetCount == 2 ? $" * {TargetCount}명의" : "한명의";
-            // 여기서만 사용 하는 내용이기 때문에 합쳤습니다.
 
             return $"{Name}!\n- 공격력 * {Value} 로 {TargetCountText} {Desc}\n";
             // 기본 공격
@@ -75,6 +71,7 @@ namespace Text_RPG_24Group
         public string PlayerAttackInfoText(int InAtk) //데미지표시메서드
         {
             Power = (int)Math.Round(InAtk * Value);
+            // 플레이어의 능력치 업데이트
 
             Random random = new Random();
 
@@ -117,14 +114,12 @@ namespace Text_RPG_24Group
                 : $"{Name}\n을(를) 공격했지만 아무일도 일어나지 않았습니다.";
         }
 
-        public void Ability(int InPower, int InCriticalChance, double InCriticalDamage)
+        public void AbilityStat()
         { // 능력치 포인트로 올린 스탯
-            abilityDamage = Type == 1 ? InPower * 2 : InPower * 1;
-            abilityCriticalChance = Type == 2 ? InCriticalChance * 2 : InCriticalChance * 1;
-            abilityCriticalDamage = Type == 3 ? InCriticalDamage * 0.2f : InCriticalDamage * 0.1f;
+            abilityDamage = Type == 1 ? Program.player.stat[0] * 2 : Program.player.stat[0] * 1;
+            abilityCriticalChance = Type == 2 ? Program.player.stat[1] * 2 : Program.player.stat[1] * 1;
+            abilityCriticalDamage = Type == 3 ? Program.player.stat[2] * 0.2f : Program.player.stat[2] * 0.1f;
             // 현재 모두 0이라 능력치엔 변화 없음
-            // 생각해 보니까 이거 하나씩 저장된거라 못 쓸거같은데
-            // 항상 능력치를 받아와야 가능할거 같다
         }
 
         private string damageText
@@ -151,9 +146,7 @@ namespace Text_RPG_24Group
     }
 }
 // 캐릭터별로 힘 민첩 지능
-// 힘 = 전사 == true ?  공격력 + 3 : 공격력 + 1
+// 힘 = 전사 == true ?  공격력 + 2 : 공격력 + 1
 // 민첩 = 도적 == true ?  치명타 확률 + 2 : 치명타 확률 + 1 
 // 지능 = 마법사 == true ?  치명타 공격력 + 0.2f : 치명타 공격력 + 0.1f
-// 레벨 업마다 찍을 수 있고(?) 포인트가 아니었구나 ↓ 그럼 보상 칸이네
-// CharacterCustom을 건드려야 되나? 능력치칸이 따로 있나?
-// 임시로 만들어서 해봐야지
+// 레벨 업마다 찍을 수 있게
