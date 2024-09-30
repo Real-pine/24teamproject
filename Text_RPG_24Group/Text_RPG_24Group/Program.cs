@@ -25,12 +25,9 @@ namespace Text_RPG_24Group
 
         static void Main(string[] args)
         {
-<<<<<<< HEAD
             SetData();
-            Program.BGMManager.PlayBGM(Program.BGMManager.SoundVillage, BGMManager, 45); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
+            //Program.BGMManager.PlayBGM(Program.BGMManager.SoundVillage, BGMManager, 45); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
             //Stage.PlayerMove(1, 1, mapDb[2]);
-=======
->>>>>>> (Feat)Save/30
             StartDisplay();
             SetData();
 
