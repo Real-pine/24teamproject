@@ -14,12 +14,18 @@ namespace Text_RPG_24Group
         public static CharacterCustom player;
         public static Item[] itemDb;
         public static Monster[] monsterDb;
+<<<<<<< HEAD
+=======
+        public static Battle[] playerBattleDb;
+        public static Battle[] monsterBattleDb;
+>>>>>>> (New)Dungeon30
         private static Poition[] poitionDb;
         public static Quest[] questDb;
         private static Poition potion;
         
         private static string characterName;
         private static int selectedJob;
+<<<<<<< HEAD
         private static DungeonMap[] mapDb;
         private static SoundManager BGMManager;
         private static SoundManager SoundEffectManager;
@@ -30,11 +36,25 @@ namespace Text_RPG_24Group
             //Stage.PlayerMove(1, 1, mapDb[2]);
             SetData();
             //Stage.PlayerMove(1, 1, mapDb[2]);
+=======
+        
+        public static DungeonMap[] mapDb;
+
+        static void Main(string[] args)
+        {
+            //Stage.PlayerMove(1, 1, mapDb[2]);//
+            SetData();
+            DungeonPlay.player = player; //DungeonPlay클래스의 player필드에 설정
+>>>>>>> (New)Dungeon30
             DisplayMainUI();
         }
 
         protected static void SetData()
         {
+<<<<<<< HEAD
+=======
+            //캐릭터생성
+>>>>>>> (New)Dungeon30
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine("\n원하시는 이름을 설정해주세요.\n");
 
@@ -52,7 +72,10 @@ namespace Text_RPG_24Group
                 Console.WriteLine("이름을 다시 입력해주세요.");
                 characterName = Console.ReadLine();
             }
+<<<<<<< HEAD
             //캐릭터생성
+=======
+>>>>>>> (New)Dungeon30
             player = new CharacterCustom(characterName, selectedJob);
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
@@ -126,8 +149,12 @@ namespace Text_RPG_24Group
             Console.WriteLine("3. 상점");
             Console.WriteLine("4. 퀘스트");
             Console.WriteLine("5. 회복의 방");
+<<<<<<< HEAD
             Console.WriteLine("6. 저장된 파일");
             Console.WriteLine("7. 저장된 파일제거");
+=======
+            Console.WriteLine("7. 던전입장");
+>>>>>>> (New)Dungeon30
             Console.WriteLine("8. 저장하기");
             Console.WriteLine("9. 불러오기");
             Console.WriteLine("10. 환경설정");
@@ -155,8 +182,13 @@ namespace Text_RPG_24Group
                 case 5:
                     DiplayPotionUI();
                     break;
+<<<<<<< HEAD
                 case 6:
                     ListSaves();
+=======
+                case 7:
+                    DisplayDungeonUI();
+>>>>>>> (New)Dungeon30
                     break;
                 case 7:
                     DeleteSave();
@@ -178,13 +210,6 @@ namespace Text_RPG_24Group
             Console.Clear();
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
-
-            if (player == null)
-            {
-                Console.WriteLine("플레이어 객체가 null입니다. 먼저 캐릭터를 생성하세요.");
-                DisplayMainUI(); // 메인 메뉴로 돌아가게 함
-                return;
-            }
 
             player.DisplayCharacterInfo();
 
@@ -374,7 +399,7 @@ namespace Text_RPG_24Group
             }
         }
 
-        static void DiplayPotionUI()
+        public static void DiplayPotionUI()
         {
             Console.Clear();
             Console.WriteLine("회복의 방.");
@@ -416,7 +441,7 @@ namespace Text_RPG_24Group
 
         static void DisplayDungeonUI()
         {
-            Console.WriteLine($"Level: {player.Level}, Exp: {player.Job}, Hp: {player.Hp}, Gold: {player.Gold}");
+            DungeonPlay.InDungeonUI();
         }
 
         public static int CheckInput(int min, int max)

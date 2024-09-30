@@ -88,10 +88,13 @@ public class CharacterCustom
     public int Def { get; set; }
     public int Hp { get; set; }
     public int MaxHp { get; set; }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> (New)Dungeon30
     public int Gold { get; set; }
-    public int Experience { get; private set; } //현재 경험치
+    public int Experience { get; set; } //현재 경험치
     public int[] ExpToNextLev = { 10, 35, 65, 100 }; //4레벨까지 요구경험치테이블
 
     public enum JobType //직업선택을 위해 enum으로 넘버링
@@ -122,9 +125,7 @@ public class CharacterCustom
         Experience = 0; //시작경험치
         Gold = 1500; //시작골드
         Job = (JobType)jobNumber;
-        Hp = MaxHp; // 현재HP를 최대HP로 초기화
-
-
+        
         switch (Job)
         {
             case JobType.Warrior:
@@ -143,6 +144,10 @@ public class CharacterCustom
                 MaxHp = 120;
                 break;
         }
+<<<<<<< HEAD
+=======
+        Hp = MaxHp; // 현재HP를 최대HP로 초기화
+>>>>>>> (New)Dungeon30
     }
     //경험치 획득 메서드
     public void GainExperience(int exp)
