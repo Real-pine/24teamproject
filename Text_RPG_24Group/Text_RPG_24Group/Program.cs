@@ -12,7 +12,7 @@ namespace Text_RPG_24Group
     {
         public static CharacterCustom player;
         public static Item[] itemDb;
-        private static Monster[] monsterDb;
+        public static Monster[] monsterDb;
         public static Battle[] playerBattleDb;
         private static Battle[] monsterBattleDb;
         private static Poition[] poitionDb;
@@ -25,14 +25,13 @@ namespace Text_RPG_24Group
 
         static void Main(string[] args)
         {
-            StartDisplay();
             SetData();
             Stage.PlayerMove(1, 1, mapDb[2]);
             DisplayMainUI();
         }
-        public static void StartDisplay()
-        {
 
+        protected static void SetData()
+        {
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine("\n원하시는 이름을 설정해주세요.\n");
 
@@ -50,10 +49,6 @@ namespace Text_RPG_24Group
                 Console.WriteLine("이름을 다시 입력해주세요.");
                 characterName = Console.ReadLine();
             }
-        }
-
-        protected static void SetData()
-        {
             //캐릭터생성
             player = new CharacterCustom(characterName, selectedJob);
 
@@ -79,9 +74,9 @@ namespace Text_RPG_24Group
           };
             playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬 벨류, 타겟 수, 공격력, 마력, 스킬 구분
             {
-                new Battle(player.Job, 1, "적을 공격합니다.", 1, 1, player.Atk, 0, false),
-                new Battle(player.Job, 2, "적을 강하게 공격합니다.", 2, 1, player.Atk, 10, true),
-                new Battle(player.Job, 3, "적을 랜덤으로 공격합니다.",  1.5f, 2, player.Atk, 15, true),
+                //new Battle(1, "적을 공격합니다."),
+                //new Battle(2, "적을 강하게 공격합니다."),
+                //new Battle(3, "적을 랜덤으로 공격합니다."),
             };
             monsterBattleDb = new Battle[] // 이름, 설명, 데미지
             {
