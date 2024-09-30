@@ -44,3 +44,9 @@ C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_2
 C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG.24FC23BF.Up2Date
 C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\Text_RPG_24Group.genruntimeconfig.cache
 C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\obj\Debug\net8.0\ref\Text_RPG_24Group.dll
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\NAudio.dll
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\NAudio.Asio.dll
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\NAudio.Core.dll
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\NAudio.Midi.dll
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\NAudio.Wasapi.dll
+C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Text_RPG_24Group\bin\Debug\net8.0\NAudio.WinMM.dll

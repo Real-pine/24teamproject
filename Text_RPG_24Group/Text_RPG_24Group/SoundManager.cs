@@ -7,16 +7,38 @@ using NAudio.Wave;
 //https://pixabay.com/ko/sound-effects/ 에서 사운드 파일 가져옴
 namespace Text_RPG_24Group
 {
-    class SoundManager
+    public class SoundManager
     {
-        string SoundBGM { get; set; }
+        static string UserLocation { get; set; }
+        string SoundVillage { get; set; }
+
         string SoundButton {  get; set; }
         string SoundHurt { get; set; }
         string SoundHit { get; set; }
-        
-        void PlaySoundBGM(string soundFilePath) 
+        string SoundSelect { get; set; }
+
+        public SoundManager(string userLocation)
         {
-            using (var audioFile = new AudioFileReader(soundFilePath))
+            UserLocation = userLocation;//C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group
+            SoundVillage = "";
+            SoundButton = "";
+            SoundHurt = "";
+            SoundHit = "";
+            SoundSelect = "";
+        }
+        public static void PlaySoundVillage()
+        {
+            // 경로 설정
+            string audioFileLocation = @"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group\Sound\1 -30-village-chronology-of-love.mp3";
+            // 파일 존재 여부 확인
+            if (!File.Exists(audioFileLocation))
+            {
+                Console.WriteLine("Sound file not found: " + audioFileLocation);
+                return; // 파일이 없으면 메서드 종료
+            }
+
+            // 사운드 재생
+            using (var audioFile = new AudioFileReader(audioFileLocation))
             using (var outputDevice = new WaveOutEvent())
             {
                 outputDevice.Init(audioFile);

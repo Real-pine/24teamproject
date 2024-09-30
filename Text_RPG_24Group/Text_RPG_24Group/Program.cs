@@ -19,10 +19,11 @@ namespace Text_RPG_24Group
         private static string characterName;
         private static int selectedJob;
         private static DungeonMap[] mapDb;
-
+        public static SoundManager soundManager;
         static void Main(string[] args)
         {
             SetData();
+            SoundManager.PlaySoundVillage();
             Stage.PlayerMove(1, 1, mapDb[2]);//
             StartDisplay();
             DisplayMainUI();
@@ -57,7 +58,7 @@ namespace Text_RPG_24Group
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
 
-
+            soundManager = new SoundManager("C:\\Users\\BaekSeungWoo\\Documents\\GitHub\\24teamproject\\Text_RPG_24Group");
             itemDb = new Item[]
             {
             new Item("수련자의 갑옷", 1, 5,"수련에 도움을 주는 갑옷입니다. ",1000),
@@ -95,7 +96,6 @@ namespace Text_RPG_24Group
                 new Quest(100,0,0,false,false),
                 new Quest(200,0,0,false,false)
             };
-
             mapDb = new DungeonMap[]
    {
         new DungeonMap(new int[,]
