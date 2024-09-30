@@ -22,9 +22,9 @@ namespace Text_RPG_24Group
 
         static void Main(string[] args)
         {
-            SetData();
-            Stage.PlayerMove(1, 1, mapDb[2]);//
             StartDisplay();
+            SetData();
+
             DisplayMainUI();
         }
         public static void StartDisplay()
@@ -139,7 +139,8 @@ namespace Text_RPG_24Group
             Console.WriteLine("3. 상점");
             Console.WriteLine("4. 퀘스트");
             Console.WriteLine("5. 회복의 방");
-            Console.WriteLine("7. 저장된 파일");
+            Console.WriteLine("6. 저장된 파일");
+            Console.WriteLine("7. 저장된 파일제거");
             Console.WriteLine("8. 저장하기");
             Console.WriteLine("9. 불러오기");
 
@@ -166,10 +167,12 @@ namespace Text_RPG_24Group
                 case 5:
                     DiplayPotionUI();
                     break;
-                case 7:
+                case 6:
                     ListSaves();
                     break;
-
+                case 7:
+                    DeleteSave();
+                    break;
                 case 8:
                     Save();
                     break;
@@ -404,23 +407,21 @@ namespace Text_RPG_24Group
                         potion.Count--;
                         Program.player.Hp += 30;
                         Console.WriteLine("\nHP가 30 회복되었습니다.");
+                        Console.ReadLine();
                         DiplayPotionUI();
                     }
 
                     else
 
                     Console.WriteLine("포션의 수가 부족합니다.");
+                    Console.ReadLine();
                     DiplayPotionUI();
 
                     break;
 
             }
 
-
-
         }
-
-
 
         static void DisplayDungeonUI()
         {
@@ -455,6 +456,7 @@ namespace Text_RPG_24Group
             Console.Write("저장할 파일 이름을 입력하세요: ");
             string saveName = Console.ReadLine();
             SaveLoadSystem.SaveCharacter(player, saveName);
+            Console.ReadLine();
             DisplayMainUI();
         }
 
@@ -463,12 +465,18 @@ namespace Text_RPG_24Group
             Console.Write("불러올 파일 이름을 입력하세요: ");
             string saveName = Console.ReadLine();
             player = SaveLoadSystem.LoadCharacter(saveName);
-            if (player != null)
-            {
-                Console.WriteLine($"Level: {player.Level}, Exp: {player.Job}, Hp: {player.Hp}, Gold: {player.Gold},Inventory:{player.Inventory}");
-                DisplayMainUI();
+         
+            Console.ReadLine();
+            DisplayMainUI();
+        }
 
-            }
+        static void DeleteSave()
+        {
+            Console.Write("삭제할 파일 이름을 입력하세요: ");
+            string saveName = Console.ReadLine();
+            SaveLoadSystem.DeleteSaveFile(saveName);
+            Console.ReadLine();
+            DisplayMainUI();
         }
     }
 }
