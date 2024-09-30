@@ -23,7 +23,8 @@ namespace Text_RPG_24Group
         static void Main(string[] args)
         {
             SetData();
-            SoundManager.PlaySoundVillage();
+            SoundManager.PlaySoundHit();
+            SoundManager.PlayBGMVillage();// SoundManager.SoundBGMPlaying = false;// BGM스탑가능
             Stage.PlayerMove(1, 1, mapDb[2]);//
             StartDisplay();
             DisplayMainUI();
@@ -58,7 +59,8 @@ namespace Text_RPG_24Group
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
 
-            soundManager = new SoundManager("C:\\Users\\BaekSeungWoo\\Documents\\GitHub\\24teamproject\\Text_RPG_24Group");
+            soundManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group",false);
+            //주소 예시//C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group//뒤에 @꼭 붙히세요
             itemDb = new Item[]
             {
             new Item("수련자의 갑옷", 1, 5,"수련에 도움을 주는 갑옷입니다. ",1000),
