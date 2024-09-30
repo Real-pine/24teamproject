@@ -8,24 +8,23 @@ using NAudio.Wave;
 //https://pixabay.com/ko/sound-effects/ 에서 사운드 파일 가져옴
 namespace Text_RPG_24Group
 {
-    public class SoundManager
+    class SoundManager
     {
-        static string UserLocation { get; set; }
-        public static string SoundVillage { get; set; }
-        public static string SoundButton {  get; set; }
-        public static string SoundClear { get; set; }
-        public static string SoundDie { get; set; }
-        public static string SoundHit { get; set; }
-        public static string SoundHurt { get; set; }
-        public static string SoundSelect { get; set; }
-        public static string SoundSkill { get; set; }
+        public string UserLocation { get; private set; }
+        public  string SoundVillage { get; private set; }
+        public  string SoundButton {  get; private set; }
+        public  string SoundClear { get; private set; }
+        public  string SoundDie { get; private set; }
+        public  string SoundHit { get; private set; }
+        public  string SoundHurt { get; private set; }
+        public  string SoundSelect { get; private set; }
+        public  string SoundSkill { get; private set; }
 
-        public static bool SoundBGMPlaying { get; set; }
-        public static bool SoundBGMUserSet { get; set; }
-        public static bool SoundEffectUserSet { get; set; }
+        public  bool SoundBGMPlaying { get; set; }
+        public  bool SoundBGMUserSet { get; set; }
+        public  bool SoundEffectUserSet { get; set; }
 
-        public static float SoundBGMSize { get; set; }
-        public static float SoundEffectSize { get; set; }
+        public float SoundSize { get; set; }
 
 
         public SoundManager(string userLocation)
@@ -41,13 +40,12 @@ namespace Text_RPG_24Group
             SoundSkill = @"\Sound\skill-camera-flash.mp3";
             SoundBGMUserSet = true;
             SoundEffectUserSet = true;
-            SoundBGMSize = 1f;
-            SoundEffectSize = 1f;
+            SoundSize = 1f;
 
 
         }
 
-        public static async Task PlayBGM(string soundBGM, int playTime, SoundManager soundManager)
+        public async Task PlayBGM(string soundBGM,SoundManager soundManager, int playTime)
         {
             while (true)
             {
@@ -57,7 +55,7 @@ namespace Text_RPG_24Group
                     using (var audioFile = new AudioFileReader(audioFileLocation))
                     using (var outputDevice = new WaveOutEvent())
                     {
-                        outputDevice.Volume = SoundBGMSize;
+                        outputDevice.Volume = soundManager.SoundSize;
                         outputDevice.Init(audioFile);
                         outputDevice.Play();
                         //Console.WriteLine("사운드 재생 중...");
@@ -65,14 +63,14 @@ namespace Text_RPG_24Group
                         // 사운드가 재생되는 동안 대기
                         while (outputDevice.PlaybackState == PlaybackState.Playing)
                         {
-                            System.Threading.Thread.Sleep(playTime); // 상태 확인 주기                           
+                            System.Threading.Thread.Sleep(playTime); // 상태 확인 주기
                         }
                     }
                 });
             }
             
         }
-        public static async Task PlaySoundEffect(string soundEffect)
+        public async Task PlaySoundEffect(string soundEffect, SoundManager soundManager)
         {
             if(SoundEffectUserSet)
             {
@@ -82,7 +80,7 @@ namespace Text_RPG_24Group
                     using (var audioFile = new AudioFileReader(audioFileLocation))
                     using (var outputDevice = new WaveOutEvent())
                     {
-                        outputDevice.Volume = SoundEffectSize;
+                        outputDevice.Volume = soundManager.SoundSize;
                         outputDevice.Init(audioFile);
                         outputDevice.Play();
                         //Console.WriteLine("사운드 재생 중...");

@@ -25,7 +25,7 @@ namespace Text_RPG_24Group
             QuestStart = start;
             QuestClear = clear;
         }
-        public static void QuestMain()
+        public  void QuestMain()
         {
             Console.Clear();
             Console.WriteLine("Quest!!\r\n\r\n0. 돌아가기\r\n1. 마을을 위협하는 미니언 처치\r\n2. 장비를 장착해보자\r\n3. 더욱 더 강해지기!\r\n\r\n\r\n원하시는 퀘스트를 선택해주세요.\r\n>>");
@@ -50,7 +50,7 @@ namespace Text_RPG_24Group
             }
         }
 
-        static void QuestDisplay(Quest quest,int num,int itemNum)// quest 퀘스트, num 몇번퀘스트(1~3),itemNum(보상을 줄 아이템 인덱스)
+        void QuestDisplay(Quest quest,int num,int itemNum)// quest 퀘스트, num 몇번퀘스트(1~3),itemNum(보상을 줄 아이템 인덱스)
         {
             int input;
             GetQuestTxt(quest, num,itemNum);
@@ -82,7 +82,7 @@ namespace Text_RPG_24Group
                 }
             }            
         }      
-        static void QuestReward(Quest quest,int num,int itemNum)
+        void QuestReward(Quest quest,int num,int itemNum)
         {
             Console.Clear();
             quest.QuestStart=false;
@@ -106,7 +106,7 @@ namespace Text_RPG_24Group
             Console.WriteLine("2. 돌아가기\r\n\r\n원하시는 행동을 입력해주세요.\r\n>>");
             int input = Program.CheckInput(1, 2);
         }
-        static void GetQuestTxt(Quest quest, int indexnum,int itemNum)
+        void GetQuestTxt(Quest quest, int indexnum,int itemNum)
         {
             Console.Clear();
             Item targetItem = Program.itemDb[itemNum];
