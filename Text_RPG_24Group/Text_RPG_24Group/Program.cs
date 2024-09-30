@@ -18,18 +18,20 @@ namespace Text_RPG_24Group
         
         private static string characterName;
         private static int selectedJob;
+        
         private static DungeonMap[] mapDb;
 
         static void Main(string[] args)
         {
+            //Stage.PlayerMove(1, 1, mapDb[2]);//
             SetData();
-            Stage.PlayerMove(1, 1, mapDb[2]);//
-            StartDisplay();
+            DungeonPlay.player = player; //DungeonPlay클래스의 player필드에 설정
             DisplayMainUI();
         }
-        public static void StartDisplay()
-        {
 
+        protected static void SetData()
+        {
+            //캐릭터생성
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine("\n원하시는 이름을 설정해주세요.\n");
 
@@ -47,12 +49,6 @@ namespace Text_RPG_24Group
                 Console.WriteLine("이름을 다시 입력해주세요.");
                 characterName = Console.ReadLine();
             }
-        }
-
-        protected static void SetData()
-        {
-            //캐릭터생성
-
             player = new CharacterCustom(characterName, selectedJob);
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
@@ -139,7 +135,7 @@ namespace Text_RPG_24Group
             Console.WriteLine("3. 상점");
             Console.WriteLine("4. 퀘스트");
             Console.WriteLine("5. 회복의 방");
-            Console.WriteLine("7. 저장된 파일");
+            Console.WriteLine("7. 던전입장");
             Console.WriteLine("8. 저장하기");
             Console.WriteLine("9. 불러오기");
 
@@ -167,7 +163,7 @@ namespace Text_RPG_24Group
                     DiplayPotionUI();
                     break;
                 case 7:
-                    ListSaves();
+                    DisplayDungeonUI();
                     break;
 
                 case 8:
@@ -184,13 +180,6 @@ namespace Text_RPG_24Group
             Console.Clear();
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
-
-            if (player == null)
-            {
-                Console.WriteLine("플레이어 객체가 null입니다. 먼저 캐릭터를 생성하세요.");
-                DisplayMainUI(); // 메인 메뉴로 돌아가게 함
-                return;
-            }
 
             player.DisplayCharacterInfo();
 
@@ -424,7 +413,7 @@ namespace Text_RPG_24Group
 
         static void DisplayDungeonUI()
         {
-            Console.WriteLine($"Level: {player.Level}, Exp: {player.Job}, Hp: {player.Hp}, Gold: {player.Gold}");
+            DungeonPlay.InDungeonUI();
         }
 
         public static int CheckInput(int min, int max)

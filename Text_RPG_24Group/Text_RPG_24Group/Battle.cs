@@ -68,7 +68,7 @@ namespace Text_RPG_24Group
             }
         }
 
-        public string PlayerSkillInfoText() //스킬설명메서드
+        public string PlayerSkillInfoText() //스킬상세설명메서드
         {
 
             return $" {Name}\n - 공격력 * {Value}로 {DisplayTypeText}{Desc}";
@@ -76,7 +76,7 @@ namespace Text_RPG_24Group
             //  공격력 * 1로 한명의 적을 공격합니다.
         }
 
-        public string PlayerAttackInfoText() //데미지표시메서드
+        public string PlayerAttackInfoText() //스킬일떄만?기본공격둘다? 데미지출력메서드
         {
             Random random = new Random();
 
