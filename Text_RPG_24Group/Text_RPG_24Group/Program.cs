@@ -13,8 +13,6 @@ namespace Text_RPG_24Group
         public static CharacterCustom player;
         public static Item[] itemDb;
         public static Monster[] monsterDb;
-        public static Battle[] playerBattleDb;
-        private static Battle[] monsterBattleDb;
         private static Poition[] poitionDb;
         public static Quest[] questDb;
         private static Poition potion;
@@ -72,20 +70,6 @@ namespace Text_RPG_24Group
             new Monster("골램","자연적인 현상에의해 돌에 생명력이 들어갔다.",5,5,10,20,200),
             new Monster("악마","고대부터 존재했던 것",10,20,5,50,1000),
           };
-            playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬 벨류, 타겟 수, 공격력, 마력, 스킬 구분
-            {
-                //new Battle(1, "적을 공격합니다."),
-                //new Battle(2, "적을 강하게 공격합니다."),
-                //new Battle(3, "적을 랜덤으로 공격합니다."),
-            };
-            monsterBattleDb = new Battle[] // 이름, 설명, 데미지
-            {
-                new Battle("점액 뿌리기", "산성 점액에 의해 화상을 약간 입었다.", 5),
-                new Battle("돌맹이 던지기", "단단한 돌에 맞았다.", 10),
-                new Battle("끌어안기", "뼈조각에 찔렸다.", 10),
-                new Battle("휘두르기", "느리지만 강력한 공격에 맞았다.", 5),
-                new Battle("저주", "지독한 저주에 걸렸다.", 20),
-            };
             questDb = new Quest[]//돈보상, 목표1,목표2,시작불값,클리어불값
             {
                 new Quest(50,5,0,false,false),
