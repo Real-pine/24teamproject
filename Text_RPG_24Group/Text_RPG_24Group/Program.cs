@@ -9,9 +9,9 @@ namespace Text_RPG_24Group
     {
         public static CharacterCustom player;
         public static Item[] itemDb;
-        private static Monster[] monsterDb;
-        private static Battle[] playerBattleDb;
-        private static Battle[] monsterBattleDb;
+        public static Monster[] monsterDb;
+        public static Battle[] playerBattleDb;
+        public static Battle[] monsterBattleDb;
         private static Poition[] poitionDb;
         public static Quest[] questDb;
         private static Poition potion;
@@ -19,7 +19,7 @@ namespace Text_RPG_24Group
         private static string characterName;
         private static int selectedJob;
         
-        private static DungeonMap[] mapDb;
+        public static DungeonMap[] mapDb;
 
         static void Main(string[] args)
         {
@@ -369,7 +369,7 @@ namespace Text_RPG_24Group
             }
         }
 
-        static void DiplayPotionUI()
+        public static void DiplayPotionUI()
         {
             Console.Clear();
             Console.WriteLine("회복의 방.");

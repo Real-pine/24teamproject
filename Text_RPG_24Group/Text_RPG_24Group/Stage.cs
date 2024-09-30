@@ -90,7 +90,7 @@ namespace Text_RPG_24Group
         }
     }
 
-    class DungeonMap
+    public class DungeonMap
     {
         public int[,] MapData { get; set; }
 

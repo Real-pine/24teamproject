@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG_24Group
 {
-    internal class Monster
+    public class Monster
     {
         public string MonsterName { get; private set; }
         public string Monstertell { get; private set; }

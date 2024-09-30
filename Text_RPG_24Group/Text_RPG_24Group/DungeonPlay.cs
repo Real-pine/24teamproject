@@ -267,7 +267,7 @@ namespace Text_RPG_24Group
             //배틀의 몬스터3 공격 메서드()
 
             Console.WriteLine($"\n\nLV.{player.Level} {player.Name}");
-            Console.WriteLine($"HP : {player.Hp} -> {player.Hp-몬스터데미지}");
+            //Console.WriteLine($"HP : {player.Hp} -> {player.Hp-몬스터데미지}");
             //Console.WriteLine($"MP : {player.MP}/{player.MaxMP}"); <<마나
 
             Console.WriteLine("\n\n0. 다음");
@@ -286,8 +286,8 @@ namespace Text_RPG_24Group
         {
             Console.WriteLine($"\n\n몬스터 격퇴 성공!");
             Console.WriteLine($"보상");
-            CharacterCustom.GainExperience(몬스터1경험치+몬스터2경험치+몬스터3경험치);
-            Console.WriteLine($"{player.Gold}->{player.Gold+몬스터1,2,3골드}");
+            //CharacterCustom.GainExperience(몬스터1경험치+몬스터2경험치+몬스터3경험치);
+            //Console.WriteLine($"{player.Gold}->{player.Gold+몬스터1,2,3골드}");
 
             Console.WriteLine($"0. 다음");
             int result = Program.CheckInput(0, 0);
@@ -295,8 +295,8 @@ namespace Text_RPG_24Group
             switch (result)
             {
                 case 0:
-                    if (맵db에몬스터가없다면)Program.DisplayMainUI();
-                    else { 기존맵db; }
+                    //if (맵db에몬스터가없다면)Program.DisplayMainUI();
+                    //else { 기존맵db; }
                     break;
             }
         }

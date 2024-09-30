@@ -8,7 +8,7 @@ using static Text_RPG_24Group.CharacterCustom;
 
 namespace Text_RPG_24Group
 {
-    internal class Battle
+    public class Battle
     {
         public string PlayerName { get; private set; }
 
