@@ -1,10 +1,7 @@
 ﻿using System;
-<<<<<<< HEAD
 using System.Threading;
-=======
 using System.Numerics;
 using static Text_RPG_24Group.CharacterCustom;
->>>>>>> (Feat)Battle30
 using Newtonsoft.Json;
 using System.Threading;
 
@@ -29,16 +26,10 @@ namespace Text_RPG_24Group
 
         static void Main(string[] args)
         {
-            SetData();
-<<<<<<< HEAD
             //Program.BGMManager.PlayBGM(Program.BGMManager.SoundVillage, BGMManager, 45); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
             //Stage.PlayerMove(1, 1, mapDb[2]);
-            StartDisplay();
             SetData();
-
-=======
-            Stage.PlayerMove(1, 1, mapDb[2]);
->>>>>>> (Feat)Battle30
+            //Stage.PlayerMove(1, 1, mapDb[2]);
             DisplayMainUI();
         }
 
