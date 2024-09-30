@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using NAudio.Wave;
@@ -10,12 +11,12 @@ namespace Text_RPG_24Group
     public class SoundManager
     {
         static string UserLocation { get; set; }
-        static string SoundVillage { get; set; }
-        static string SoundButton {  get; set; }
-        static string SoundHurt { get; set; }
-        static string SoundHit { get; set; }
-        static string SoundSelect { get; set; }
-        public static bool SoundBGMPlaying { get; set; }
+        public static string SoundVillage { get; set; }
+        public static string SoundButton {  get; set; }
+        public static string SoundHurt { get; set; }
+        public static string SoundHit { get; set; }
+        public static string SoundSelect { get; set; }
+        static bool SoundBGMPlaying { get; set; }
         public SoundManager(string userLocation, bool soundBGMPlaying)
         {
             UserLocation = userLocation;//C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group
@@ -26,15 +27,15 @@ namespace Text_RPG_24Group
             SoundSelect = @"\Sound\select-system-notification.mp3";
             soundBGMPlaying = SoundBGMPlaying;
         }
-        private static void StopSound()
+        public static void StopSound()
         {
             SoundBGMPlaying = false; // 사운드 재생 상태 변경
-            Console.WriteLine("사운드 멈춤");
         }
-        public static async Task PlayBGMVillage()
+
+        public static async Task PlayBGM(string soundBGM, int playTime)
         {
             SoundBGMPlaying = true;
-            string audioFileLocation = @$"{UserLocation}{SoundVillage}";// 경로 설정
+            string audioFileLocation = @$"{UserLocation}{soundBGM}";// 경로 설정
             await Task.Run(() =>
             {
                 using (var audioFile = new AudioFileReader(audioFileLocation))
@@ -47,15 +48,15 @@ namespace Text_RPG_24Group
                     // 사운드가 재생되는 동안 대기
                     while (outputDevice.PlaybackState == PlaybackState.Playing)
                     {
-                        System.Threading.Thread.Sleep(90); // 상태 확인 주기
+                        System.Threading.Thread.Sleep(playTime); // 상태 확인 주기
                         if (SoundBGMPlaying == false) break;
                     }
                 }
             });
         }
-        public static async Task PlaySoundButton()
+        public static async Task PlaySoundEffect(string soundEffect)
         {
-            string audioFileLocation = @$"{UserLocation}{SoundButton}";// 경로 설정
+            string audioFileLocation = @$"{UserLocation}{soundEffect}";// 경로 설정
             await Task.Run(() =>
             {
                 using (var audioFile = new AudioFileReader(audioFileLocation))
@@ -72,66 +73,6 @@ namespace Text_RPG_24Group
                     }
                 }
             });
-        }
-        public static async Task PlaySoundHurt()
-        {
-            string audioFileLocation = @$"{UserLocation}{SoundHurt}";// 경로 설정
-            await Task.Run(() =>
-            {
-                using (var audioFile = new AudioFileReader(audioFileLocation))
-                using (var outputDevice = new WaveOutEvent())
-                {
-                    outputDevice.Init(audioFile);
-                    outputDevice.Play();
-                    Console.WriteLine("사운드 재생 중...");
-
-                    // 사운드가 재생되는 동안 대기
-                    while (outputDevice.PlaybackState == PlaybackState.Playing)
-                    {
-                        System.Threading.Thread.Sleep(2); // 상태 확인 주기
-                    }
-                }
-            });
-        }
-        public static async Task PlaySoundHit()
-        {
-            string audioFileLocation = @$"{UserLocation}{SoundHit}";// 경로 설정
-            await Task.Run(() =>
-            {
-                using (var audioFile = new AudioFileReader(audioFileLocation))
-                using (var outputDevice = new WaveOutEvent())
-                {
-                    outputDevice.Init(audioFile);
-                    outputDevice.Play();
-                    Console.WriteLine("사운드 재생 중...");
-
-                    // 사운드가 재생되는 동안 대기
-                    while (outputDevice.PlaybackState == PlaybackState.Playing)
-                    {
-                        System.Threading.Thread.Sleep(2); // 상태 확인 주기
-                    }
-                }
-            });
-        }
-        public static async Task PlaySoundSelect()
-        {
-            string audioFileLocation = @$"{UserLocation}{SoundSelect}";// 경로 설정
-            await Task.Run(() =>
-            {
-                using (var audioFile = new AudioFileReader(audioFileLocation))
-                using (var outputDevice = new WaveOutEvent())
-                {
-                    outputDevice.Init(audioFile);
-                    outputDevice.Play();
-                    Console.WriteLine("사운드 재생 중...");
-
-                    // 사운드가 재생되는 동안 대기
-                    while (outputDevice.PlaybackState == PlaybackState.Playing)
-                    {
-                        System.Threading.Thread.Sleep(2); // 상태 확인 주기
-                    }
-                }
-            });
-        }
+        }       
     }
 }

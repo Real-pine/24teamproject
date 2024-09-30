@@ -23,9 +23,10 @@ namespace Text_RPG_24Group
         static void Main(string[] args)
         {
             SetData();
-            SoundManager.PlaySoundHit();
-            SoundManager.PlayBGMVillage();// SoundManager.SoundBGMPlaying = false;// BGM스탑가능
-            Stage.PlayerMove(1, 1, mapDb[2]);//
+            SoundManager.PlaySoundEffect(SoundManager.SoundButton); //사운드(버튼)
+            SoundManager.PlayBGM(SoundManager.SoundVillage,90); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
+            SoundManager.StopSound();// BGM스탑가능
+            Stage.PlayerMove(1, 1, mapDb[2]);
             StartDisplay();
             DisplayMainUI();
         }
