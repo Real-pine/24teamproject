@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Newtonsoft.Json;
 
 
@@ -19,14 +20,16 @@ namespace Text_RPG_24Group
         private static string characterName;
         private static int selectedJob;
         private static DungeonMap[] mapDb;
-        public static SoundManager soundManager;
+        public static SoundManager BGMManager;
+        public static SoundManager SoundEffectManager;
+
         static void Main(string[] args)
         {
             SetData();
-            SoundManager.PlaySoundEffect(SoundManager.SoundButton); //사운드(버튼)
-            SoundManager.PlayBGM(SoundManager.SoundVillage,90); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
-            SoundManager.StopSound();// BGM스탑가능
-            Stage.PlayerMove(1, 1, mapDb[2]);
+            Program.BGMManager.PlayBGM(SoundManager.SoundVillage, 45); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
+            //SoundManager.SoundBGMPlaying = false;// BGM스탑가능
+            //SoundManager.StopSound();// BGM스탑가능
+            //Stage.PlayerMove(1, 1, mapDb[2]);
             StartDisplay();
             DisplayMainUI();
         }
@@ -60,7 +63,8 @@ namespace Text_RPG_24Group
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
 
-            soundManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group",false);
+            BGMManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
+            SoundEffectManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
             //주소 예시//C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group//뒤에 @꼭 붙히세요
             itemDb = new Item[]
             {
@@ -145,17 +149,19 @@ namespace Text_RPG_24Group
             Console.WriteLine("7. 저장된 파일");
             Console.WriteLine("8. 저장하기");
             Console.WriteLine("9. 불러오기");
+            Console.WriteLine("10. 환경설정");
 
 
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
-            int result = CheckInput(1, 9);
-
+            int result = CheckInput(1, 10);
+            SoundManager.PlaySoundEffect(SoundManager.SoundButton);//사운드(버튼)
             switch (result)
             {
                 case 1:
                     DisplayStatUI();
+
                     break;
                 case 2:
                     DisplayInventoryUI();
@@ -178,6 +184,9 @@ namespace Text_RPG_24Group
                     break;
                 case 9:
                     Load();
+                    break;
+                case 10:
+                    UserSettings();
                     break;
             }
         }
@@ -436,6 +445,7 @@ namespace Text_RPG_24Group
             while (true)
             {
                 string input = Console.ReadLine();
+                SoundManager.PlaySoundEffect(SoundManager.SoundButton);
                 bool isNumber = int.TryParse(input, out result);
                 if (isNumber)
                 {
@@ -472,6 +482,45 @@ namespace Text_RPG_24Group
                 DisplayMainUI();
 
             }
+        }
+        static void UserSettings()
+        {
+            Console.Clear();
+            Console.WriteLine("\n\r환경설정\n");
+            Console.WriteLine($"1. 배경음ON/OFF(현재{SoundManager.SoundBGMUserSet})");
+            Console.WriteLine($"2. 효과음ON/OFF(현재{SoundManager.SoundEffectUserSet})");
+            Console.WriteLine("0. 돌아가기\n\r");
+            Console.WriteLine("원하는 숫자 입력 : ");
+            int result = CheckInput(0, 2);
+            Console.Clear();
+            switch (result)
+            {
+                case 1:
+                    if (SoundManager.SoundBGMUserSet == true)
+                    {
+                        Console.WriteLine("\n배경음이 OFF 되었습니다.");
+                       SoundManager.SoundBGMSize = 0f;
+                    }
+                    else if (SoundManager.SoundBGMUserSet == false)
+                    {
+                        Console.WriteLine("\n배경음이 ON 되었습니다.");
+                        SoundManager.SoundBGMSize = 1f;
+                    }
+                    SoundManager.SoundBGMUserSet = !SoundManager.SoundBGMUserSet;
+                    Console.WriteLine("0. 돌아가기\n\r");
+                    int result1 = CheckInput(0, 0);
+                    break;
+                case 2:
+                    if (SoundManager.SoundEffectUserSet == true) Console.WriteLine("\n효과음이 OFF 되었습니다.");
+                    else if (SoundManager.SoundEffectUserSet == false) Console.WriteLine("\n효과음이 ON 되었습니다.");
+                    SoundManager.SoundEffectUserSet = !SoundManager.SoundEffectUserSet;
+                    Console.WriteLine("0. 돌아가기\n\r");
+                    int result2 = CheckInput(0, 0);
+                    break;
+                default:
+                    break;
+            }
+            DisplayMainUI();
         }
     }
 }

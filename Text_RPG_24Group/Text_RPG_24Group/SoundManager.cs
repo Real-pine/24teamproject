@@ -13,66 +13,89 @@ namespace Text_RPG_24Group
         static string UserLocation { get; set; }
         public static string SoundVillage { get; set; }
         public static string SoundButton {  get; set; }
-        public static string SoundHurt { get; set; }
+        public static string SoundClear { get; set; }
+        public static string SoundDie { get; set; }
         public static string SoundHit { get; set; }
+        public static string SoundHurt { get; set; }
         public static string SoundSelect { get; set; }
-        static bool SoundBGMPlaying { get; set; }
-        public SoundManager(string userLocation, bool soundBGMPlaying)
+        public static string SoundSkill { get; set; }
+
+        public static bool SoundBGMPlaying { get; set; }
+        public static bool SoundBGMUserSet { get; set; }
+        public static bool SoundEffectUserSet { get; set; }
+
+        public static float SoundBGMSize { get; set; }
+        public static float SoundEffectSize { get; set; }
+
+
+        public SoundManager(string userLocation)
         {
             UserLocation = userLocation;//C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group
-            SoundVillage = @"\Sound\1-30-viilage-chonology-of-love.mp3";
+            SoundVillage = @"\Sound\45-village-game-music-loop.mp3";
             SoundButton = @"\Sound\button-new-notification.mp3";
-            SoundHurt = @"\Sound\hurt-punch.mp3";
-            SoundHit = @"\Sound\hit-punch-6.mp3";
+            SoundClear = @"\Sound\clear-level-up.mp3";
+            SoundDie = @"\Sound\die-punch.mp3";
+            SoundHit = @"\Sound\hit-movement-swipe-whoosh.mp3";
+            SoundHurt = @"\Sound\hurt-punch-6.mp3";
             SoundSelect = @"\Sound\select-system-notification.mp3";
-            soundBGMPlaying = SoundBGMPlaying;
-        }
-        public static void StopSound()
-        {
-            SoundBGMPlaying = false; // 사운드 재생 상태 변경
+            SoundSkill = @"\Sound\skill-camera-flash.mp3";
+            SoundBGMUserSet = true;
+            SoundEffectUserSet = true;
+            SoundBGMSize = 1f;
+            SoundEffectSize = 1f;
+
+
         }
 
-        public static async Task PlayBGM(string soundBGM, int playTime)
+        public static async Task PlayBGM(string soundBGM, int playTime, SoundManager soundManager)
         {
-            SoundBGMPlaying = true;
-            string audioFileLocation = @$"{UserLocation}{soundBGM}";// 경로 설정
-            await Task.Run(() =>
+            while (true)
             {
-                using (var audioFile = new AudioFileReader(audioFileLocation))
-                using (var outputDevice = new WaveOutEvent())
+                string audioFileLocation = @$"{UserLocation}{soundBGM}";// 경로 설정
+                await Task.Run(() =>
                 {
-                    outputDevice.Init(audioFile);
-                    outputDevice.Play();
-                    Console.WriteLine("사운드 재생 중...");
-
-                    // 사운드가 재생되는 동안 대기
-                    while (outputDevice.PlaybackState == PlaybackState.Playing)
+                    using (var audioFile = new AudioFileReader(audioFileLocation))
+                    using (var outputDevice = new WaveOutEvent())
                     {
-                        System.Threading.Thread.Sleep(playTime); // 상태 확인 주기
-                        if (SoundBGMPlaying == false) break;
+                        outputDevice.Volume = SoundBGMSize;
+                        outputDevice.Init(audioFile);
+                        outputDevice.Play();
+                        //Console.WriteLine("사운드 재생 중...");
+
+                        // 사운드가 재생되는 동안 대기
+                        while (outputDevice.PlaybackState == PlaybackState.Playing)
+                        {
+                            System.Threading.Thread.Sleep(playTime); // 상태 확인 주기                           
+                        }
                     }
-                }
-            });
+                });
+            }
+            
         }
         public static async Task PlaySoundEffect(string soundEffect)
         {
-            string audioFileLocation = @$"{UserLocation}{soundEffect}";// 경로 설정
-            await Task.Run(() =>
+            if(SoundEffectUserSet)
             {
-                using (var audioFile = new AudioFileReader(audioFileLocation))
-                using (var outputDevice = new WaveOutEvent())
+                string audioFileLocation = @$"{UserLocation}{soundEffect}";// 경로 설정
+                await Task.Run(() =>
                 {
-                    outputDevice.Init(audioFile);
-                    outputDevice.Play();
-                    Console.WriteLine("사운드 재생 중...");
-
-                    // 사운드가 재생되는 동안 대기
-                    while (outputDevice.PlaybackState == PlaybackState.Playing)
+                    using (var audioFile = new AudioFileReader(audioFileLocation))
+                    using (var outputDevice = new WaveOutEvent())
                     {
-                        System.Threading.Thread.Sleep(2); // 상태 확인 주기
+                        outputDevice.Volume = SoundEffectSize;
+                        outputDevice.Init(audioFile);
+                        outputDevice.Play();
+                        //Console.WriteLine("사운드 재생 중...");
+
+                        // 사운드가 재생되는 동안 대기
+                        while (outputDevice.PlaybackState == PlaybackState.Playing)
+                        {
+                            System.Threading.Thread.Sleep(2); // 상태 확인 주기
+                        }
                     }
-                }
-            });
+                });
+            }
+            
         }       
     }
 }
