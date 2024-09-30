@@ -1,155 +1,213 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 using static Text_RPG_24Group.CharacterCustom;
 
 namespace Text_RPG_24Group
 {
-    internal class Battle
+    public class Battle
     {
-        public string PlayerName { get; private set; }
+        public CharacterCustom player;
 
-        public int Type { get; private set; } // 직업
-        // int input = CheckInput(1, 3);
-        // playerBattleDb[player.Job * 3 - input].PlayerSkillInfoText();
-        // 이런식으로 스킬을 쓰면 되려나
         public string Name { get; private set; } // 스킬 이름
-        public double Value { get; private set; } // 스킬 벨류
-        public int TargetCount { get; private set; } // 타겟 수
-        public int Power { get; private set; } // 공격력
-
-        public int Spell { get; private set; } // 마력
         public string Desc { get; private set; } // 스킬 설명
+        public int Power { get; set; } // 공격력
+        public int Spell { get; set; } // 마력
 
-        public bool isSkill = false;
+        Random random = new Random();
 
-        public static int damage;
+        bool isCritical = false;
+        bool isAvoid = false;
 
-        static int abilityDamage = 0;
-        static int abilityCriticalChance = 0;
-        static double abilityCriticalDamage = 0.0f;
+        //public Battle(string name, string desc)
+        //{
+        //    Power = player.Atk;
+        //    Name = name;
+        //    Desc = desc;
+        //}
 
-        public static string[] name1 = { "", "기본공격", "깊게 베기", "연속공격" };
-        public static string[] name2 = { "", "기본공격", "폭발", "전기 사슬" };
-        public static string[] name3 = { "", "기본공격", "암습", "수리검 던지기" };
+        //public Battle(string name, string tell, int atk)
+        //{
+        //    Name = name;
+        //    Desc = tell;
+        //    Power = atk;
+        //}
 
-        public Battle(JobType job, int InName, string InDesc, double InValue, int InTargetCount, int InAttack, int InSpell, bool InSkill)
+        string[] skillName1 = { "깊게 베기", "폭발", "암습" };
+        string[] skillName2 = { "휩쓸기", "전기 사슬", "수리검 던지기" };
+
+        public void BasicAttack(Monster monster) // 기본 공격 메서드
+        { // 타겟이 된 몬스터 정보 받아오기
+            Console.WriteLine($"{player.Name} 의 공격!");
+
+            // 공격 회피 10% ← 스킬은 회피 X
+            int avoid = random.Next(0, 100);
+            isAvoid = avoid <= 10 ? false : true;
+
+            if (isAvoid)
+            { // 회피시 회피 출력 후 종료
+                Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 공격했지만 아무일도 일어나지 않았습니다.");
+            }
+            else
+            {
+                Power = player.Atk;
+
+                if (isCritical)
+                    Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}] - 치명적 공격!!");
+                else
+                    Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}]");
+
+                // 몬스터 클래스에서  curHp 변수를 만들고
+                // curHp = MonsterHP;
+
+                Console.WriteLine("\n");
+                Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName}");
+                Console.Write($"HP {monster.curHp} -> ");
+                monster.curHp =- damage;
+                Console.WriteLine(monster.curHp > 0 ? monster.curHp : "Dead");
+            }
+        }
+
+        public void Skill(JobType Jop)
         {
-            Type = (int)job;
-            Desc = InDesc;
-            Value = InValue;
-            TargetCount = InTargetCount;
-            Power = InAttack;
-            Spell = InSpell;
-            isSkill = InSkill;
-
-            switch ((int)job)
+            Console.WriteLine("[내정보]");
+            switch ((int)Jop)
             {
                 case 1:
-                    Name = name1[InName];
+                    Console.WriteLine($"Lv. {player.Level} {player.Name} (전사)");
                     break;
                 case 2:
-                    Name = name2[InName];
+                    Console.WriteLine($"Lv. {player.Level} {player.Name} (마법사)");
                     break;
                 case 3:
-                    Name = name3[InName];
+                    Console.WriteLine($"Lv. {player.Level} {player.Name} (도적)");
                     break;
             }
+            Console.WriteLine($"HP {player.Hp}/{player.MaxHp}");
+            Console.WriteLine("MP 50/50");
+            // 마나 아직 없음
+            Console.WriteLine("\n");
+            Console.WriteLine($"1. {skillName1[(int)player.Job]} - MP 10");
+            Console.WriteLine("공격력 * 2 로 하나의 적을 공격합니다.");
+            Console.WriteLine($"2. {skillName2[(int)player.Job]} - MP 15");
+            Console.WriteLine("공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.");
+        }
+        // ↑ 지우게 될 수 도 있는거
+
+        public void SkillAttack(Monster monster, int skiilNumber) // 스킬 공격 메서드
+        { // 행동 선택시 스킬 발동 마찬가지로 타겟이 된 몬스터 정보 받아오기
+            switch (skiilNumber)
+            {
+                case 1:
+                    Spell = 10;
+                    Power = player.Atk * 2;
+                    break;
+                case 2:
+                    Spell = 15;
+                    Power = (int)Math.Round(player.Atk * 1.5f);
+                    // 2번 공격 : 2명의 적을 랜덤으로 공격합니다. -> 한명의 적을 두번 공격합니다.
+                    // 이게 좋으려나?
+                    break;
+            }
+
+            if (isCritical)
+                Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}] - 치명적 공격!!");
+            else
+                Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}]");
+
+            Console.WriteLine("\n");
+            Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName}");
+            Console.Write($"HP {monster.curHp} -> ");
+            monster.curHp =- damage;
+            Console.WriteLine(monster.curHp > 0 ? monster.curHp : "Dead");
         }
 
-        public string DisplayTypeText
-        {
-            get
+        public void MonsterAttack(Monster monster) // 몬스터 공격 메서드
+        { // 타겟이 되었던 몬스터의 정보 받아오기
+            Console.WriteLine($"{monster.MonsterName} 의 공격!");
+
+            // 공격 회피 10%
+            int avoid = random.Next(0, 100);
+            isAvoid = avoid <= 10 ? false : true;
+
+            if (isAvoid)
+            { // 회피시 회피 출력 후 종료
+                Console.WriteLine($"Lv.{player.Level} {player.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.");
+            }
+            else
             {
-                return TargetCount == 2 ? $" * {TargetCount}명의" : "한명의";
+                Power = monster.MonsterAtk;
+
+                if (isCritical)
+                    Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 :{damage}] - 치명적 공격!!");
+                else
+                    Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 :{damage}]");
+
+                Console.WriteLine("\n");
+                Console.Write($"HP {player.Hp} -> ");
+                player.Hp = - damage;
+                if (player.Hp < 0)
+                    player.Hp = 0;
+                Console.WriteLine(player.Hp);
             }
         }
 
-        public string PlayerSkillInfoText() //스킬설명메서드
+        public void ResultWin(int monsterCount)
         {
-
-            return $" {Name}\n - 공격력 * {Value}로 {DisplayTypeText}{Desc}";
-            // 기본 공격
-            //  공격력 * 1로 한명의 적을 공격합니다.
+            Console.WriteLine("Battle!! - Result");
+            Console.WriteLine("\n");
+            Console.WriteLine("Victory");
+            Console.WriteLine("\n");
+            Console.WriteLine($"던전에서 몬스터 {monsterCount}마리를 잡았습니다.");
+            Console.WriteLine("\n");
+            Console.WriteLine($"Lv. {player.Level} {player.Name}");
+            Console.WriteLine($"HP {player.Hp} -> {player.Hp}");
+            // 던전 입장 전 HP? 마지막 전투 HP?
         }
 
-        public string PlayerAttackInfoText() //데미지표시메서드
+        public void ResultLose()
         {
-            Random random = new Random();
-
-            int avoid = random.Next(0, 100);
-
-            string attacktext;
-
-            if (isSkill)
-                attacktext = $" 을(를) 맞췄습니다.{Damage}";
-            // 을(를) 맞췄습니다. [데미지 : 16] - 치명타 공격!!
-            else
-                attacktext = avoid <= 10 ? $" 을(를) 맞췄습니다. {Damage}"
-                : " 을(를) 공격했지만 아무일도 일어나지 않았습니다.";
-            // 회피시 : 하지만 아무일도 일어나지 않았습니다.
-
-            return attacktext;
+            Console.WriteLine("Battle!! - Result");
+            Console.WriteLine("\n");
+            Console.WriteLine("You Lose");
+            Console.WriteLine("\n");
+            Console.WriteLine($"Lv. {player.Level} {player.Name}");
+            Console.WriteLine($"HP {player.Hp} -> {player.Hp}");
+            // 던전 입장 전 HP? 마지막 전투 HP?
         }
 
-        public int MonsterAtk { get; private set; }
-
-        public Battle(string name, string tell, int atk)
-        {
-            Name = name;
-            Desc = tell;
-            Power = atk;
-        }
-
-        public string MonsterSkillInfoText() //몬스터가 플레이어공격시 출력메서드
-        {
-            Random random = new Random();
-
-            int avoid = random.Next(0, 100);
-
-            return avoid <= 10 ? $"{Name}\n{Desc} - {Damage}" 
-                : $" {Name}\n을(를) 공격했지만 아무일도 일어나지 않았습니다.";
-        }
-
-        public void Ability(int InPower, int InCriticalChance, double InCriticalDamage)
-        { // 능력치 포인트로 올린 스탯
-            abilityDamage = Type == 1 ? InPower * 2 : InPower * 1;
-            abilityCriticalChance = Type == 2 ? InCriticalChance * 2 : InCriticalChance * 1;
-            abilityCriticalDamage = Type == 3 ? InCriticalDamage * 0.2f : InCriticalDamage * 0.1f;
-            // 현재 모두 0이라 능력치엔 변화 없음
-        }
-
-        private string Damage
+        public int damage
         {
             get
             {
-                Random random = new Random();
+                int outDamage = 0;
 
+                // 데미지 오차 10%
                 int err = random.Next(-1, 2);
-                int errDamange = (Power / 10) * err;
-                // 데미지 10 퍼센트 오차
+                int errDamage = (Power / 10) * err;
 
+                // 크리티컬 15%
                 int critical = random.Next(0, 100);
-                if (critical <= 15 + abilityCriticalChance)
-                    damage = (int)Math.Round((Power + abilityDamage + errDamange) * 1.6f + abilityCriticalDamage);
+                if (critical <= 15)
+                {
+                    outDamage = (int)Math.Round((Power + errDamage) * 1.6f);
+                    isCritical = true;
+                }
                 else
-                    damage = Power + errDamange;
-                // 크리티컬 15 퍼센트
+                {
+                    outDamage = Power + errDamage;
+                    isCritical = false;
+                }
 
-                return critical <= 15 ? $" [데미지] : {damage} - 치명타 공격!!"
-                    : $" [데미지 : {Power}]";
+                return outDamage;
             }
         }
     }
 }
-// 캐릭터별로 힘 민첩 지능
-// 힘 = 전사 == true ?  공격력 + 3 : 공격력 + 1
-// 민첩 = 도적 == true ?  치명타 확률 + 2 : 치명타 확률 + 1 
-// 지능 = 마법사 == true ?  치명타 공격력 + 0.2f : 치명타 공격력 + 0.1f
-// 레벨 업마다 찍을 수 있고(?) 포인트가 아니었구나 ↓ 그럼 보상 칸이네
-// CharacterCustom을 건드려야 되나? 능력치칸이 따로 있나?
-// 곱 처리로 데미지 증가
-// 임시로 만들어서 해봐야지

@@ -1,6 +1,12 @@
 ﻿using System;
+<<<<<<< HEAD
 using System.Threading;
+=======
+using System.Numerics;
+using static Text_RPG_24Group.CharacterCustom;
+>>>>>>> (Feat)Battle30
 using Newtonsoft.Json;
+using System.Threading;
 
 
 
@@ -10,9 +16,7 @@ namespace Text_RPG_24Group
     {
         public static CharacterCustom player;
         public static Item[] itemDb;
-        private static Monster[] monsterDb;
-        private static Battle[] playerBattleDb;
-        private static Battle[] monsterBattleDb;
+        public static Monster[] monsterDb;
         private static Poition[] poitionDb;
         public static Quest[] questDb;
         private static Poition potion;
@@ -26,16 +30,20 @@ namespace Text_RPG_24Group
         static void Main(string[] args)
         {
             SetData();
+<<<<<<< HEAD
             //Program.BGMManager.PlayBGM(Program.BGMManager.SoundVillage, BGMManager, 45); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
             //Stage.PlayerMove(1, 1, mapDb[2]);
             StartDisplay();
             SetData();
 
+=======
+            Stage.PlayerMove(1, 1, mapDb[2]);
+>>>>>>> (Feat)Battle30
             DisplayMainUI();
         }
-        public static void StartDisplay()
-        {
 
+        protected static void SetData()
+        {
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine("\n원하시는 이름을 설정해주세요.\n");
 
@@ -53,12 +61,7 @@ namespace Text_RPG_24Group
                 Console.WriteLine("이름을 다시 입력해주세요.");
                 characterName = Console.ReadLine();
             }
-        }
-
-        protected static void SetData()
-        {
             //캐릭터생성
-
             player = new CharacterCustom(characterName, selectedJob);
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
@@ -83,20 +86,6 @@ namespace Text_RPG_24Group
             new Monster("골램","자연적인 현상에의해 돌에 생명력이 들어갔다.",5,5,10,20,200),
             new Monster("악마","고대부터 존재했던 것",10,20,5,50,1000),
           };
-            playerBattleDb = new Battle[] // 직업, 이름, 설명, 스킬 벨류, 타겟 수, 공격력, 마력, 스킬 구분
-            {
-                new Battle(player.Job, 1, "적을 공격합니다.", 1, 1, player.Atk, 0, false),
-                new Battle(player.Job, 2, "적을 강하게 공격합니다.", 2, 1, player.Atk, 10, true),
-                new Battle(player.Job, 3, "적을 랜덤으로 공격합니다.",  1.5f, 2, player.Atk, 15, true),
-            };
-            monsterBattleDb = new Battle[] // 이름, 설명, 데미지
-            {
-                new Battle("점액 뿌리기", "산성 점액에 의해 화상을 약간 입었다.", 5),
-                new Battle("돌맹이 던지기", "단단한 돌에 맞았다.", 10),
-                new Battle("끌어안기", "뼈조각에 찔렸다.", 10),
-                new Battle("휘두르기", "느리지만 강력한 공격에 맞았다.", 5),
-                new Battle("저주", "지독한 저주에 걸렸다.", 20),
-            };
             questDb = new Quest[]//돈보상, 목표1,목표2,시작불값,클리어불값
             {
                 new Quest(50,5,0,false,false),
@@ -151,7 +140,6 @@ namespace Text_RPG_24Group
             Console.WriteLine("8. 저장하기");
             Console.WriteLine("9. 불러오기");
             Console.WriteLine("10. 환경설정");
-
 
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");

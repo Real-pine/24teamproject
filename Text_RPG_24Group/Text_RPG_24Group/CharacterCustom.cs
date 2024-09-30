@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -142,7 +143,6 @@ public class CharacterCustom
                 MaxHp = 120;
                 break;
         }
-
     }
     //경험치 획득 메서드
     public void GainExperience(int exp)
@@ -236,7 +236,4 @@ public class CharacterCustom
     {
         return Inventory.Contains(item);
     }
-
-
-    
 }

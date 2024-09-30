@@ -66,6 +66,7 @@ namespace Text_RPG_24Group
                     break;
             }
         }
+
         public void MyBattlePhase()
         {
             Console.WriteLine("\n\nBattle !!");
@@ -100,6 +101,7 @@ namespace Text_RPG_24Group
                     break;
             }
         }
+
         //기본공격시 페이즈
         public void Player1Attack()
         {
@@ -107,11 +109,8 @@ namespace Text_RPG_24Group
             Console.WriteLine($"{player.Name}의 페이즈");
 
             //출현 몬스터중에 랜덤선택메서드 or 선택 메서드
-            Console.WriteLine($"\n\n{player.Name}의 기본공격!");
-            battle.PlayerAttackInfoText();
 
-            //Console.WriteLine("해당몬스터");
-            //Console.WriteLine($"Hp {xx} -> {xx - battle.Damage}");
+            
 
             Console.WriteLine("\n\n0. 다음");
             int result = Program.CheckInput(0, 2);
