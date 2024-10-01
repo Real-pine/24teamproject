@@ -208,6 +208,7 @@ public class CharacterCustom
         Console.WriteLine(ExtraAtk == 0 ? $"공격력 : {Atk}" : $"공격력 : {Atk + ExtraAtk} (+{ExtraAtk})");
         Console.WriteLine(ExtraDef == 0 ? $"방어력 : {Def}" : $"방어력 : {Def + ExtraDef} (+{ExtraDef})");
         Console.WriteLine($"체력 : {Hp}/{MaxHp}");
+        Console.WriteLine($"마나 : {Mp}/{MaxMp}");
         Console.WriteLine($"Gold : {Gold} G");
         Console.WriteLine($"나이 : {age} ({act} / 5)");
     }

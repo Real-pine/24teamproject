@@ -567,7 +567,7 @@ namespace Text_RPG_24Group
         {
             Console.Clear();
             Console.WriteLine("회복의 방.");
-            Console.WriteLine("\n포션을 사용하면 체력을 30 회복 할 수 있습니다."+"(남은포션 :" +potion.Count+")");
+            Console.WriteLine("\n200골드를 지불하면 HP를 회복할수있습니다."+"(남은골드 :" +player.Gold+")");
             Console.WriteLine("\n0. 나가기");
             Console.WriteLine("1. 회복하기");
             Console.WriteLine("\n원하시는 행동을 입력해주세요.");
@@ -582,19 +582,19 @@ namespace Text_RPG_24Group
 
                 case 1:
 
-                    if (potion.Count > 0)
+                    if (player.Gold >= 200)
                     {
                         player.AgeUP();
-                        potion.Count--;
-                        Program.player.Hp += 30;
-                        Console.WriteLine("\nHP가 30 회복되었습니다.");
+                        player.Gold -= 200;
+                        player.Hp = player.MaxHp;
+                        Console.WriteLine("\nHP가 최대로 회복되었습니다.");
                         Console.ReadLine();
                         DiplayPotionUI();
                     }
 
                     else
 
-                    Console.WriteLine("포션의 수가 부족합니다.");
+                    Console.WriteLine("골드가 부족합니다");
                     Console.ReadLine();
                     DiplayPotionUI();
 
