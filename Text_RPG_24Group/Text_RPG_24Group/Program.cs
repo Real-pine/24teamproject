@@ -120,6 +120,7 @@ namespace Text_RPG_24Group
         })
    };
         }
+        /*
         public static void DisplayMainUI()
 
         {
@@ -182,7 +183,52 @@ namespace Text_RPG_24Group
                     break;
             }
         }
+        */
+        public static void DisplayMainUI()
+        {
+            Console.Clear();
+            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
+            Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
+            Console.WriteLine();
+            Console.WriteLine("1. 상태 보기");
+            Console.WriteLine("2. 인벤토리");
+            Console.WriteLine("3. 던전");
+            Console.WriteLine("4. 마을");
+            Console.WriteLine("5. 허브산");
+            Console.WriteLine("6. 저장하기");
+            Console.WriteLine("7. 환경설정");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
 
+            int result = CheckInput(1, 7);
+            switch (result)
+            {
+                case 1:
+                    DisplayStatUI();
+
+                    break;
+                case 2:
+                    DisplayInventoryUI();
+                    break;
+                case 3://DisplayShopUI();
+                    DisplayDungeonUI();
+                    break;
+                case 4://Program.questDb[0].QuestMain();
+                    Pub.PubMainUI();
+                    break;
+                case 5://DiplayPotionUI();
+                    HerbUI();
+                    break;
+                case 6:
+                    SaveUI();
+                    break;
+                case 7:
+                    UserSettings();
+                    break;
+                default:
+                    break;
+            }
+        }
         static void DisplayStatUI()
         {
             Console.Clear();
@@ -394,7 +440,7 @@ namespace Text_RPG_24Group
             }
         }
 
-        static void DisplayShopUI()
+        public static void DisplayShopUI()
         {
             Console.Clear();
             Console.WriteLine("상점");
@@ -426,7 +472,7 @@ namespace Text_RPG_24Group
             switch (result)
             {
                 case 0:
-                    DisplayMainUI();
+                    Pub.PubMainUI();
                     break;
 
                 case 1:
@@ -577,7 +623,7 @@ namespace Text_RPG_24Group
             switch (result)
             {
                 case 0:
-                    DisplayMainUI();
+                    Pub.PubMainUI();
                     break;
 
                 case 1:

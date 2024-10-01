@@ -35,7 +35,7 @@ namespace Text_RPG_24Group
             switch (input)
             {
                 case 0:
-                    Program.DisplayMainUI();
+                    Pub.PubMainUI();
                     break;
                 case 1:
                     QuestDisplay(Program.questDb[0], 0, 1);// 퀘스트데이터베이스, 퀘스트타입번호, 보상무기인덱스 번호

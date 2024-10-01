@@ -244,16 +244,9 @@ namespace Text_RPG_24Group
                 int errDamage = (Atk / 10) * err;
 
                 if (isCritical)
-<<<<<<< HEAD
                     outDamage = (int)Math.Round((Atk + errDamage) * 1.6f) ;
                 else
                     outDamage = Atk + errDamage ;
-=======
-                    outDamage = (int)Math.Round((Atk + errDamage) * 1.6f);
-                else
-                    outDamage = Atk + errDamage;
->>>>>>> (Feat)Battle01
-
                 Double DeductedDamage = 100 / (Def + 100) * 100;
                 //Console.WriteLine($"받는 데미지 : {outDamage}");
                 return (int)(outDamage * (1 - DeductedDamage));

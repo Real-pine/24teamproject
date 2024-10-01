@@ -9,7 +9,7 @@ namespace Text_RPG_24Group
 {
     class Pub
     {
-        public void PubMainUI()
+        public static void PubMainUI()
         {
         Console.Clear();
             Console.WriteLine("\n\r선술집에 오신 것을 환영합니다!(메인홀)\n\r");
@@ -17,9 +17,13 @@ namespace Text_RPG_24Group
             Console.WriteLine("1. 숙박");
             Console.WriteLine("2. 도박");
             Console.WriteLine("3. 술마시기");
-            Console.WriteLine("0. 뒤로가기");
+            Console.WriteLine("4. 상점");
+            Console.WriteLine("5. 신전");
+            Console.WriteLine("6. 퀘스트");
 
-            int input = Program.CheckInput(0, 4);
+            Console.WriteLine("0. 뒤로가기");
+            //회복에방, 퀘스트
+            int input = Program.CheckInput(0, 6);
             switch (input)
             {
                 case 0:
@@ -34,11 +38,20 @@ namespace Text_RPG_24Group
                 case 3:
                     DrinkAlcohol();
                     break;
+                case 4:
+                    Program.DisplayShopUI();
+                    break;
+                case 5:
+                    Program.DiplayPotionUI();
+                    break;
+                case 6:
+                    Program.questDb[0].QuestMain();
+                    break;
                 default:
                     break;
             }          
         }
-        void PubGoToBed()
+        static void PubGoToBed()
         {
             Console.Clear();
             Console.WriteLine("\n\r숙박시설에 오신 것을 환영합니다!\n\r");
@@ -53,7 +66,7 @@ namespace Text_RPG_24Group
             else PubGoToBed(input);
             
         }
-        void PubGoToBed(int num)
+        static void PubGoToBed(int num)
         {
                     Console.Clear();
             switch (num)
@@ -115,8 +128,8 @@ namespace Text_RPG_24Group
             Console.WriteLine("\n0. 뒤로가기");
             int input = Program.CheckInput(0, 0);
             PubGoToBed();
-        }        
-        void Gambling()
+        }
+        static void Gambling()
         {
             Console.Clear();
             Console.WriteLine("\n\r도박장에 오신 것을 환영합니다!\n\r");
@@ -158,8 +171,8 @@ namespace Text_RPG_24Group
             }
             PubMainUI();
         }
-        
-        void CoinFlip()
+
+        static void CoinFlip()
         {
             Console.Clear();
             Console.WriteLine("\n\r코인플립에 오신 것을 환영합니다!\n\r");
@@ -191,7 +204,7 @@ namespace Text_RPG_24Group
             input = Program.CheckInput(0, 0);
             Gambling();
         }
-        void HorseRide()
+        static void HorseRide()
         {
             Console.Clear();
             Random random = new Random();
@@ -240,7 +253,7 @@ namespace Text_RPG_24Group
             input = Program.CheckInput(0, 0);
             Gambling();
         }
-        void BlackJack()
+        static void BlackJack()
         {
             Console.Clear();
             Console.WriteLine("\n\r블랙잭에 오신 것을 환영합니다!\n\r");
@@ -314,7 +327,7 @@ namespace Text_RPG_24Group
             input = Program.CheckInput(0, 0);
             Gambling();
         }
-        void DrinkAlcohol()
+        static void DrinkAlcohol()
         {
             Console.Clear();
             Console.WriteLine("\n\r어떤 술을 드시겠습니까?\n\r");
@@ -344,7 +357,7 @@ namespace Text_RPG_24Group
             }
             PubMainUI();
         }
-        void BuyAlcohol(int gold, int mana) 
+        static void BuyAlcohol(int gold, int mana) 
         {
             if (Program.player.Gold < gold)
             {
