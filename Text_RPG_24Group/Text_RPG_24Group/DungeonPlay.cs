@@ -13,13 +13,15 @@ namespace Text_RPG_24Group
     class DungeonPlay
     {
         public static CharacterCustom player;
-        public static Monster[] monster;
+        public static Monster[] currentStageMonster;
         public static Stage[] stages;
         public static Battle battle;
         private static Difficulty currentDifficulty; //현재난이도저장
+        private static List<Monster> activeMonster; //현재 전투중인 몬스터
         public static Dictionary<Difficulty, Monster[]> difficultyMonsters;
+        private static Random random = new Random();
 
-        //난이도 넘버링 세팅
+        //난이도 세팅
         public enum Difficulty
         {
             Easy = 1, 
@@ -30,8 +32,8 @@ namespace Text_RPG_24Group
         {
             SetMonsterGroups();
         }
-        //그룹화
-        private static void SetMonsterGroups()
+        //난이도별 몬스터 출현 그룹 설정
+        private static void SetMonsterGroups() 
         {
             difficultyMonsters = new Dictionary<Difficulty, Monster[]>
             {
@@ -47,6 +49,32 @@ namespace Text_RPG_24Group
                 { return monsters; }
 
             return new Monster[0];
+        }
+        //난이도에 맞는 몬스터 개수 생성기
+        private static void GenerateActiveMonsters()
+        {
+            activeMonster = new List<Monster>();
+            int monsterCount = currentDifficulty == Difficulty.Easy ? 2 : 3;
+
+            for ( int i = 0; i < monsterCount; i++ )
+            {
+                Monster newMonster = SelectRandomMonster();
+                activeMonster.Add(new Monster(newMonster.MonsterName, newMonster.Monstertell,
+                newMonster.MonsterLev, newMonster.MonsterAtk, newMonster.MonsterDef,
+                newMonster.MonsterHp, newMonster.MonsterGold));
+            }
+        }
+
+        //몬스터 목록 표시 메서드
+        private static void DisplayMonsters()
+        {
+            Console.WriteLine("\n출현한 몬스터:");
+            for(int i = 0; i<activeMonster.Count; i++)
+            {
+                Monster monster = activeMonster[i];
+                string hpDisplay = monster.curHp > 0 ? $"{monster.curHp}/{monster.MonsterHp}" : "Dead";
+                Console.WriteLine($"{i + 1}. Lv. {monster.MonsterLev} {monster.MonsterName} (HP : {hpDisplay})");
+            }
         }
 
         //던전첫메뉴
@@ -104,19 +132,28 @@ namespace Text_RPG_24Group
 
         private static void StartStage(Difficulty difficulty)
         {
-            currentDifficulty = difficulty; //현재난이도설정
-            monster = GetMonsterByDifficulty(difficulty);
+            currentDifficulty = difficulty; //난이도설정
+            currentStageMonster = GetMonsterByDifficulty(difficulty);
             DungeonMap selectedMap = Program.mapDb[(int)difficulty - 1];
+            battle = new Battle { player = player }; // Battle인스턴스 생성
             Stage.PlayerMove(1, 1, selectedMap);
         }
 
-        public void EncounterUI()
+        private static Monster SelectRandomMonster()
+        {
+            int index = random.Next(currentStageMonster.Length);
+            return currentStageMonster[index];
+        }
+
+        public static void EncounterUI()
         {
             Console.Clear();
             Console.WriteLine("적과 마주쳤습니다!");
             Console.WriteLine("\n\nBattle !!");
-            //몬스터 출현 메서드
-            //몬스터 목록
+            
+            GenerateActiveMonsters();
+            DisplayMonsters();
+
             Console.WriteLine("\n\n{내정보}");
             Console.WriteLine($"LV.{player.Level} {player.Name}");
             Console.WriteLine($"HP : {player.Hp}/{player.MaxHp}");
@@ -131,7 +168,10 @@ namespace Text_RPG_24Group
             {
                 case 0:
                     player.Hp -= 50;
-                    Stage.PlayerMove(1, 1, Program.mapDb[(int)currentDifficulty - 1]);
+                    Console.WriteLine($"{player.Name}의 HP가 50 감소했습니다. (현재 HP: {player.Hp}/{player.MaxHp})");
+                    Console.WriteLine("아무 키나 누르면 계속합니다...");
+                    Console.ReadKey();
+                    Stage.PlayerMove(Stage.PlayerX, Stage.PlayerY, Program.mapDb[(int)currentDifficulty - 1]); 
                     break;
                 case 1:
                     MyBattlePhase();
@@ -139,13 +179,13 @@ namespace Text_RPG_24Group
             }
         }
 
-        public void MyBattlePhase()
+        public static void MyBattlePhase()
         {
+            Console.Clear();
             Console.WriteLine("\n\nBattle !!");
             Console.WriteLine($"{player.Name}의 페이즈");
 
-            //몬스터 출현 메서드
-            //몬스터 목록
+            DisplayMonsters();
 
             Console.WriteLine("\n\n{내정보}");
             Console.WriteLine($"LV.{player.Level} {player.Name}");
@@ -153,7 +193,7 @@ namespace Text_RPG_24Group
             //Console.WriteLine($"MP : {player.MP}/{player.MaxMP}"); <<마나
 
             Console.WriteLine("\n\n원하시는 행동을 입력해주세요");
-            Console.WriteLine("1. 기본공격하기{공격설명메서드}");
+            Console.WriteLine("1. 기본공격하기");
             Console.WriteLine("2. 스킬사용");
             Console.WriteLine("0. 도망가기(HP 50감소)");
 
@@ -162,114 +202,131 @@ namespace Text_RPG_24Group
             switch (result)
             {
                 case 0:
-                    Program.DisplayMainUI();
                     player.Hp -= 50;
+                    Console.WriteLine($"{player.Name}의 HP가 50 감소했습니다. (현재 HP: {player.Hp}/{player.MaxHp})");
+                    Console.WriteLine("아무 키나 누르면 계속합니다...");
+                    Console.ReadKey();
+                    Stage.PlayerMove(Stage.PlayerX, Stage.PlayerY, Program.mapDb[(int)currentDifficulty - 1]);
                     break;
                 case 1:
-                    //기본공격메서드, 공격시 데미지출력 메서드
+                    PlayerBasicAttack();
                     break;
                 case 2:
-                    //스킬공격메서드, 공격시 데미지출력 메서드
+                    PlayerSkillAttack();
                     break;
             }
         }
 
         //기본공격시 페이즈
-        public void Player1Attack()
+        public static void PlayerBasicAttack()
         {
             Console.WriteLine("\n\nBattle !!");
             Console.WriteLine($"{player.Name}의 페이즈");
 
-            //출현몬스터 표시
+            DisplayMonsters();
 
             Console.WriteLine("\n\n{내정보}");
             Console.WriteLine($"LV.{player.Level} {player.Name}");
             Console.WriteLine($"HP : {player.Hp}/{player.MaxHp}");
             //Console.WriteLine($"MP : {player.MP}/{player.MaxMP}"); <<마나
-            Console.WriteLine("\n\n0. 다음");
-            int result = Program.CheckInput(0, 0);
+            Console.WriteLine("공격할 몬스터를 선택하세요.");
+            int target = Program.CheckInput(1, activeMonster.Count) - 1;
+            Monster targetMonster = activeMonster[target];
+            battle.BasicAttack(targetMonster);
+            CheckMonsterDefeated(targetMonster);
 
-            switch (result)
+            if (activeMonster.Count == 0)
             {
-                case 0:
-                    //배틀의 기본공격 메서드();
-                    break;
+                Console.WriteLine($"\n0. 다음");
+                int result = Program.CheckInput(0, 0);
+
+                switch (result)
+                {
+                    case 0:
+                        SuccessResult();
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine($"\n0. 다음");
+                int result = Program.CheckInput(0, 0);
+
+                switch (result)
+                {
+                    case 0:
+                        MonsterPhase();
+                        break;
+                }
             }
         }
 
 
         //스킬공격시페이즈
-        public void Player2SkillAttack()
+        public static void PlayerSkillAttack()
         {
             Console.WriteLine("\n\nBattle !!");
             Console.WriteLine($"{player.Name}의 페이즈");
 
-            //몬스터 출현 메서드
-            //몬스터 목록
+            battle.Skill(player.Job);
+            int skillChoice = Program.CheckInput(1, 2);
 
-            Console.WriteLine("\n\n{내정보}");
-            Console.WriteLine($"LV.{player.Level} {player.Name}");
-            Console.WriteLine($"HP : {player.Hp}/{player.MaxHp}");
-            //Console.WriteLine($"MP : {player.MP}/{player.MaxMP}"); <<마나
+            Console.WriteLine("대상 몬스터를 선택하세요:");
+            DisplayMonsters();
+            int target = Program.CheckInput(1, activeMonster.Count) -1;
+            Monster targetMonster = activeMonster[target];
 
-            Console.WriteLine("\n\n원하시는 스킬을 입력해주세요");
-            Console.WriteLine("1. 스킬1");
-            Console.WriteLine("2. 스킬2");
-            Console.WriteLine("0. 돌아가기");
+            battle.SkillAttack(targetMonster, skillChoice);
+            CheckMonsterDefeated(targetMonster);
 
-            int result = Program.CheckInput(0, 2);
-
-            switch (result)
+            if (activeMonster.Count == 0)
             {
-                case 0:
-                    MyBattlePhase();
-                    break;
-                case 1:
-                    //스킬1메서드
-                    break;
-                case 2:
-                    //스킬2메서드
-                    break;
-                    //혹은 배틀의 스킬 메서드
-            }
+                Console.WriteLine($"\n0. 다음");
+                int result = Program.CheckInput(0, 0);
 
+                switch (result)
+                {
+                    case 0:
+                        SuccessResult();
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine($"\n0. 다음");
+                int result = Program.CheckInput(0, 0);
+
+                switch (result)
+                {
+                    case 0:
+                        MonsterPhase();
+                        break;
+                }
+            }
         }
-        //공격결과창
-        public void ResultAttackDamageInfo()
+
+        //몬스터 사망확인 메서드
+        private static void CheckMonsterDefeated(Monster monster)
         {
-            Console.WriteLine("\n\nBattle !!");
-            Console.WriteLine($"{player.Name}의 페이즈");
-            //배틀클래스의 기본공격or스킬 메서드
-            //Console.WriteLine($"\n\n{player.Name}의 공격!");
-            //Console.WriteLine($"\nLv. {몬스터레벨} 을(를) 공격했습니다.[데미지 : {가한데미지}");
-
-            //Console.WriteLine($"\n\nnLv. {몬스터레벨}");
-            //Console.WriteLine($"HP {몬스터HP}");
-
-            Console.WriteLine($"\n0. 다음");
-            int result = Program.CheckInput(0, 0);
-
-            switch (result)
+            if (monster.curHp <= 0)
             {
-                case 0:
-                    MonsterPhase();
-                    break;
+                Console.WriteLine($"{monster.MonsterName}이(가) 쓰러졌습니다!");
+                activeMonster.Remove(monster);
             }
         }
+        
 
         //몬스터공격시 페이즈
-        public void MonsterPhase()
+        public static void MonsterPhase()
         {
             Console.WriteLine("\n\nBattle !!");
             Console.WriteLine("ENEMY 페이즈");
 
-            //배틀의 몬스터1 공격 메서드()
-            //배틀의 몬스터2 공격 메서드()
-            //배틀의 몬스터3 공격 메서드()
-
-            Console.WriteLine($"\n\nLV.{player.Level} {player.Name}");
-            //Console.WriteLine($"HP : {player.Hp} -> {player.Hp-몬스터데미지}");
-            //Console.WriteLine($"MP : {player.MP}/{player.MaxMP}"); <<마나
+            foreach (var monster in activeMonster)
+            {
+                battle.MonsterAttack(monster);
+                if (player.Hp <= 0) break;
+            }
 
             Console.WriteLine("\n\n0. 다음");
             int result = Program.CheckInput(0, 0);
@@ -283,12 +340,26 @@ namespace Text_RPG_24Group
             }
         }
         //승리결과창
-        public void SuccessResult()
+        public static void SuccessResult()
         {
             Console.WriteLine($"\n\n몬스터 격퇴 성공!");
             Console.WriteLine($"보상");
-            //CharacterCustom.GainExperience(몬스터1경험치+몬스터2경험치+몬스터3경험치);
-            //Console.WriteLine($"{player.Gold}->{player.Gold+몬스터1,2,3골드}");
+            //경험치획득 로직
+            int totalEXP = activeMonster.Sum(m => m.MonsterLev);
+            player.GainExperience(totalEXP);
+            Console.WriteLine($"획득 경험치: {totalEXP}");
+            //골드획득 로직
+            int totlaGold = activeMonster.Sum(m => m.MonsterGold);
+            int oldGold = player.Gold;
+            player.Gold += totlaGold;
+            Console.WriteLine($"Gold: {oldGold} -> {player.Gold} (+{totlaGold}");
+            //랜덤 상점 아이템 드롭(15프로 이하)
+            if (random.Next(100) < 15)
+            {
+                Item droppedItem = GetRandomItem();
+                player.GetItem(droppedItem);
+                Console.WriteLine($"아이템 획득: {droppedItem.Name}");
+            }
 
             Console.WriteLine($"0. 다음");
             int result = Program.CheckInput(0, 0);
@@ -296,13 +367,33 @@ namespace Text_RPG_24Group
             switch (result)
             {
                 case 0:
-                    //if (맵db에몬스터가없다면)Program.DisplayMainUI();
-                    //else { 기존맵db; }
+                    //현재 위치의 몬스터 제거
+                    RemoveMonsterFromMap(Stage.PlayerX, Stage.PlayerY);
+
+                    if (AreAllMonsterDefeated())
+                    {
+                        Console.WriteLine("던전의 모든 몬스터를 물리쳤습니다!");
+                        Console.WriteLine("0. 마을로 돌아가기");
+                        Program.CheckInput(0, 0);
+                        Program.DisplayMainUI();
+                    }
+                    else
+                    {
+                        Stage.PlayerMove(Stage.PlayerX, Stage.PlayerY, Program.mapDb[(int)currentDifficulty - 1]);
+                    }
                     break;
             }
         }
+
+        //아이템 랜덤 셋
+        static private Item GetRandomItem()
+        {
+            int index = random.Next(Program.itemDb.Length);
+            return Program.itemDb[index];
+        }
+
         //공략실패결과창
-        public void FailResult()
+        public static void FailResult()
         {
             Console.WriteLine("\n\n공략 실패..");
             Console.WriteLine("\n\n0.회복의 방으로 간다.");
@@ -314,6 +405,29 @@ namespace Text_RPG_24Group
                     Program.DiplayPotionUI();
                     break;
             }
+        }
+
+        //전투승리시 기존맵의 2(적)지우기
+        private static void RemoveMonsterFromMap(int x, int y)
+        {
+            Program.mapDb[(int)currentDifficulty - 1].SetTile(y, x, 0);
+        }
+        
+        //맵에 적(2)이 남아있나 확인하는 로직
+        private static bool AreAllMonsterDefeated()
+        {
+            DungeonMap currentMap = Program.mapDb[(int)currentDifficulty - 1];
+            for ( int y = 0; y < currentMap.GetHeight(); y++)
+            {
+                for(int x = 0; x < currentMap.GetWidth(); x++)
+                {
+                    if (currentMap.GetTile(y, x) == 2)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 
