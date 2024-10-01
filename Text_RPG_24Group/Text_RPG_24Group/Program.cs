@@ -4,6 +4,7 @@ using System.Numerics;
 using static Text_RPG_24Group.CharacterCustom;
 using Newtonsoft.Json;
 using System.Threading;
+using System.Diagnostics;
 
 
 
@@ -15,6 +16,7 @@ namespace Text_RPG_24Group
         public static Item[] itemDb;
         public static Monster[] monsterDb;
         public static Quest[] questDb;
+        private static Herb[] herbDb;
         private static Poition potion;       
         private static string characterName;
         private static int selectedJob;
@@ -52,6 +54,14 @@ namespace Text_RPG_24Group
             }
             player = new CharacterCustom(characterName, selectedJob);
             pub = new Pub();
+
+            herbDb = new Herb[]
+
+            {
+                new Herb("나무 뿌리", "10개 합치면 포션",0),
+                new Herb("빨간 잎", "3개 합치면 포션",0)
+            };
+
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
 
             BGMManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
@@ -123,11 +133,9 @@ namespace Text_RPG_24Group
             Console.WriteLine("3. 상점");
             Console.WriteLine("4. 퀘스트");
             Console.WriteLine("5. 회복의 방");
-            Console.WriteLine("6. 저장된 파일");
-            //Console.WriteLine("7. 저장된 파일제거");
+            Console.WriteLine("6. 허브 산");
             Console.WriteLine("7. 던전입장");
             Console.WriteLine("8. 저장하기");
-            Console.WriteLine("9. 불러오기");
             Console.WriteLine("10. 환경설정");
 
             Console.WriteLine();
@@ -154,7 +162,7 @@ namespace Text_RPG_24Group
                     DiplayPotionUI();
                     break;
                 case 6:
-                    ListSaves();
+                     HerbUI();
                     break;
                 case 7:
                     DisplayDungeonUI();
@@ -163,11 +171,9 @@ namespace Text_RPG_24Group
                 //    DeleteSave();
                 //    break;
                 case 8:
-                    Save();
+                    SaveUI();
                     break;
-                case 9:
-                    Load();
-                    break;
+              
                 case 10:
                     UserSettings();
                     break;
@@ -196,6 +202,129 @@ namespace Text_RPG_24Group
                     DisplayMainUI();
                     break;
             }
+        }
+
+        static void HerbUI()
+        {
+            Console.Clear();
+            Console.WriteLine("약초 산");
+            Console.WriteLine("약초를 캐서 포션을 만들자!" );
+            Console.WriteLine("\n50골드가 차감됩니다" + "\t(현재골드" + player.Gold + "원)");
+
+            Console.WriteLine("\n1.약초캐기");
+            Console.WriteLine("2.약초가방");
+            Console.WriteLine("\n0.돌아가기");
+
+            int result = CheckInput(0, 2);
+
+            switch (result)
+            {
+                case 0:
+                    DisplayMainUI();
+                    break;
+
+                case 1:
+
+                    GetHerbs();
+
+                    break;
+
+                case 2:
+
+                    ShowHerbBag();
+
+                    break;
+            }
+
+
+        }
+        static void GetHerbs()
+        {
+            Random rand = new Random();
+            int rootCount = rand.Next(0, 6); // 0 to 5
+            int leafCount = rand.Next(0, 2); // 0 to 1
+
+            herbDb[0].Count += rootCount;
+            herbDb[1].Count += leafCount;
+            player.Gold -= 50;
+
+            Console.WriteLine("약초를 얻었습니다!");
+            Console.WriteLine($"나무 뿌리: {rootCount}개");
+            Console.WriteLine($"빨간 잎: {leafCount}개");
+            Console.ReadLine();
+            HerbUI();
+        }
+
+        static void ShowHerbBag()
+        {
+            Console.Clear();
+            Console.WriteLine("약초 가방\n");
+            for (int i = 0; i < herbDb.Length; i++)
+            {
+                Herb herb = herbDb[i];
+                Console.WriteLine($"{herb.Name}: {herb.Count}개");
+            }
+
+
+            Console.WriteLine("\n1. 물약제작");
+            Console.WriteLine("0. 돌아가기");
+            int result = CheckInput(0, 1);
+
+            switch (result)
+            {
+                case 0:
+                    HerbUI();
+                    break;
+
+                case 1:
+                    SelectHerbForPotion();
+                    break;
+            }
+            Console.ReadLine();
+            HerbUI();
+        }
+        static void SelectHerbForPotion()
+        {
+            Console.Clear();
+            Console.WriteLine("어떤 약초로 포션을 만들겠습니까?");
+            Console.WriteLine("\n나무뿌리 10개 = 빨간포션 1개");
+            Console.WriteLine("빨간잎 3개 = 빨간포션 1개\n");
+
+            for (int i = 0; i < herbDb.Length; i++)
+            {
+                Herb herb = herbDb[i];
+                Console.WriteLine($"{i + 1}. {herb.Name} ({herb.Count}개)");
+            }
+
+            int herbChoice = CheckInput(1, herbDb.Length) - 1;
+
+            MakePotion(herbChoice);
+        }
+
+        static void MakePotion(int herbIndex)
+        {
+            Herb herb = herbDb[herbIndex];
+
+            if ((herbIndex == 0 && herb.Count >= 10) || (herbIndex == 1 && herb.Count >= 3))
+            {
+                if (herbIndex == 0)
+                {
+                    herb.Count -= 10;
+                }
+                else if (herbIndex == 1)
+                {
+                    herb.Count -= 3;
+                }
+                potion.Count++;
+                Console.WriteLine("포션이 제작되었습니다!");
+            }
+            else
+            {
+                Console.WriteLine("재료가 부족합니다.");
+            }
+
+            Console.ReadLine();
+            ShowHerbBag();
         }
 
         static void DisplayInventoryUI()
@@ -254,7 +383,7 @@ namespace Text_RPG_24Group
                 default:
 
                     int itemIdx = result - 1;
-                    Item targetItem = itemDb[itemIdx];
+                    Item targetItem = player.Inventory[itemIdx];
                     player.EquipItem(targetItem);
 
                     DisplayEquipUI();
@@ -431,20 +560,69 @@ namespace Text_RPG_24Group
             }
         }
 
+        static void SaveUI()
+        {
+            Console.Clear();
+            Console.WriteLine("1.저장하기");
+            Console.WriteLine("2.불러오기");
+            Console.WriteLine("3.저장된 파일");
+            Console.WriteLine("4.저장된 파일제거");
+            Console.WriteLine("\n0.나가기");
+            Console.WriteLine("\n원하시는 행동을 입력해주세요.");
+
+
+            int result = CheckInput(0, 4);
+
+            switch (result)
+            {
+                case 0:
+                    DisplayMainUI();
+                    break;
+
+                case 1:
+
+                    Save();
+
+                    break;
+
+                case 2:
+
+                    Load();
+
+                    break;
+
+                case 3:
+
+                    ListSaves();
+
+                    break;
+
+
+                case 4:
+
+                    DeleteSave();
+
+                    break;
+            }
+
+
+        }        
+       
         static void ListSaves()
         {
             SaveLoadSystem.ListSaves();
             Console.ReadLine();
-            DisplayMainUI();
+            SaveUI();
 
         }
+
         static void Save()
         {
             Console.Write("저장할 파일 이름을 입력하세요: ");
             string saveName = Console.ReadLine();
             SaveLoadSystem.SaveCharacter(player, saveName);
             Console.ReadLine();
-            DisplayMainUI();
+            SaveUI();
         }
 
         static void Load()
@@ -454,7 +632,7 @@ namespace Text_RPG_24Group
             player = SaveLoadSystem.LoadCharacter(saveName);
          
             Console.ReadLine();
-            DisplayMainUI();
+            SaveUI();
         }
 
         static void DeleteSave()
@@ -463,8 +641,9 @@ namespace Text_RPG_24Group
             string saveName = Console.ReadLine();
             SaveLoadSystem.DeleteSaveFile(saveName);
             Console.ReadLine();
-            DisplayMainUI();
+            SaveUI();
         }
+
         static void UserSettings()
         {
             Console.Clear();

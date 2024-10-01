@@ -7,7 +7,19 @@ using System.Xml.Linq;
 
 namespace Text_RPG_24Group;
 
+public class Herb
+{
+    public string Name { get; }
+    public string Desc { get; }
+    public int Count { get; set; }
 
+    public Herb(string name, string desc, int count)
+    {
+        Name = name;
+        Desc = desc;
+        Count = count;
+    }
+}
 public class Poition
 {
     public string Name { get;}

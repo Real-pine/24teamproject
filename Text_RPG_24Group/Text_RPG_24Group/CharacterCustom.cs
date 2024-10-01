@@ -123,7 +123,7 @@ public class CharacterCustom
         Level = 1; // 시작레벨
         Name = name;
         Experience = 0; //시작경험치
-        Gold = 1500; //시작골드
+        Gold = 10000;  //시작골드
         Job = (JobType)jobNumber;
         age = 20;
         act = 5;
@@ -226,22 +226,29 @@ public class CharacterCustom
 
     public void EquipItem(Item item)
     {
-        if (IsEquipped(item))
+        Item equippedItem = null;
+        for (int i = 0; i < EquipList.Count; i++)
         {
-            EquipList.Remove(item);
-            if (item.Type == 0)
-                ExtraAtk -= item.Value;
-            else
-                ExtraDef -= item.Value;
+            if (EquipList[i].Type == item.Type)
+            {
+                equippedItem = EquipList[i];
+                break;
+            }
         }
+        if (equippedItem != null)
+        {
+            EquipList.Remove(equippedItem);
+            if (equippedItem.Type == 0)
+                ExtraAtk -= equippedItem.Value;
+            else
+                ExtraDef -= equippedItem.Value;
+        }
+
+        EquipList.Add(item);
+        if (item.Type == 0)
+            ExtraAtk += item.Value;
         else
-        {
-            EquipList.Add(item);
-            if (item.Type == 0)
-                ExtraAtk += item.Value;
-            else
-                ExtraDef += item.Value;
-        }
+            ExtraDef += item.Value;
     }
 
     public bool IsEquipped(Item item)
