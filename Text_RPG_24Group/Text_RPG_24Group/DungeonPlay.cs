@@ -20,6 +20,7 @@ namespace Text_RPG_24Group
         private static List<Monster> activeMonster; //현재 전투중인 몬스터
         public static Dictionary<Difficulty, Monster[]> difficultyMonsters;
         private static Random random = new Random();
+        private static List<Monster> defeatedMonsters = new List<Monster>(); //죽은몬스터정보저장
 
         //난이도 세팅
         public enum Difficulty
@@ -28,10 +29,12 @@ namespace Text_RPG_24Group
             Normal = 2, 
             Hard = 3 
         }
+
         static DungeonPlay()
         {
             SetMonsterGroups();
         }
+
         //난이도별 몬스터 출현 그룹 설정
         private static void SetMonsterGroups() 
         {
@@ -50,6 +53,7 @@ namespace Text_RPG_24Group
 
             return new Monster[0];
         }
+
         //난이도에 맞는 몬스터 개수 생성기
         private static void GenerateActiveMonsters()
         {
@@ -105,6 +109,7 @@ namespace Text_RPG_24Group
 
         public static void ChooseStage()
         {
+            Console.Clear();
             Console.WriteLine("\n\n원하시는 스테이지(난이도)를 입력해 주세요.");
             Console.WriteLine("\n\n1. 쉬움");
             Console.WriteLine("2. 보통");
@@ -136,7 +141,8 @@ namespace Text_RPG_24Group
             currentStageMonster = GetMonsterByDifficulty(difficulty);
             DungeonMap selectedMap = Program.mapDb[(int)difficulty - 1];
             battle = new Battle { player = player }; // Battle인스턴스 생성
-            Stage.PlayerMove(1, 1, selectedMap);
+            Stage.SetPlayerPosition(1, 1); // 플레이어 시작 위치 설정
+            Stage.PlayerMove(selectedMap);
         }
 
         private static Monster SelectRandomMonster()
@@ -144,7 +150,7 @@ namespace Text_RPG_24Group
             int index = random.Next(currentStageMonster.Length);
             return currentStageMonster[index];
         }
-
+        //몬스터 조우시 인카운터UI
         public static void EncounterUI()
         {
             Console.Clear();
@@ -171,14 +177,14 @@ namespace Text_RPG_24Group
                     Console.WriteLine($"{player.Name}의 HP가 50 감소했습니다. (현재 HP: {player.Hp}/{player.MaxHp})");
                     Console.WriteLine("아무 키나 누르면 계속합니다...");
                     Console.ReadKey();
-                    Stage.PlayerMove(Stage.PlayerX, Stage.PlayerY, Program.mapDb[(int)currentDifficulty - 1]); 
+                    Stage.PlayerMove(Program.mapDb[(int)currentDifficulty - 1]); 
                     break;
                 case 1:
                     MyBattlePhase();
                     break;
             }
         }
-
+        //전투 시작&전투 기본화면
         public static void MyBattlePhase()
         {
             Console.Clear();
@@ -206,7 +212,7 @@ namespace Text_RPG_24Group
                     Console.WriteLine($"{player.Name}의 HP가 50 감소했습니다. (현재 HP: {player.Hp}/{player.MaxHp})");
                     Console.WriteLine("아무 키나 누르면 계속합니다...");
                     Console.ReadKey();
-                    Stage.PlayerMove(Stage.PlayerX, Stage.PlayerY, Program.mapDb[(int)currentDifficulty - 1]);
+                    Stage.PlayerMove(Program.mapDb[(int)currentDifficulty - 1]);
                     break;
                 case 1:
                     PlayerBasicAttack();
@@ -220,6 +226,7 @@ namespace Text_RPG_24Group
         //기본공격시 페이즈
         public static void PlayerBasicAttack()
         {
+            Console.Clear();
             Console.WriteLine("\n\nBattle !!");
             Console.WriteLine($"{player.Name}의 페이즈");
 
@@ -265,6 +272,7 @@ namespace Text_RPG_24Group
         //스킬공격시페이즈
         public static void PlayerSkillAttack()
         {
+            Console.Clear();
             Console.WriteLine("\n\nBattle !!");
             Console.WriteLine($"{player.Name}의 페이즈");
 
@@ -311,6 +319,7 @@ namespace Text_RPG_24Group
             if (monster.curHp <= 0)
             {
                 Console.WriteLine($"{monster.MonsterName}이(가) 쓰러졌습니다!");
+                defeatedMonsters.Add(monster); //보상을 위한 처치한 몬스터 정보 저장
                 activeMonster.Remove(monster);
                 Program.questDb[0].QuestMonsterCount(monster);
             }
@@ -320,6 +329,7 @@ namespace Text_RPG_24Group
         //몬스터공격시 페이즈
         public static void MonsterPhase()
         {
+            Console.Clear();
             Console.WriteLine("\n\nBattle !!");
             Console.WriteLine("ENEMY 페이즈");
 
@@ -343,17 +353,19 @@ namespace Text_RPG_24Group
         //승리결과창
         public static void SuccessResult()
         {
+            Console.Clear();
             Console.WriteLine($"\n\n몬스터 격퇴 성공!");
             Console.WriteLine($"보상");
             //경험치획득 로직
-            int totalEXP = activeMonster.Sum(m => m.MonsterLev);
+            int totalEXP = defeatedMonsters.Sum(m => m.MonsterLev);
+            int oldExp = player.Experience;
             player.GainExperience(totalEXP);
-            Console.WriteLine($"획득 경험치: {totalEXP}");
+            Console.WriteLine($"획득 경험치: {totalEXP} (현재 경험치: {oldExp} -> {player.Experience})");
             //골드획득 로직
-            int totlaGold = activeMonster.Sum(m => m.MonsterGold);
+            int totlaGold = defeatedMonsters.Sum(m => m.MonsterGold);
             int oldGold = player.Gold;
             player.Gold += totlaGold;
-            Console.WriteLine($"Gold: {oldGold} -> {player.Gold} (+{totlaGold}");
+            Console.WriteLine($"Gold: {oldGold} -> {player.Gold} (+{totlaGold})");
             //랜덤 상점 아이템 드롭(15프로 이하)
             if (random.Next(100) < 15)
             {
@@ -370,9 +382,12 @@ namespace Text_RPG_24Group
                 case 0:
                     //현재 위치의 몬스터 제거
                     RemoveMonsterFromMap(Stage.PlayerX, Stage.PlayerY);
+                    //전투 종료 후 보상정보리스트 초기화
+                    defeatedMonsters.Clear();
 
                     if (AreAllMonsterDefeated())
                     {
+                        Console.Clear();
                         Console.WriteLine("던전의 모든 몬스터를 물리쳤습니다!");
                         Console.WriteLine("0. 마을로 돌아가기");
                         Program.CheckInput(0, 0);
@@ -380,7 +395,7 @@ namespace Text_RPG_24Group
                     }
                     else
                     {
-                        Stage.PlayerMove(Stage.PlayerX, Stage.PlayerY, Program.mapDb[(int)currentDifficulty - 1]);
+                        Stage.PlayerMove(Program.mapDb[(int)currentDifficulty - 1]);
                     }
                     break;
             }

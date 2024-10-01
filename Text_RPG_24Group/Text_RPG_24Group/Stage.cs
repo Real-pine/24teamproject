@@ -8,11 +8,18 @@ namespace Text_RPG_24Group
 {
     class Stage
     {
-        public static int PlayerX = 1;
-        public static int PlayerY = 1;
+        public static int PlayerX { get; private set; } = 1;
+        public static int PlayerY { get; private set; } = 1;
+
+        //마지막 위치 업데이트메서드
+        public static void SetPlayerPosition(int x, int y)
+        {
+            PlayerX = x;
+            PlayerY = y;
+        }
 
         // 플레이어 이동 메서드
-        public static void PlayerMove(int playerX, int playerY, DungeonMap map)
+        public static void PlayerMove(DungeonMap map)
         {
             while (true)
             {
@@ -22,7 +29,7 @@ namespace Text_RPG_24Group
                 {
                     for (int x = 0; x < map.GetWidth(); x++) // GetWidth()로 너비를 가져옴
                     {
-                        if (x == playerX && y == playerY)
+                        if (x == PlayerX && y == PlayerY)
                         {
                             Console.Write("□"); // 플레이어 표시
                         }
@@ -48,8 +55,8 @@ namespace Text_RPG_24Group
                 Console.WriteLine("■ : 벽\t□ : 플레이어\t◎ : 적\t");
                 // 플레이어 이동 처리
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                int newPlayerX = playerX;
-                int newPlayerY = playerY;
+                int newPlayerX = PlayerX;
+                int newPlayerY = PlayerY;
 
                 switch (keyInfo.Key)
                 {
@@ -70,14 +77,12 @@ namespace Text_RPG_24Group
                 
                 if (map.GetTile(newPlayerY, newPlayerX) == 0)//빈공간 이동
                 {
-                    playerX = newPlayerX;
-                    playerY = newPlayerY;
+                    SetPlayerPosition(newPlayerX, newPlayerY);
                 }
                 else if (map.GetTile(newPlayerY, newPlayerX) == 2) //적과 컨택 > 전투시작
                 {
                     map.SetTile(newPlayerY, newPlayerX, 0);
-                    playerX = newPlayerX;
-                    playerY = newPlayerY;
+                    SetPlayerPosition(newPlayerX, newPlayerY);
                     DungeonPlay.EncounterUI();
                 }
                 else if (map.GetTile(newPlayerY, newPlayerX) == 3)//마을로 이동

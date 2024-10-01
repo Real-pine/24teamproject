@@ -247,9 +247,9 @@ namespace Text_RPG_24Group
                 int errDamage = (Atk / 10) * err;
 
                 if (isCritical)
-                    outDamage = (int)Math.Round((Atk + errDamage) * 1.6f) - Def;
+                    outDamage = (int)Math.Round((Atk + errDamage) * 1.6f) ;
                 else
-                    outDamage = Atk + errDamage - Def;
+                    outDamage = Atk + errDamage ;
 
                 return outDamage;
             }
