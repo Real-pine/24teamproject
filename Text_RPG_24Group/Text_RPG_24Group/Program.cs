@@ -77,11 +77,11 @@ namespace Text_RPG_24Group
             };
             monsterDb = new Monster[]//이름, 이야기, 레벨, 공격, 방어, 체력, 돈
           {
-            new Monster("슬라임","몬스터 중에서도 가장 약한 몹이다.",1,5,0,5,50),//레벨, 공격, 방어, 체력, 돈
-            new Monster("고블린","욕심이 많고 주로 약탈을 일삼는다.",2,10,0,10,100),
-            new Monster("스켈레톤","뼈로 이루어진 고대 사람이였던 것",3,10,0,15,150),
-            new Monster("골램","자연적인 현상에의해 돌에 생명력이 들어갔다.",5,5,10,20,200),
-            new Monster("악마","고대부터 존재했던 것",10,20,5,50,1000),
+            new Monster("슬라임","몬스터 중에서도 가장 약한 몹이다.",1,5,10,5,50),//레벨, 공격, 방어, 체력, 돈
+            new Monster("고블린","욕심이 많고 주로 약탈을 일삼는다.",2,10,10,10,100),
+            new Monster("스켈레톤","뼈로 이루어진 고대 사람이였던 것",3,10,10,15,150),
+            new Monster("골램","자연적인 현상에의해 돌에 생명력이 들어갔다.",5,5,40,20,200),
+            new Monster("악마","고대부터 존재했던 것",10,20,35,50,1000),
           };
             questDb = new Quest[]//돈보상, 목표1,목표2,시작불값,클리어불값,0은퀘다시가능,1은2가되서불가
             {
@@ -732,7 +732,7 @@ namespace Text_RPG_24Group
             DisplayMainUI();
         }
 
-        public static void GameEnd(int age)
+        public static void Ending(int age)
         {
             if (age != 40)
                 return;

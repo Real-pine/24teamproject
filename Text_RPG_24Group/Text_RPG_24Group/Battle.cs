@@ -45,8 +45,6 @@ namespace Text_RPG_24Group
             int avoid = random.Next(0, 100);
             isAvoid = avoid <= 10 ? true : false;
 
-            Console.WriteLine(avoid);
-
             if (isAvoid)
             { // 회피시 회피 출력 후 종료
                 Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 공격했지만 아무일도 일어나지 않았습니다.");
@@ -233,6 +231,8 @@ namespace Text_RPG_24Group
             Console.WriteLine("\n");
         }
 
+        private const float defRate = 0.5f;
+
         public int damageCalculation // 데미지 계산 변수
         {
             get
@@ -247,9 +247,11 @@ namespace Text_RPG_24Group
                     outDamage = (int)Math.Round((Atk + errDamage) * 1.6f) ;
                 else
                     outDamage = Atk + errDamage ;
-                Double DeductedDamage = 100 / (Def + 100) * 100;
-                //Console.WriteLine($"받는 데미지 : {outDamage}");
-                return (int)(outDamage * (1 - DeductedDamage));
+
+                int deductedDamage = (int)(outDamage * ((Def * defRate)/100));
+
+                //Console.WriteLine($"줄어든 데미지 : {deductedDamage} 받는 데미지 : {outDamage}");
+                return outDamage - deductedDamage;
             }
         }
     }

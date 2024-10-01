@@ -134,7 +134,7 @@ public class CharacterCustom
                 Atk = 10;
                 Def = 15;
                 MaxHp = 140;
-                MaxMp = 10;
+                MaxMp = 50;
                 break;
             case JobType.Mage:
                 Atk = 15;
@@ -190,7 +190,7 @@ public class CharacterCustom
 
     public void AgeUP() // 나이 기능 메서드
     {
-        Program.GameEnd(age);
+        Program.Ending(age);
 
         act -= 1;
 
