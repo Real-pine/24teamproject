@@ -28,8 +28,6 @@ namespace Text_RPG_24Group
         private int damage = 0; // 데미지
         private int playerHp = 0;
 
-        public int checkNumber { get; set; }
-
         private string[] skillName1 = { "", "깊게 베기", "폭발", "암습" };
         private string[] skillName2 = { "", "휩쓸기", "전기 사슬", "수리검 던지기" };
 
@@ -85,8 +83,6 @@ namespace Text_RPG_24Group
 
         public void Skill(JobType Jop) // 스킬 설명 출력 메서드
         {
-            checkNumber = 0;
-
             Console.WriteLine("[내정보]");
             switch ((int)Jop)
             {
@@ -103,21 +99,10 @@ namespace Text_RPG_24Group
             Console.WriteLine($"HP {player.Hp}/{player.MaxHp}");
             Console.WriteLine($"MP {player.Mp}/{player.MaxMp}");
             Console.WriteLine("\n");
-            if (player.Mp >= 10)
-            {
-                checkNumber++;
-                Console.WriteLine($"1. {skillName1[(int)player.Job]} - MP 10");
-                Console.WriteLine("공격력 * 2 로 하나의 적을 공격합니다.");
-            }
-            if (player.Mp >= 15)
-            {
-                checkNumber++;
-                Console.WriteLine($"2. {skillName2[(int)player.Job]} - MP 15");
-                Console.WriteLine("공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.");
-            }
-            Console.WriteLine("0. 취소");
-            Console.WriteLine("\n");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.WriteLine($"1. {skillName1[(int)player.Job]} - MP 10");
+            Console.WriteLine("공격력 * 2 로 하나의 적을 공격합니다.");
+            Console.WriteLine($"2. {skillName2[(int)player.Job]} - MP 15");
+            Console.WriteLine("공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.");
         }
 
         public void SkillAttack(Monster monster, int skiilNumber) // 스킬 공격 메서드
@@ -129,19 +114,31 @@ namespace Text_RPG_24Group
             }
 
             Atk = player.Atk;
+            Def = monster.MonsterDef;
 
             switch (skiilNumber)
             {
                 case 1:
+                    if (player.Mp < 10)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine($"마나가 부족합니다.[부족한 마나 : {10 - player.Mp}]");
+                        return;
+                    }
                     player.Mp -= 10;
                     Atk = player.Atk * 2;
                     break;
                 case 2:
+                    if (player.Mp < 15)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine($"마나가 부족합니다.[부족한 마나 : {15 - player.Mp}]");
+                        return;
+                    }
                     player.Mp -= 15;
                     Atk = (int)Math.Round(player.Atk * 1.5f);
                     break;
             }
-            Def = monster.MonsterDef; ;
 
             Console.WriteLine($"{player.Name} 의 공격! - {skillName1[(int)player.Job]}");
 
@@ -247,9 +244,9 @@ namespace Text_RPG_24Group
                 int errDamage = (Atk / 10) * err;
 
                 if (isCritical)
-                    outDamage = (int)Math.Round((Atk + errDamage) * 1.6f) - Def;
+                    outDamage = (int)Math.Round((Atk + errDamage) * 1.6f);
                 else
-                    outDamage = Atk + errDamage - Def;
+                    outDamage = Atk + errDamage;
 
                 return outDamage;
             }
