@@ -19,21 +19,14 @@ namespace Text_RPG_24Group
         private static string characterName;
         private static int selectedJob;
         public static DungeonMap[] mapDb;
-<<<<<<< HEAD
         public static SoundManager BGMManager;
         public static SoundManager SoundEffectManager;
-        private static Pub pub;
-=======
-        private static SoundManager BGMManager;
-        private static SoundManager SoundEffectManager;
-        private static Battle battle;
-    
->>>>>>> (Feat)Battle31
+        private static Pub pub;  
         static void Main(string[] args)
         {
             SetData();
             DungeonPlay.player = player; //DungeonPlay클래스의 player필드에 설정
-            Program.pub.PubMainUI();
+            //Program.pub.PubMainUI();
             //Program.BGMManager.PlayBGM(Program.BGMManager.SoundVillage, BGMManager, 45); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
             DisplayMainUI();
         }
@@ -58,12 +51,7 @@ namespace Text_RPG_24Group
                 characterName = Console.ReadLine();
             }
             player = new CharacterCustom(characterName, selectedJob);
-<<<<<<< HEAD
             pub = new Pub();
-=======
-            battle = new Battle();
-
->>>>>>> (Feat)Battle31
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
 
             BGMManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
