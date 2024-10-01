@@ -94,6 +94,9 @@ public class CharacterCustom
     public int Experience { get; set; } //현재 경험치
     public int[] ExpToNextLev = { 10, 35, 65, 100 }; //4레벨까지 요구경험치테이블
 
+    public int age { get; set; } // 나이
+    public int act { get; set; } // 행동력
+
     public enum JobType //직업선택을 위해 enum으로 넘버링
     {
         Warrior = 1,
@@ -122,7 +125,8 @@ public class CharacterCustom
         Experience = 0; //시작경험치
         Gold = 1500; //시작골드
         Job = (JobType)jobNumber;
-
+        age = 20;
+        act = 5;
 
         switch (Job)
         {
@@ -130,7 +134,7 @@ public class CharacterCustom
                 Atk = 10;
                 Def = 15;
                 MaxHp = 140;
-                MaxMp = 50;
+                MaxMp = 10;
                 break;
             case JobType.Mage:
                 Atk = 15;
@@ -184,6 +188,19 @@ public class CharacterCustom
         }
     }
 
+    public void AgeUP() // 나이 기능 메서드
+    {
+        Program.GameEnd(age);
+
+        act -= 1;
+
+        if(act <= 0)
+        {
+            act = 5;
+            age++;
+        }
+    }
+
     public void DisplayCharacterInfo()
     {
         Console.WriteLine($"Lv. {Level:D2}");
@@ -192,6 +209,7 @@ public class CharacterCustom
         Console.WriteLine(ExtraDef == 0 ? $"방어력 : {Def}" : $"방어력 : {Def + ExtraDef} (+{ExtraDef})");
         Console.WriteLine($"체력 : {Hp}/{MaxHp}");
         Console.WriteLine($"Gold : {Gold} G");
+        Console.WriteLine($"나이 : {age} ({act} / 5)");
     }
 
     public void DisplayInventory(bool showIdx)

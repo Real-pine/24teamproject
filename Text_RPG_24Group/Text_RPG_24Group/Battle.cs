@@ -17,7 +17,8 @@ namespace Text_RPG_24Group
     {
         public CharacterCustom player = Program.player;
 
-        public int Power { get; set; } // 공격력
+        public int Atk = 0; // 공격력
+        public int Def = 0; // 방어력
 
         private Random random = new Random();
 
@@ -26,6 +27,8 @@ namespace Text_RPG_24Group
 
         private int damage = 0; // 데미지
         private int playerHp = 0;
+
+        public int checkNumber { get; set; }
 
         private string[] skillName1 = { "", "깊게 베기", "폭발", "암습" };
         private string[] skillName2 = { "", "휩쓸기", "전기 사슬", "수리검 던지기" };
@@ -52,7 +55,8 @@ namespace Text_RPG_24Group
             }
             else
             {
-                Power = player.Atk;
+                Atk = player.Atk;
+                Def = monster.MonsterDef;
 
                 int critical = random.Next(0, 100);
                 if (critical <= 15)
@@ -78,8 +82,11 @@ namespace Text_RPG_24Group
                 Console.WriteLine("\n");
             }
         }
+
         public void Skill(JobType Jop) // 스킬 설명 출력 메서드
         {
+            checkNumber = 0;
+
             Console.WriteLine("[내정보]");
             switch ((int)Jop)
             {
@@ -96,11 +103,21 @@ namespace Text_RPG_24Group
             Console.WriteLine($"HP {player.Hp}/{player.MaxHp}");
             Console.WriteLine($"MP {player.Mp}/{player.MaxMp}");
             Console.WriteLine("\n");
-            Console.WriteLine($"1. {skillName1[(int)player.Job]} - MP 10");
-            Console.WriteLine("공격력 * 2 로 하나의 적을 공격합니다.");
-            Console.WriteLine($"2. {skillName2[(int)player.Job]} - MP 15");
-            Console.WriteLine("공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.");
+            if (player.Mp >= 10)
+            {
+                checkNumber++;
+                Console.WriteLine($"1. {skillName1[(int)player.Job]} - MP 10");
+                Console.WriteLine("공격력 * 2 로 하나의 적을 공격합니다.");
+            }
+            if (player.Mp >= 15)
+            {
+                checkNumber++;
+                Console.WriteLine($"2. {skillName2[(int)player.Job]} - MP 15");
+                Console.WriteLine("공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.");
+            }
+            Console.WriteLine("0. 취소");
             Console.WriteLine("\n");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
         }
 
         public void SkillAttack(Monster monster, int skiilNumber) // 스킬 공격 메서드
@@ -111,19 +128,20 @@ namespace Text_RPG_24Group
                 return;
             }
 
-            Power = player.Atk;
+            Atk = player.Atk;
 
             switch (skiilNumber)
             {
                 case 1:
-                        player.Mp -= 10;
-                        Power = player.Atk * 2;
+                    player.Mp -= 10;
+                    Atk = player.Atk * 2;
                     break;
                 case 2:
-                        player.Mp -= 15;
-                        Power = (int)Math.Round(player.Atk * 1.5f);
+                    player.Mp -= 15;
+                    Atk = (int)Math.Round(player.Atk * 1.5f);
                     break;
             }
+            Def = monster.MonsterDef; ;
 
             Console.WriteLine($"{player.Name} 의 공격! - {skillName1[(int)player.Job]}");
 
@@ -162,7 +180,8 @@ namespace Text_RPG_24Group
             }
             else
             {
-                Power = monster.MonsterAtk;
+                Atk = monster.MonsterAtk;
+                Def = player.Def;
 
                 int critical = random.Next(0, 100);
                 if (critical <= 15)
@@ -225,12 +244,12 @@ namespace Text_RPG_24Group
 
                 // 데미지 오차 10%
                 int err = random.Next(-1, 2);
-                int errDamage = (Power / 10) * err;
+                int errDamage = (Atk / 10) * err;
 
                 if (isCritical)
-                    outDamage = (int)Math.Round((Power + errDamage) * 1.6f);
+                    outDamage = (int)Math.Round((Atk + errDamage) * 1.6f) - Def;
                 else
-                    outDamage = Power + errDamage;
+                    outDamage = Atk + errDamage - Def;
 
                 return outDamage;
             }

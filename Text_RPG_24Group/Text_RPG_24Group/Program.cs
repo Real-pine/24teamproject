@@ -390,6 +390,7 @@ namespace Text_RPG_24Group
 
                     if (potion.Count > 0)
                     {
+                        player.AgeUP();
                         potion.Count--;
                         Program.player.Hp += 30;
                         Console.WriteLine("\nHP가 30 회복되었습니다.");
@@ -503,6 +504,23 @@ namespace Text_RPG_24Group
                     break;
             }
             DisplayMainUI();
+        }
+
+        public static void GameEnd(int age)
+        {
+            if (age != 40)
+                return;
+
+            Console.Clear();
+            Console.WriteLine("...");
+            Console.WriteLine("0. 은퇴");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            int result = CheckInput(0, 0);
+            // 게임 종료
+
+            if(result == 0)
+                Environment.Exit(0);
         }
     }
 }
