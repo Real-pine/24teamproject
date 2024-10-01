@@ -217,7 +217,7 @@ namespace Text_RPG_24Group
             Console.WriteLine("2. 스킬2");
             Console.WriteLine("0. 돌아가기");
 
-            int result = Program.CheckInput(0, battle.checkNumber);
+            int result = Program.CheckInput(0, 2);
 
             switch (result)
             {
