@@ -248,7 +248,9 @@ namespace Text_RPG_24Group
                 else
                     outDamage = Atk + errDamage;
 
-                return outDamage;
+                Double DeductedDamage = 100 / (Def + 100) * 100;
+                //Console.WriteLine($"받는 데미지 : {outDamage}");
+                return (int)(outDamage * (1 - DeductedDamage));
             }
         }
     }
