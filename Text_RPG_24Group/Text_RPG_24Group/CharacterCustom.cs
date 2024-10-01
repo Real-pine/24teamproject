@@ -249,6 +249,7 @@ public class CharacterCustom
             ExtraAtk += item.Value;
         else
             ExtraDef += item.Value;
+        Program.questDb[1].QuestAddItem(item);
     }
 
     public bool IsEquipped(Item item)
@@ -260,7 +261,10 @@ public class CharacterCustom
     {
         Inventory.Add(item);
     }
-
+    public void RemoveItem(Item item)
+    {
+        Inventory.Remove(item);
+    }
     public bool HasItem(Item item)
     {
         return Inventory.Contains(item);

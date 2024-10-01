@@ -17,13 +17,13 @@ namespace Text_RPG_24Group
             Console.WriteLine("1. 숙박");
             Console.WriteLine("2. 도박");
             Console.WriteLine("3. 술마시기");
-            Console.WriteLine("4. 개인정비");
             Console.WriteLine("0. 뒤로가기");
 
             int input = Program.CheckInput(0, 4);
             switch (input)
             {
                 case 0:
+                    Program.DisplayMainUI();
                     break;
                 case 1:
                     PubGoToBed();
@@ -32,9 +32,6 @@ namespace Text_RPG_24Group
                     Gambling();
                     break;
                 case 3:
-                    BlackJack();
-                    break;
-                case 4:
                     DrinkAlcohol();
                     break;
                 default:
@@ -65,6 +62,8 @@ namespace Text_RPG_24Group
                     if(Program.player.Gold < 20)
                     {
                         Console.WriteLine("소지금이 부족합니다!");
+                        Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHurt);
+
                     }
                     else
                     {
@@ -79,6 +78,8 @@ namespace Text_RPG_24Group
                     if (Program.player.Gold < 50)
                     {
                         Console.WriteLine("소지금이 부족합니다!");
+                        Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHurt);
+
                     }
                     else
                     {
@@ -94,6 +95,8 @@ namespace Text_RPG_24Group
                     if (Program.player.Gold < 60)
                     {
                         Console.WriteLine("소지금이 부족합니다!");
+                        Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHurt);
+
                     }
                     else
                     {
@@ -107,7 +110,9 @@ namespace Text_RPG_24Group
                 default:
                     break;
             }
-            Console.WriteLine("0. 뒤로가기");
+            Console.WriteLine($"\n현재금액 : {Program.player.Gold}");
+            Console.WriteLine($"\n현재채력 : {Program.player.Hp}");
+            Console.WriteLine("\n0. 뒤로가기");
             int input = Program.CheckInput(0, 0);
             PubGoToBed();
         }        
@@ -127,9 +132,9 @@ namespace Text_RPG_24Group
             input = 0;
                 Console.Clear();
                 Console.WriteLine("골드가 없어서 돌아갑니다...!");
+                Console.WriteLine("0. 뒤로가기");
                 Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHurt);
                 input = Program.CheckInput(0, 0);
-                Console.WriteLine("0. 뒤로가기");
             } 
             else
             {
@@ -169,15 +174,16 @@ namespace Text_RPG_24Group
             Random random = new Random();
             int computer = random.Next(1, 3);
             Console.WriteLine($"나 : {input}, 딜러 : {computer}");
+            Console.Clear();
             if (input == computer)
             {
-                Program.player.Gold += bet;
-                Console.WriteLine($"축하합니다. 승리하셨습니다!\n{bet}G 를 얻습니다, 현재골드 : {Program.player.Gold}G");
+                Program.player.Gold += bet*2;
+                Console.WriteLine($"축하합니다. 승리하셨습니다!\n{bet}G 를 얻습니다, \n현재골드 : {Program.player.Gold}G");
                 Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundClear);
             }
             else
             {
-                Console.WriteLine($"다음 기회에... 패배하셨습니다!\n{bet}G 를 잃습니다, 현재골드 : {Program.player.Gold}G");
+                Console.WriteLine($"다음 기회에... 패배하셨습니다!\n{bet}G 를 잃습니다, \n현재골드 : {Program.player.Gold}G");
                 Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundDie);
 
             }
@@ -208,6 +214,7 @@ namespace Text_RPG_24Group
                 arr[i] = numbers[index];      // 선택된 숫자를 저장
                 numbers.RemoveAt(index);      // 선택된 숫자는 리스트에서 제거 (중복 방지)
             }
+            Console.Clear();
             Console.WriteLine($"1등 : {arr[0]}번\n2등 : {arr[1]}번\n3등 : {arr[2]}번\n\n유저 선택 : {input}번");
             if (input == arr[0])
             {
@@ -228,6 +235,7 @@ namespace Text_RPG_24Group
                 Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundDie);
             }
             else Console.WriteLine("아쉽지만 다음기회에!");
+            Console.WriteLine($"현재 금액 : {Program.player.Gold}");
             Console.WriteLine("0. 돌아가기");
             input = Program.CheckInput(0, 0);
             Gambling();
@@ -311,14 +319,54 @@ namespace Text_RPG_24Group
             Console.Clear();
             Console.WriteLine("\n\r어떤 술을 드시겠습니까?\n\r");
             Console.WriteLine($"\n소지금 : {Program.player.Gold}\n");
+            Console.WriteLine($"\n마나   : {Program.player.Mp}\n");
             Console.WriteLine("원하시는 술을 선택해주세요>");
-            Console.WriteLine("1. 맥주(50g)(50%확률로 마나)");
-            Console.WriteLine("2. 과일주(100g)");
-            Console.WriteLine("3. 와인(200g)");
-            Console.WriteLine("4. 뒤로가기");
+            Console.WriteLine("1. 맥주(50g)(마나 5)");
+            Console.WriteLine("2. 과일주(150g)(마나 20)");
+            Console.WriteLine("3. 와인(250g)(마나 50)");
+            Console.WriteLine("0. 뒤로가기");
             int input = Program.CheckInput(0, 3);
+            switch (input)
+            {
+                case 0:
+                    break;
+                case 1:
+                    BuyAlcohol(50,5);
+                    break;
+                case 2:
+                    BuyAlcohol(150, 20);
+                    break;
+                case 3:
+                    BuyAlcohol(250, 50);
+                    break;
+                default:
+                    break;
+            }
             PubMainUI();
-
         }
+        void BuyAlcohol(int gold, int mana) 
+        {
+            if (Program.player.Gold < gold)
+            {
+             Console.Clear();
+             Console.WriteLine("돈이 없어서 돌아갑니다!");
+             Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHurt);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine($"{gold}만큼 돈을 지불합니다!");
+                Console.WriteLine($"{mana}만큼 마나를 회복합니다!");
+                Program.player.Gold -= gold;
+                Program.player.Mp += mana;
+                if (Program.player.Mp > Program.player.MaxMp) Program.player.Mp = Program.player.MaxMp;
+                Console.WriteLine($"\n소지금 : {Program.player.Gold}\n");
+                Console.WriteLine($"\n마나   : {Program.player.Mp}\n");
+            }
+            Console.WriteLine("0. 돌아가기");
+            int input = Program.CheckInput(0, 0);
+            DrinkAlcohol();
+        }
+
     }
 }

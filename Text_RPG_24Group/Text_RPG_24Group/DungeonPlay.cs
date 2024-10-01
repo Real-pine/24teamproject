@@ -312,6 +312,7 @@ namespace Text_RPG_24Group
             {
                 Console.WriteLine($"{monster.MonsterName}이(가) 쓰러졌습니다!");
                 activeMonster.Remove(monster);
+                Program.questDb[0].QuestMonsterCount(monster);
             }
         }
         

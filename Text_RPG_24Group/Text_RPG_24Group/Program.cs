@@ -28,7 +28,6 @@ namespace Text_RPG_24Group
         {
             SetData();
             DungeonPlay.player = player; //DungeonPlay클래스의 player필드에 설정
-            //Program.pub.PubMainUI();
             //Program.BGMManager.PlayBGM(Program.BGMManager.SoundVillage, BGMManager, 45); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
             DisplayMainUI();
         }
@@ -67,7 +66,7 @@ namespace Text_RPG_24Group
             BGMManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
             SoundEffectManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
             //주소 예시//C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group//뒤에 @꼭 붙히세요
-            itemDb = new Item[]
+            itemDb = new Item[]//string name, int type, int value, string desc, int price
             {
             new Item("수련자의 갑옷", 1, 5,"수련에 도움을 주는 갑옷입니다. ",1000),
             new Item("무쇠갑옷", 1, 9,"무쇠로 만들어져 튼튼한 갑옷입니다. ",2000),
@@ -84,11 +83,11 @@ namespace Text_RPG_24Group
             new Monster("골램","자연적인 현상에의해 돌에 생명력이 들어갔다.",5,5,10,20,200),
             new Monster("악마","고대부터 존재했던 것",10,20,5,50,1000),
           };
-            questDb = new Quest[]//돈보상, 목표1,목표2,시작불값,클리어불값
+            questDb = new Quest[]//돈보상, 목표1,목표2,시작불값,클리어불값,0은퀘다시가능,1은2가되서불가
             {
-                new Quest(50,5,0,false,false),
-                new Quest(100,0,0,false,false),
-                new Quest(200,0,0,false,false)
+                new Quest(50,0,0,false,false,0),
+                new Quest(100,0,0,false,false,1),
+                new Quest(200,0,0,false,false,0)
             };
             mapDb = new DungeonMap[]
    {
@@ -138,10 +137,11 @@ namespace Text_RPG_24Group
             Console.WriteLine("8. 저장하기");
             Console.WriteLine("10. 환경설정");
 
+            Console.WriteLine("11. 선술집");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
-            int result = CheckInput(1, 10);
+            int result = CheckInput(1, 11);
             SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundButton);//사운드(버튼)
             switch (result)
             {
@@ -176,6 +176,9 @@ namespace Text_RPG_24Group
               
                 case 10:
                     UserSettings();
+                    break;
+                case 11:
+                    Program.pub.PubMainUI();
                     break;
             }
         }
@@ -411,12 +414,14 @@ namespace Text_RPG_24Group
             }
 
             Console.WriteLine();
-            Console.WriteLine("1. 아이템 구매");
             Console.WriteLine("0. 나가기");
+            Console.WriteLine("1. 아이템 구매");
+            Console.WriteLine("2. 아이템 판매");
+
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
-            int result = CheckInput(0, 1);
+            int result = CheckInput(0, 2);
 
             switch (result)
             {
@@ -427,10 +432,71 @@ namespace Text_RPG_24Group
                 case 1:
                     DisplayBuyUI();
                     break;
+                case 2:
+                    DisplaySellUI();
+                    break;
+            }
+        }
+        static void DisplaySellUI()
+        {
+            Console.Clear();
+            Console.Clear();
+            Console.WriteLine("상점 - 아이템 구매");
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.(80%가격으로 판매)");
+            Console.WriteLine();
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine($"{player.Gold} G");
+            Console.WriteLine();
+            Console.WriteLine("[아이템 목록]");
+            for (int i = 0; i < itemDb.Length; i++)
+            {
+                Item curItem = itemDb[i];
+
+                string displayPrice = (player.HasItem(curItem) ? "구매완료" : $"{curItem.Price} G");
+                Console.WriteLine($"- {i + 1} {curItem.ItemInfoText()}  |  {displayPrice}");
+            }
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            int result = CheckInput(0, itemDb.Length);
+            switch (result)
+            {
+                case 0:
+                    DisplayShopUI();
+                    break;
+
+                default:
+                    int itemIdx = result - 1;
+                    Item targetItem = itemDb[itemIdx];
+
+                    if(player.IsEquipped(targetItem))
+                    {
+                        Console.WriteLine("장착된 아이템입니다. 판매불가!");
+                        Console.WriteLine("Enter 를 눌러주세요.");
+                        Console.ReadLine();
+                    }
+                    else if (player.HasItem(targetItem))// 이미 구매한 아이템이라면?
+                    {
+                        Console.WriteLine("아이템을 판매합니다.");
+                        player.Gold += (int)(targetItem.Price*0.8f);
+                        player.RemoveItem(targetItem);
+                        Console.WriteLine("Enter 를 눌러주세요.");
+                        Console.ReadLine();
+                    }
+                    else // 아이템이 없을 때
+                    {
+                        Console.WriteLine("없는 아이템입니다.");
+                        Console.WriteLine("Enter 를 눌러주세요.");
+                        Console.ReadLine();
+                    }
+
+                    DisplaySellUI();
+                    break;
             }
         }
 
-        static void DisplayBuyUI()
+        static void DisplayBuyUI()///////////////
         {
             Console.Clear();
             Console.WriteLine("상점 - 아이템 구매");
