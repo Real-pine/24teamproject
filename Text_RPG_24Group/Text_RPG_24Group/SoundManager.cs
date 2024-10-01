@@ -8,7 +8,7 @@ using NAudio.Wave;
 //https://pixabay.com/ko/sound-effects/ 에서 사운드 파일 가져옴
 namespace Text_RPG_24Group
 {
-    class SoundManager
+    public class SoundManager
     {
         public string UserLocation { get; private set; }
         public  string SoundVillage { get; private set; }
@@ -70,7 +70,7 @@ namespace Text_RPG_24Group
             }
             
         }
-        public async Task PlaySoundEffect(string soundEffect, SoundManager soundManager)
+        public async Task PlaySoundEffect(string soundEffect)
         {
             if(SoundEffectUserSet)
             {
@@ -80,7 +80,7 @@ namespace Text_RPG_24Group
                     using (var audioFile = new AudioFileReader(audioFileLocation))
                     using (var outputDevice = new WaveOutEvent())
                     {
-                        outputDevice.Volume = soundManager.SoundSize;
+                        outputDevice.Volume = this.SoundSize;
                         outputDevice.Init(audioFile);
                         outputDevice.Play();
                         //Console.WriteLine("사운드 재생 중...");
