@@ -28,7 +28,7 @@ namespace Text_RPG_24Group
         {
             SetData();
             DungeonPlay.player = player; //DungeonPlay클래스의 player필드에 설정
-            //Program.BGMManager.PlayBGM(Program.BGMManager.SoundVillage, BGMManager, 45); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
+            Program.BGMManager.PlayBGM(Program.BGMManager.SoundVillage, BGMManager, 45); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
             DisplayMainUI();
         }
 
@@ -119,71 +119,7 @@ namespace Text_RPG_24Group
             { 1, 1, 1, 1, 1, 1 }
         })
    };
-        }
-        /*
-        public static void DisplayMainUI()
-
-        {
-            Console.Clear();
-            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
-            Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
-            Console.WriteLine();
-            Console.WriteLine("1. 상태 보기");
-            Console.WriteLine("2. 인벤토리");
-            Console.WriteLine("3. 상점");
-            Console.WriteLine("4. 퀘스트");
-            Console.WriteLine("5. 회복의 방");
-            Console.WriteLine("6. 허브 산");
-            Console.WriteLine("7. 던전입장");
-            Console.WriteLine("8. 저장하기");
-            Console.WriteLine("10. 환경설정");
-
-            Console.WriteLine("11. 선술집");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-
-            int result = CheckInput(1, 11);
-            SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundButton);//사운드(버튼)
-            switch (result)
-            {
-                case 1:
-                    DisplayStatUI();
-
-                    break;
-                case 2:
-                    DisplayInventoryUI();
-                    break;
-                case 3:
-                    DisplayShopUI();
-                    break;
-                case 4:
-                    Program.questDb[0].QuestMain();
-                    break;
-                case 5:
-                    DiplayPotionUI();
-                    break;
-                case 6:
-                     HerbUI();
-                    break;
-                case 7:
-                    DisplayDungeonUI();
-                    break;
-                //case 7:
-                //    DeleteSave();
-                //    break;
-                case 8:
-                    SaveUI();
-                    break;
-              
-                case 10:
-                    UserSettings();
-                    break;
-                case 11:
-                    Program.pub.PubMainUI();
-                    break;
-            }
-        }
-        */
+        }        
         public static void DisplayMainUI()
         {
             Console.Clear();
@@ -542,7 +478,7 @@ namespace Text_RPG_24Group
             }
         }
 
-        static void DisplayBuyUI()///////////////
+        static void DisplayBuyUI()
         {
             Console.Clear();
             Console.WriteLine("상점 - 아이템 구매");
