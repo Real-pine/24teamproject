@@ -201,6 +201,8 @@ namespace Text_RPG_24Group
         //스킬공격시페이즈
         public void Player2SkillAttack()
         {
+            int checkNumber = 0;
+
             Console.WriteLine("\n\nBattle !!");
             Console.WriteLine($"{player.Name}의 페이즈");
 
@@ -213,11 +215,19 @@ namespace Text_RPG_24Group
             //Console.WriteLine($"MP : {player.MP}/{player.MaxMP}"); <<마나
 
             Console.WriteLine("\n\n원하시는 스킬을 입력해주세요");
-            Console.WriteLine("1. 스킬1");
-            Console.WriteLine("2. 스킬2");
+            if (player.Mp >= 10)
+            {
+                checkNumber++;
+                Console.WriteLine("1. 스킬1");
+            }
+            if (player.Mp >= 15)
+            {
+                checkNumber++;
+                Console.WriteLine("2. 스킬2");
+            }
             Console.WriteLine("0. 돌아가기");
 
-            int result = Program.CheckInput(0, 2);
+            int result = Program.CheckInput(0, checkNumber);
 
             switch (result)
             {

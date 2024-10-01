@@ -87,7 +87,9 @@ public class CharacterCustom
     public int Atk { get; set; }
     public int Def { get; set; }
     public int Hp { get; set; }
+    public int Mp { get; set; }
     public int MaxHp { get; set; }
+    public int MaxMp { get; set; }
     public int Gold { get; set; }
     public int Experience { get; set; } //현재 경험치
     public int[] ExpToNextLev = { 10, 35, 65, 100 }; //4레벨까지 요구경험치테이블
@@ -120,26 +122,31 @@ public class CharacterCustom
         Experience = 0; //시작경험치
         Gold = 1500; //시작골드
         Job = (JobType)jobNumber;
-        
+
+
         switch (Job)
         {
             case JobType.Warrior:
                 Atk = 10;
                 Def = 15;
                 MaxHp = 140;
+                MaxMp = 50;
                 break;
             case JobType.Mage:
                 Atk = 15;
                 Def = 8;
                 MaxHp = 100;
+                MaxMp = 70;
                 break;
             case JobType.Rogue:
                 Atk = 12;
                 Def = 12;
                 MaxHp = 120;
+                MaxMp = 55;
                 break;
         }
         Hp = MaxHp; // 현재HP를 최대HP로 초기화
+        Mp = MaxMp;
     }
     //경험치 획득 메서드
     public void GainExperience(int exp)

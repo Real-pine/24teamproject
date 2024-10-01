@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -14,42 +15,36 @@ namespace Text_RPG_24Group
 {
     public class Battle
     {
-        public CharacterCustom player;
+        public CharacterCustom player = Program.player;
 
-        public string Name { get; private set; } // 스킬 이름
-        public string Desc { get; private set; } // 스킬 설명
         public int Power { get; set; } // 공격력
-        public int Spell { get; set; } // 마력
 
-        Random random = new Random();
+        private Random random = new Random();
 
-        bool isCritical = false;
-        bool isAvoid = false;
+        private bool isCritical = false;
+        private bool isAvoid = false;
 
-        //public Battle(string name, string desc)
-        //{
-        //    Power = player.Atk;
-        //    Name = name;
-        //    Desc = desc;
-        //}
+        private int damage = 0; // 데미지
+        private int playerHp = 0;
 
-        //public Battle(string name, string tell, int atk)
-        //{
-        //    Name = name;
-        //    Desc = tell;
-        //    Power = atk;
-        //}
-
-        string[] skillName1 = { "깊게 베기", "폭발", "암습" };
-        string[] skillName2 = { "휩쓸기", "전기 사슬", "수리검 던지기" };
+        private string[] skillName1 = { "", "깊게 베기", "폭발", "암습" };
+        private string[] skillName2 = { "", "휩쓸기", "전기 사슬", "수리검 던지기" };
 
         public void BasicAttack(Monster monster) // 기본 공격 메서드
         { // 타겟이 된 몬스터 정보 받아오기
+            if(monster.curHp <= 0)
+            {
+                Console.WriteLine("몬스터가 이미 죽어있습니다.");
+                return;
+            }
+
             Console.WriteLine($"{player.Name} 의 공격!");
 
             // 공격 회피 10% ← 스킬은 회피 X
             int avoid = random.Next(0, 100);
-            isAvoid = avoid <= 10 ? false : true;
+            isAvoid = avoid <= 10 ? true : false;
+
+            Console.WriteLine(avoid);
 
             if (isAvoid)
             { // 회피시 회피 출력 후 종료
@@ -58,6 +53,14 @@ namespace Text_RPG_24Group
             else
             {
                 Power = player.Atk;
+
+                int critical = random.Next(0, 100);
+                if (critical <= 15)
+                    isCritical = true;
+                else
+                    isCritical = false;
+
+                damage = damageCalculation;
 
                 if (isCritical)
                     Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}] - 치명적 공격!!");
@@ -70,12 +73,12 @@ namespace Text_RPG_24Group
                 Console.WriteLine("\n");
                 Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName}");
                 Console.Write($"HP {monster.curHp} -> ");
-                monster.curHp =- damage;
+                monster.curHp -= damage;
                 Console.WriteLine(monster.curHp > 0 ? monster.curHp : "Dead");
+                Console.WriteLine("\n");
             }
         }
-
-        public void Skill(JobType Jop)
+        public void Skill(JobType Jop) // 스킬 설명 출력 메서드
         {
             Console.WriteLine("[내정보]");
             switch ((int)Jop)
@@ -91,42 +94,58 @@ namespace Text_RPG_24Group
                     break;
             }
             Console.WriteLine($"HP {player.Hp}/{player.MaxHp}");
-            Console.WriteLine("MP 50/50");
-            // 마나 아직 없음
+            Console.WriteLine($"MP {player.Mp}/{player.MaxMp}");
             Console.WriteLine("\n");
             Console.WriteLine($"1. {skillName1[(int)player.Job]} - MP 10");
             Console.WriteLine("공격력 * 2 로 하나의 적을 공격합니다.");
             Console.WriteLine($"2. {skillName2[(int)player.Job]} - MP 15");
             Console.WriteLine("공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.");
+            Console.WriteLine("\n");
         }
-        // ↑ 지우게 될 수 도 있는거
 
         public void SkillAttack(Monster monster, int skiilNumber) // 스킬 공격 메서드
         { // 행동 선택시 스킬 발동 마찬가지로 타겟이 된 몬스터 정보 받아오기
+            if (monster.curHp <= 0)
+            {
+                Console.WriteLine("몬스터가 이미 죽어있습니다.");
+                return;
+            }
+
+            Power = player.Atk;
+
             switch (skiilNumber)
             {
                 case 1:
-                    Spell = 10;
-                    Power = player.Atk * 2;
+                        player.Mp -= 10;
+                        Power = player.Atk * 2;
                     break;
                 case 2:
-                    Spell = 15;
-                    Power = (int)Math.Round(player.Atk * 1.5f);
-                    // 2번 공격 : 2명의 적을 랜덤으로 공격합니다. -> 한명의 적을 두번 공격합니다.
-                    // 이게 좋으려나?
+                        player.Mp -= 15;
+                        Power = (int)Math.Round(player.Atk * 1.5f);
                     break;
             }
+
+            Console.WriteLine($"{player.Name} 의 공격! - {skillName1[(int)player.Job]}");
+
+            int critical = random.Next(0, 100);
+            if (critical <= 15)
+                isCritical = true;
+            else
+                isCritical = false;
+
+            damage = damageCalculation;
 
             if (isCritical)
                 Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}] - 치명적 공격!!");
             else
                 Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}]");
-
             Console.WriteLine("\n");
+
             Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName}");
             Console.Write($"HP {monster.curHp} -> ");
-            monster.curHp =- damage;
+            monster.curHp -= damage;
             Console.WriteLine(monster.curHp > 0 ? monster.curHp : "Dead");
+            Console.WriteLine("\n");
         }
 
         public void MonsterAttack(Monster monster) // 몬스터 공격 메서드
@@ -135,7 +154,7 @@ namespace Text_RPG_24Group
 
             // 공격 회피 10%
             int avoid = random.Next(0, 100);
-            isAvoid = avoid <= 10 ? false : true;
+            isAvoid = avoid <= 10 ? true : false;
 
             if (isAvoid)
             { // 회피시 회피 출력 후 종료
@@ -145,6 +164,14 @@ namespace Text_RPG_24Group
             {
                 Power = monster.MonsterAtk;
 
+                int critical = random.Next(0, 100);
+                if (critical <= 15)
+                    isCritical = true;
+                else
+                    isCritical = false;
+
+                damage = damageCalculation;
+
                 if (isCritical)
                     Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 :{damage}] - 치명적 공격!!");
                 else
@@ -152,38 +179,45 @@ namespace Text_RPG_24Group
 
                 Console.WriteLine("\n");
                 Console.Write($"HP {player.Hp} -> ");
-                player.Hp = - damage;
+                playerHp = player.Hp;
+                // 전투 종료시 출력 될 이전 HP
+                player.Hp -= damage;
                 if (player.Hp < 0)
                     player.Hp = 0;
                 Console.WriteLine(player.Hp);
+                Console.WriteLine("\n");
             }
         }
 
-        public void ResultWin(int monsterCount)
+        public void ResultWin(int monsterCount) // 결과 - 승리 출력 메서드
         {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Battle!! - Result");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\n");
             Console.WriteLine("Victory");
             Console.WriteLine("\n");
             Console.WriteLine($"던전에서 몬스터 {monsterCount}마리를 잡았습니다.");
             Console.WriteLine("\n");
             Console.WriteLine($"Lv. {player.Level} {player.Name}");
-            Console.WriteLine($"HP {player.Hp} -> {player.Hp}");
-            // 던전 입장 전 HP? 마지막 전투 HP?
+            Console.WriteLine($"HP {playerHp} -> {player.Hp}");
+            Console.WriteLine("\n");
         }
 
-        public void ResultLose()
+        public void ResultLose() // 결과 - 패배 출력 메서드
         {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Battle!! - Result");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\n");
             Console.WriteLine("You Lose");
             Console.WriteLine("\n");
             Console.WriteLine($"Lv. {player.Level} {player.Name}");
-            Console.WriteLine($"HP {player.Hp} -> {player.Hp}");
-            // 던전 입장 전 HP? 마지막 전투 HP?
+            Console.WriteLine($"HP {playerHp} -> {player.Hp}");
+            Console.WriteLine("\n");
         }
 
-        public int damage
+        public int damageCalculation // 데미지 계산 변수
         {
             get
             {
@@ -193,18 +227,10 @@ namespace Text_RPG_24Group
                 int err = random.Next(-1, 2);
                 int errDamage = (Power / 10) * err;
 
-                // 크리티컬 15%
-                int critical = random.Next(0, 100);
-                if (critical <= 15)
-                {
+                if (isCritical)
                     outDamage = (int)Math.Round((Power + errDamage) * 1.6f);
-                    isCritical = true;
-                }
                 else
-                {
                     outDamage = Power + errDamage;
-                    isCritical = false;
-                }
 
                 return outDamage;
             }

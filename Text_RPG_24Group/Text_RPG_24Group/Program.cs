@@ -21,6 +21,7 @@ namespace Text_RPG_24Group
         public static DungeonMap[] mapDb;
         private static SoundManager BGMManager;
         private static SoundManager SoundEffectManager;
+        private static Battle battle;
     
         static void Main(string[] args)
         {
@@ -50,6 +51,7 @@ namespace Text_RPG_24Group
                 characterName = Console.ReadLine();
             }
             player = new CharacterCustom(characterName, selectedJob);
+            battle = new Battle();
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
 
