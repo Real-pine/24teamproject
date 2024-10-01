@@ -281,6 +281,7 @@ namespace Text_RPG_24Group
 
             if (activeMonster.Count == 0)
             {
+<<<<<<< HEAD
                 Console.WriteLine($"\n0. 다음");
                 int result = Program.CheckInput(0, 0);
 
@@ -302,6 +303,18 @@ namespace Text_RPG_24Group
                         MonsterPhase();
                         break;
                 }
+=======
+                case 0:
+                    MyBattlePhase();
+                    break;
+                case 1:
+                    //스킬1메서드
+                    break;
+                case 2:
+                    //스킬2메서드
+                    break;
+                    //혹은 배틀의 스킬 메서드
+>>>>>>> (Feat)Battle31
             }
         }
 

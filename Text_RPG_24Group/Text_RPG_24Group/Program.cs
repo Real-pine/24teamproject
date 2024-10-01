@@ -19,9 +19,16 @@ namespace Text_RPG_24Group
         private static string characterName;
         private static int selectedJob;
         public static DungeonMap[] mapDb;
+<<<<<<< HEAD
         public static SoundManager BGMManager;
         public static SoundManager SoundEffectManager;
         private static Pub pub;
+=======
+        private static SoundManager BGMManager;
+        private static SoundManager SoundEffectManager;
+        private static Battle battle;
+    
+>>>>>>> (Feat)Battle31
         static void Main(string[] args)
         {
             SetData();
@@ -51,7 +58,12 @@ namespace Text_RPG_24Group
                 characterName = Console.ReadLine();
             }
             player = new CharacterCustom(characterName, selectedJob);
+<<<<<<< HEAD
             pub = new Pub();
+=======
+            battle = new Battle();
+
+>>>>>>> (Feat)Battle31
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
 
             BGMManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
@@ -389,6 +401,7 @@ namespace Text_RPG_24Group
 
                     if (potion.Count > 0)
                     {
+                        player.AgeUP();
                         potion.Count--;
                         Program.player.Hp += 30;
                         Console.WriteLine("\nHP가 30 회복되었습니다.");
@@ -502,6 +515,23 @@ namespace Text_RPG_24Group
                     break;
             }
             DisplayMainUI();
+        }
+
+        public static void GameEnd(int age)
+        {
+            if (age != 40)
+                return;
+
+            Console.Clear();
+            Console.WriteLine("...");
+            Console.WriteLine("0. 은퇴");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            int result = CheckInput(0, 0);
+            // 게임 종료
+
+            if(result == 0)
+                Environment.Exit(0);
         }
     }
 }
