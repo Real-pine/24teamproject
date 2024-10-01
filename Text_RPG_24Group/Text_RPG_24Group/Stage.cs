@@ -8,8 +8,8 @@ namespace Text_RPG_24Group
 {
     class Stage
     {
-        int PlayerX = 1;
-        int PlayerY = 1;
+        public static int PlayerX = 1;
+        public static int PlayerY = 1;
 
         // 플레이어 이동 메서드
         public static void PlayerMove(int playerX, int playerY, DungeonMap map)
@@ -78,11 +78,12 @@ namespace Text_RPG_24Group
                     map.SetTile(newPlayerY, newPlayerX, 0);
                     playerX = newPlayerX;
                     playerY = newPlayerY;
-                    //전투 씬
+                    DungeonPlay.EncounterUI();
                 }
                 else if (map.GetTile(newPlayerY, newPlayerX) == 3)//마을로 이동
                 {
                     Console.Clear();
+                    Program.DisplayMainUI();
                     break;
                 }
 
