@@ -115,6 +115,7 @@ namespace Text_RPG_24Group
         {
             BGMManager.PlayBGM(BGMManager, BGMManager.SoundVillage, 45);
             Console.Clear();
+            Ending(player.age);
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
             Console.WriteLine($"\n현재 나이: {Program.player.age} 행동력: {Program.player.act}\n");
@@ -599,8 +600,16 @@ namespace Text_RPG_24Group
         }
 
         static void DisplayDungeonUI()
-        {
-            DungeonPlay.InDungeonUI();
+        { // 체력이 없다면 입장 불가
+            if (player.Hp <= 0)
+            {
+                Console.WriteLine($"체력이 부족합니다.[현재 체력 : {player.Hp}]");
+                Console.WriteLine("0. 다른 행동 고르기");
+                if (CheckInput(0, 0) == 0)
+                    DisplayMainUI();
+            }
+            else
+                DungeonPlay.InDungeonUI();
         }
 
         public static int CheckInput(int min, int max)

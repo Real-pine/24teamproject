@@ -124,12 +124,15 @@ namespace Text_RPG_24Group
                     Program.DisplayMainUI();
                     break;
                 case 1:
+                    player.age++;
                     StartStage(Difficulty.Easy);//쉬움 스테이지 맵db연결, 쉬움몬스터구성
                     break;
                 case 2:
+                    player.age++;
                     StartStage(Difficulty.Normal);//보통 스테이지 맵db연결, 보통몬스터구성
                     break;
                 case 3:
+                    player.age++;
                     StartStage(Difficulty.Hard);//어려움 스테이지 맵db연결, 어려움몬스터구성
                     break;
             }
@@ -294,13 +297,31 @@ namespace Text_RPG_24Group
             battle.Skill(player.Job);
             int skillChoice = Program.CheckInput(1, 2);
 
-            Console.WriteLine("대상 몬스터를 선택하세요:");
-            DisplayMonsters();
-            int target = Program.CheckInput(1, activeMonster.Count) -1;
-            Monster targetMonster = activeMonster[target];
+            if (skillChoice == 1)
+            {
+                Console.WriteLine("대상 몬스터를 선택하세요:");
+                DisplayMonsters();
+                int target = Program.CheckInput(1, activeMonster.Count) - 1;
+                Monster targetMonster = activeMonster[target];
 
-            battle.SkillAttack(targetMonster, skillChoice);
-            CheckMonsterDefeated(targetMonster);
+                battle.SkillAttack(targetMonster, skillChoice);
+                CheckMonsterDefeated(targetMonster);
+            }
+            else if (skillChoice == 2)
+            {
+                Console.WriteLine("대상 몬스터를 랜덤 선택합니다.");
+                int i = 0;
+                while (i < 2)
+                {
+                    DisplayMonsters();
+                    int target = random.Next(0, activeMonster.Count);
+                    Monster targetMonster = activeMonster[target];
+
+                    battle.SkillAttack(targetMonster, skillChoice);
+                    CheckMonsterDefeated(targetMonster);
+                    i++;
+                }
+            }
 
             if (activeMonster.Count == 0)
             {
@@ -476,7 +497,8 @@ namespace Text_RPG_24Group
         {
             currentDifficulty = Difficulty.Easy;
             SetMonsterGroups();
-            activeMonster.Clear();
+            if(activeMonster != null)
+                activeMonster.Clear();
             defeatedMonsters.Clear();
             Program.ResetMapDb();
         }

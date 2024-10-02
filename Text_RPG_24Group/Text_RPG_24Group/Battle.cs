@@ -101,7 +101,7 @@ namespace Text_RPG_24Group
             Console.WriteLine("\n");
             Console.WriteLine($"1. {skillName1[(int)player.Job]} - MP 10");
             Console.WriteLine("공격력 * 2 로 하나의 적을 공격합니다.");
-            Console.WriteLine($"2. {skillName2[(int)player.Job]} - MP 15");
+            Console.WriteLine($"2. {skillName2[(int)player.Job]} - MP 20");
             Console.WriteLine("공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.");
         }
 
@@ -130,23 +130,23 @@ namespace Text_RPG_24Group
                     }
                     player.Mp -= 10;
                     Atk = player.Atk * 2;
+                    Console.WriteLine($"{player.Name} 의 공격! - {skillName1[(int)player.Job]}");
                     break;
                 case 2:
-                    if (player.Mp < 15)
+                    if (player.Mp < 20)
                     {
                         Console.WriteLine();
-                        Console.WriteLine($"마나가 부족합니다.[부족한 마나 : {15 - player.Mp}]");
+                        Console.WriteLine($"마나가 부족합니다.[부족한 마나 : {20 - player.Mp}]");
                         Console.WriteLine("아무 키나 입력하세요.");
                         Console.ReadLine();
                         DungeonPlay.MyBattlePhase();
                         return;
                     }
-                    player.Mp -= 15;
+                    player.Mp -= 10;
                     Atk = (int)Math.Round(player.Atk * 1.5f);
+                    Console.WriteLine($"{player.Name} 의 공격! - {skillName2[(int)player.Job]}");
                     break;
             }
-
-            Console.WriteLine($"{player.Name} 의 공격! - {skillName1[(int)player.Job]}");
 
             int critical = random.Next(0, 100);
             if (critical <= 15)
