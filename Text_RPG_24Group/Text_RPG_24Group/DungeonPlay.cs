@@ -174,10 +174,15 @@ namespace Text_RPG_24Group
             {
                 case 0:
                     player.Hp -= 50;
-                    Console.WriteLine($"{player.Name}의 HP가 50 감소했습니다. (현재 HP: {player.Hp}/{player.MaxHp})");
-                    Console.WriteLine("아무 키나 누르면 계속합니다...");
-                    Console.ReadKey();
-                    Stage.PlayerMove(Program.mapDb[(int)currentDifficulty - 1]); 
+                    if (player.Hp < 0) FailResult();
+                    else
+                    {
+                        Console.WriteLine($"{player.Name}의 HP가 50 감소했습니다. (현재 HP: {player.Hp}/{player.MaxHp})");
+                        Console.WriteLine("아무 키나 누르면 계속합니다...");
+                        Console.ReadKey();
+                        Stage.MovePlayerToPreviousPosition();
+                        Stage.PlayerMove(Program.mapDb[(int)currentDifficulty - 1]);
+                    }
                     break;
                 case 1:
                     MyBattlePhase();
@@ -199,26 +204,36 @@ namespace Text_RPG_24Group
             Console.WriteLine($"MP : {player.Mp}/{player.MaxMp}");
 
             Console.WriteLine("\n\n원하시는 행동을 입력해주세요");
-            Console.WriteLine("1. 기본공격하기");
-            Console.WriteLine("2. 스킬사용");
+            Console.WriteLine("1. 기본 공격하기");
+            Console.WriteLine("2. 스킬 사용하기");
+            Console.WriteLine("3. 회복물약 사용하기");
             Console.WriteLine("0. 도망가기(HP 50감소)");
 
-            int result = Program.CheckInput(0, 2);
+            int result = Program.CheckInput(0, 3);
 
             switch (result)
             {
                 case 0:
                     player.Hp -= 50;
-                    Console.WriteLine($"{player.Name}의 HP가 50 감소했습니다. (현재 HP: {player.Hp}/{player.MaxHp})");
-                    Console.WriteLine("아무 키나 누르면 계속합니다...");
-                    Console.ReadKey();
-                    Stage.PlayerMove(Program.mapDb[(int)currentDifficulty - 1]);
+                    if (player.Hp < 0) FailResult();
+                    else
+                    {
+                        Console.WriteLine($"{player.Name}의 HP가 50 감소했습니다. (현재 HP: {player.Hp}/{player.MaxHp})");
+                        Console.WriteLine("아무 키나 누르면 계속합니다...");
+                        Console.ReadKey();
+                        Stage.MovePlayerToPreviousPosition();
+                        Stage.PlayerMove(Program.mapDb[(int)currentDifficulty - 1]);
+                    }
                     break;
                 case 1:
                     PlayerBasicAttack();
                     break;
                 case 2:
                     PlayerSkillAttack();
+                    break;
+                case 3:
+                    UsePotion();
+                    MyBattlePhase();
                     break;
             }
         }
@@ -391,6 +406,7 @@ namespace Text_RPG_24Group
                         Console.WriteLine("던전의 모든 몬스터를 물리쳤습니다!");
                         Console.WriteLine("0. 마을로 돌아가기");
                         Program.CheckInput(0, 0);
+                        ResetMap();
                         Program.DisplayMainUI();
                     }
                     else
@@ -412,7 +428,7 @@ namespace Text_RPG_24Group
         public static void FailResult()
         {
             Console.WriteLine("\n\n공략 실패..");
-            Console.WriteLine("\n\n0.회복의 방으로 간다.");
+            Console.WriteLine("\n\n0.신전으로 간다.");
             int result = Program.CheckInput(0, 0);
 
             switch (result)
@@ -423,12 +439,12 @@ namespace Text_RPG_24Group
             }
         }
 
-        //전투승리시 기존맵의 2(적)지우기
+        //전투승리 시 기존맵의 2(적)지우기
         private static void RemoveMonsterFromMap(int x, int y)
         {
             Program.mapDb[(int)currentDifficulty - 1].SetTile(y, x, 0);
         }
-        
+
         //맵에 적(2)이 남아있나 확인하는 로직
         private static bool AreAllMonsterDefeated()
         {
@@ -444,6 +460,37 @@ namespace Text_RPG_24Group
                 }
             }
             return true;
+        }
+
+        //맵 초기화 메서드
+        public static void ResetMap()
+        {
+            currentDifficulty = Difficulty.Easy;
+            SetMonsterGroups();
+            activeMonster.Clear();
+            defeatedMonsters.Clear();
+            Program.ResetMapDb();
+        }
+
+        //포션 사용 메서드
+        private static void UsePotion()
+        {
+            Console.Clear();
+            if (Program.PotionCount() > 0)
+            {
+                int healAmount = Program.PotionValue();
+                player.Hp = Math.Min(player.Hp + healAmount, player.MaxHp);
+                Program.UsePotionFromInventory();
+                Console.WriteLine($"{Program.PotionName()}을(를) 사용했습니다. HP가 {healAmount}만큼 회복되었습니다.");
+                Console.WriteLine($"현재 HP: {player.Hp}/{player.MaxHp}");
+                Console.WriteLine($"남은 {Program.PotionName()}: {Program.PotionCount()}개");
+            }
+            else
+            {
+                Console.WriteLine($"{Program.PotionName()}이(가) 없습니다.");
+            }
+            Console.WriteLine("계속 진행하려면 아무 키나 누르세요.");
+            Console.ReadLine();
         }
     }
 
