@@ -106,7 +106,7 @@ namespace Text_RPG_24Group
                     break;
             }
         }
-
+        //스테이지선택UI메서드
         public static void ChooseStage()
         {
             Console.Clear();
@@ -134,7 +134,7 @@ namespace Text_RPG_24Group
                     break;
             }
         }
-
+        //난이도에 따른 스테이지 선택메서드
         private static void StartStage(Difficulty difficulty)
         {
             currentDifficulty = difficulty; //난이도설정
@@ -382,7 +382,7 @@ namespace Text_RPG_24Group
             player.Gold += totlaGold;
             Console.WriteLine($"Gold: {oldGold} -> {player.Gold} (+{totlaGold})");
             //랜덤 상점 아이템 드롭(15프로 이하)
-            if (random.Next(100) < 101)//15
+            if (random.Next(100) < 15)//15
             {
                     Item droppedItem = GetRandomItem();
                 if (Program.player.HasItem(droppedItem))

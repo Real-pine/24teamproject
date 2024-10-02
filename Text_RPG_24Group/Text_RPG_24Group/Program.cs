@@ -26,6 +26,8 @@ namespace Text_RPG_24Group
         private static Pub pub;
         static void Main(string[] args)
         {
+            Console.WindowHeight = 40;
+            Console.WindowWidth = 70;
             SetData();
             DungeonPlay.player = player; //DungeonPlay클래스의 player필드에 설정
             DisplayMainUI();
