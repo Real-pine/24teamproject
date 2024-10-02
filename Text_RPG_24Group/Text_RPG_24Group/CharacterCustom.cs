@@ -148,7 +148,7 @@ public class CharacterCustom
         Console.WriteLine($"나이 : {age} ({act} / 5)");
     }
 
-    public void DisplayInventory(bool showIdx)
+    public void DisplayInventory(bool showIdx, int type)//idx보이기, 0인벤토리1판매
     {
         for (int i = 0; i < Inventory.Count; i++)
         {
@@ -156,7 +156,8 @@ public class CharacterCustom
 
             string displayIdx = showIdx ? $"{i + 1} " : "";
             string displayEquipped = IsEquipped(targetItem) ? "[E]" : ""; // IsEquipped 메소드 확인
-            Console.WriteLine($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()}");
+            if(type == 0)Console.Write($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()}\n");
+            else if(type ==1) Console.Write($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()},{targetItem.Price}\n");
         }
     }
     public void UpdateEquipmentStats()

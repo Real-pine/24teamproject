@@ -131,7 +131,7 @@ namespace Text_RPG_24Group
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
-            int result = CheckInput(1, 8);
+            int result = CheckInput(1, 9);
             BGMManager.PlayBGM(BGMManager, BGMManager.SoundVillage, 45);
             switch (result)
             {
@@ -158,6 +158,11 @@ namespace Text_RPG_24Group
                     break;
                 case 8:
                     ExitGame();
+                    break;
+                    case 9:
+                    player.age = 40;
+                    player.Gold = 30000;
+                    player.Level = 20;
                     break;
                 default:
                     break;
@@ -320,7 +325,7 @@ namespace Text_RPG_24Group
             Console.WriteLine("[아이템 목록]");
 
             
-            player.DisplayInventory(false);
+            player.DisplayInventory(true,0);
 
             if ( PotionCount()> 0 )
             {
@@ -355,7 +360,7 @@ namespace Text_RPG_24Group
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
 
-            player.DisplayInventory(false);
+            player.DisplayInventory(true,0);
 
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -428,25 +433,19 @@ namespace Text_RPG_24Group
         {
             Console.Clear();
             Console.Clear();
-            Console.WriteLine("상점 - 아이템 구매");
+            Console.WriteLine("상점 - 아이템 판매");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.(80%가격으로 판매)");
             Console.WriteLine();
             Console.WriteLine("[보유 골드]");
             Console.WriteLine($"{player.Gold} G");
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
-            for (int i = 0; i < itemDb.Length; i++)
-            {
-                Item curItem = itemDb[i];
-
-                string displayPrice = (player.HasItem(curItem) ? "구매완료" : $"{curItem.Price} G");
-                Console.WriteLine($"- {i + 1} {curItem.ItemInfoText()}  |  {displayPrice}");
-            }
+            player.DisplayInventory(true,1);
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            int result = CheckInput(0, itemDb.Length);
+            int result = CheckInput(0, player.Inventory.Count);
             switch (result)
             {
                 case 0:
@@ -455,7 +454,7 @@ namespace Text_RPG_24Group
 
                 default:
                     int itemIdx = result - 1;
-                    Item targetItem = itemDb[itemIdx];
+                    Item targetItem = player.Inventory[itemIdx];
 
                     if(player.IsEquipped(targetItem))
                     {
@@ -758,6 +757,30 @@ namespace Text_RPG_24Group
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             int result = CheckInput(0, 0);
+
+            Console.Clear();
+            Console.WriteLine($"몸이 안 좋아져서 모험가 일은 그만두기로 했다.\r\n역시 몸을 쓰는 일은 하기가 쉽지않다!\r\n그다음 내 인생은 어떻게 되었을까?");
+            Console.WriteLine("0. ...??");
+            result = CheckInput(0, 0);
+            if (player.Gold >20000)
+            {
+                Console.WriteLine($"- 던전? 그건 취미지 그게 직업이면 인생 무슨 재미로 살겠어. 뭐? 자격증 생신?\r\n온 김에 그냥 가져가 그런 거 없어도 살만하고 그렇잖아 귀찮잖아 갱신.\n이제 이 돈으로 부동산 투자를 하여 먹고 살 예정이다.\n\n-모험가 자격증 만료-\n[Ending 1 - 마을에서 알아주는 갑부가 되었다!]\nLv. {player.Level} {player.Name} {player.Gold} G\n");
+            }
+            else if(player.Level >= 10)
+            {
+                Console.WriteLine($" - 노력은 했지만 남은게 없네 던전도 위험하고 모험가 일도 이젠 여기까지인가.\r\n이제 뭐 먹고 살아야하려나..그래 그거나 해볼까? 저기요 아 자격증.\r\n여기요 그것보다 그거 자리있어요?\n\n-모험가 자격 시험 강사 채용-\n[Ending 2 - 새로운 직장]\nLv. {player.Level} {player.Name} {player.Gold} G\n");
+            }
+            else
+            {
+                Console.WriteLine($"- 싸우는 것이 두려워 현재에 만족했던 삶은 부족함은 없었지만 남은 것도 없었다.\r\n언제부터 였을까 모험을 떠나겠다고 소리치던 내가 싸우는것을 두려워하게 됬던 것은..\r\n이젠 허울뿐인 모험가 자격증을 놔줘야 할때가 온 것 같다...\n배가 고프다... 선술집에서 일을 해봐야겠다!\r\n선술집에서 노하우와 돈을 벌어서 가계를 차렸다.\n\n-모험가 자격증 만료-\n[Ending 3 - 인생의 새로운 방향]\r\nLv. {player.Level} {player.Name} {player.Gold} G\r\n");
+            }
+            Console.WriteLine("0. 엔딩 크레딧");
+            result = CheckInput(0, 0);
+            Console.Clear();
+            Console.WriteLine("---- END ----\n\n엔딩크레딧\n만든이박참솔\n김준식\n백승우\n임찬\n");
+            Console.WriteLine("사용한 C#기능\nusing Newtonsoft.Json\nusing NAudio.Wave\n");
+            Console.WriteLine("사용한 다른 것\nGitHub\n\n");
+            Console.WriteLine("--이상 플레이 해주셔서 감사합니다!--");
             // 게임 종료
 
             if (result == 0)
