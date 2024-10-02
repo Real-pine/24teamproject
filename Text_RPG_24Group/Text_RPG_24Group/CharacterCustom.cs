@@ -226,6 +226,14 @@ public class CharacterCustom
     }
     public bool HasItem(Item item)
     {
-        return Inventory.Contains(item);
+        for (int i = 0; i < Inventory.Count; i++)
+        {
+            Item iItem = Inventory[i];
+            if (iItem.Name == item.Name)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -26,11 +26,7 @@ namespace Text_RPG_24Group
             {
                 string json = File.ReadAllText(filePath);
                 CharacterCustom character = JsonConvert.DeserializeObject<CharacterCustom>(json);
-                character.UpdateEquipmentStats();
                 Console.WriteLine($"캐릭터 데이터를 {saveName}에서 불러왔습니다.");
-
-                // 인벤토리 상태 출력 (디버깅 용)
-                character.DisplayInventory(true);
 
                 return character;
             }
@@ -63,15 +59,8 @@ namespace Text_RPG_24Group
             string filePath = Path.Combine(saveDirectory, saveName + ".json");
             if (File.Exists(filePath))
             {
-                try
-                {
                     File.Delete(filePath);
                     Console.WriteLine("파일이 성공적으로 삭제되었습니다.");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"파일 삭제 중 오류가 발생했습니다: {ex.Message}");
-                }
             }
             else
             {
