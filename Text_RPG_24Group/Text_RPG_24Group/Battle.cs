@@ -121,6 +121,9 @@ namespace Text_RPG_24Group
                     {
                         Console.WriteLine();
                         Console.WriteLine($"마나가 부족합니다.[부족한 마나 : {10 - player.Mp}]");
+                        Console.WriteLine("아무 키나 입력하세요.");
+                        Console.ReadLine();
+                        DungeonPlay.MyBattlePhase();
                         return;
                     }
                     player.Mp -= 10;
@@ -131,6 +134,9 @@ namespace Text_RPG_24Group
                     {
                         Console.WriteLine();
                         Console.WriteLine($"마나가 부족합니다.[부족한 마나 : {15 - player.Mp}]");
+                        Console.WriteLine("아무 키나 입력하세요.");
+                        Console.ReadLine();
+                        DungeonPlay.MyBattlePhase();
                         return;
                     }
                     player.Mp -= 15;
