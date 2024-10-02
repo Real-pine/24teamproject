@@ -17,7 +17,7 @@ namespace Text_RPG_24Group
         public static Monster[] monsterDb;
         public static Quest[] questDb;
         private static Herb[] herbDb;
-        private static Poition potion;       
+        public static Poition potion;       
         private static string characterName;
         private static int selectedJob;
         public static DungeonMap[] mapDb;
@@ -33,35 +33,27 @@ namespace Text_RPG_24Group
 
         protected static void SetData()
         {
+            //캐릭터 생성
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine("\n원하시는 이름을 설정해주세요.\n");
-
             characterName = Console.ReadLine();//이름 입력
-
             Console.Clear();
             Console.WriteLine("직업을 선택해주세요.");
             Console.WriteLine("\n\n1. 전사");
             Console.WriteLine("2. 마법사");
             Console.WriteLine("3. 도적\n");
-
             selectedJob = int.Parse(Console.ReadLine());//직업선택
-            if (string.IsNullOrEmpty(characterName))
-            {
-                Console.WriteLine("이름을 다시 입력해주세요.");
-                characterName = Console.ReadLine();
-            }
             player = new CharacterCustom(characterName, selectedJob);
-            pub = new Pub();
-            BGMManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
-            SoundEffectManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
-        herbDb = new Herb[]
 
+            pub = new Pub();        
+            herbDb = new Herb[]
             {
                 new Herb("나무 뿌리", "10개 합치면 포션",0),
                 new Herb("빨간 잎", "3개 합치면 포션",0)
             };
-
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
+            BGMManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
+            SoundEffectManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
             //주소 예시//C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group//뒤에 @꼭 붙히세요
             itemDb = new Item[]//string name, int type, int value, string desc, int price
             {
@@ -234,7 +226,7 @@ namespace Text_RPG_24Group
             herbDb[0].Count += rootCount;
             herbDb[1].Count += leafCount;
             player.Gold -= 50;
-
+            player.AgeUP();
             Console.WriteLine("약초를 얻었습니다!");
             Console.WriteLine($"나무 뿌리: {rootCount}개");
             Console.WriteLine($"빨간 잎: {leafCount}개");
@@ -324,6 +316,7 @@ namespace Text_RPG_24Group
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
 
+            
             player.DisplayInventory(false);
 
             if ( PotionCount()> 0 )
@@ -359,7 +352,7 @@ namespace Text_RPG_24Group
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
 
-            player.DisplayInventory(true);
+            player.DisplayInventory(false);
 
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -629,13 +622,12 @@ namespace Text_RPG_24Group
             Console.Clear();
             Console.WriteLine("1.저장하기");
             Console.WriteLine("2.불러오기");
-            Console.WriteLine("3.저장된 파일");
-            Console.WriteLine("4.저장된 파일제거");
+            Console.WriteLine("3.저장된 파일제거");
             Console.WriteLine("\n0.나가기");
             Console.WriteLine("\n원하시는 행동을 입력해주세요.");
 
 
-            int result = CheckInput(0, 4);
+            int result = CheckInput(0, 3);
 
             switch (result)
             {
@@ -657,16 +649,10 @@ namespace Text_RPG_24Group
 
                 case 3:
 
-                    ListSaves();
-
-                    break;
-
-
-                case 4:
-
                     DeleteSave();
 
                     break;
+
             }
 
 
@@ -693,6 +679,8 @@ namespace Text_RPG_24Group
 
         static void Load()
         {
+            Console.Clear();
+            SaveLoadSystem.ListSaves();
             Console.Write("불러올 파일 이름을 입력하세요: ");
             string saveName = Console.ReadLine();
             player = SaveLoadSystem.LoadCharacter(saveName);       
@@ -703,9 +691,13 @@ namespace Text_RPG_24Group
 
         static void DeleteSave()
         {
+            Console.Clear();
+            SaveLoadSystem.ListSaves();
             Console.Write("삭제할 파일 이름을 입력하세요: ");
             string saveName = Console.ReadLine();
             SaveLoadSystem.DeleteSaveFile(saveName);
+
+
             Console.ReadLine();
             SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundSelect);
             SaveUI();

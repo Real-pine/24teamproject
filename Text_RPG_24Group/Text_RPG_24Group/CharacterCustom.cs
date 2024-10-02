@@ -8,73 +8,7 @@ using System.Threading.Tasks;
 
 namespace Text_RPG_24Group;
 
-public class SaveLoadSystem
-{
-    private static string saveDirectory = "Saves";
 
-    public static void SaveCharacter(CharacterCustom character, string saveName)
-    {
-        string filePath = Path.Combine(saveDirectory, saveName + ".json");
-        string json = JsonConvert.SerializeObject(character, Formatting.Indented);
-        File.WriteAllText(filePath, json);
-        Console.WriteLine($"캐릭터 데이터를 {saveName}에 저장했습니다.");
-    }
-
-    public static CharacterCustom LoadCharacter(string saveName)
-    {
-        string filePath = Path.Combine(saveDirectory, saveName + ".json");
-        if (File.Exists(filePath))
-        {
-            string json = File.ReadAllText(filePath);
-            CharacterCustom character = JsonConvert.DeserializeObject<CharacterCustom>(json);
-            Console.WriteLine($"캐릭터 데이터를 {saveName}에서 불러왔습니다.");
-            return character;
-        }
-        else
-        {
-            Console.WriteLine($"{saveName}에 저장된 데이터가 없습니다.");
-            return null;
-        }
-    }
-
-    public static void ListSaves()
-    {
-        string[] files = Directory.GetFiles(saveDirectory, "*.json");
-        if (files.Length > 0)
-        {
-            Console.WriteLine("저장된 파일 목록:");
-            foreach (string file in files)
-            {
-                Console.WriteLine(Path.GetFileNameWithoutExtension(file));
-            }
-        }
-        else
-        {
-            Console.WriteLine("저장된 파일이 없습니다.");
-        }
-    }
-
-    public static void DeleteSaveFile(string saveName)
-    {
-        string filePath = Path.Combine(saveDirectory, saveName + ".json");
-        if (File.Exists(filePath))
-        {
-            try
-            {
-                File.Delete(filePath);
-                Console.WriteLine("파일이 성공적으로 삭제되었습니다.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"파일 삭제 중 오류가 발생했습니다: {ex.Message}");
-            }
-        }
-        else
-        {
-            Console.WriteLine("삭제할 파일이 존재하지 않습니다.");
-        }
-    }
-}
 
 
 
@@ -206,8 +140,8 @@ public class CharacterCustom
     {
         Console.WriteLine($"Lv. {Level:D2}");
         Console.WriteLine($"{Name} {{ {Job} }}");
-        Console.WriteLine(ExtraAtk == 0 ? $"공격력 : {Atk}" : $"공격력 : {Atk + ExtraAtk} (+{ExtraAtk})");
-        Console.WriteLine(ExtraDef == 0 ? $"방어력 : {Def}" : $"방어력 : {Def + ExtraDef} (+{ExtraDef})");
+        Console.WriteLine($"공격력 : {Atk + ExtraAtk} (+{ExtraAtk})");
+        Console.WriteLine($"방어력 : {Def + ExtraDef} (+{ExtraDef})");
         Console.WriteLine($"체력 : {Hp}/{MaxHp}");
         Console.WriteLine($"마나 : {Mp}/{MaxMp}");
         Console.WriteLine($"Gold : {Gold} G");
@@ -221,42 +155,65 @@ public class CharacterCustom
             Item targetItem = Inventory[i];
 
             string displayIdx = showIdx ? $"{i + 1} " : "";
-            string displayEquipped = IsEquipped(targetItem) ? "[E]" : "";
+            string displayEquipped = IsEquipped(targetItem) ? "[E]" : ""; // IsEquipped 메소드 확인
             Console.WriteLine($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()}");
         }
     }
+    public void UpdateEquipmentStats()
+    {
+        ExtraAtk = 0;
+        ExtraDef = 0;
 
+        foreach (var item in EquipList)
+        {
+            if (item.Type == 0)
+                ExtraAtk += item.Value;
+            else
+                ExtraDef += item.Value;
+        }
+    }
     public void EquipItem(Item item)
     {
-        Item equippedItem = null;
-        for (int i = 0; i < EquipList.Count; i++)
+        if (IsEquipped(item))
         {
-            if (EquipList[i].Type == item.Type)
+            // 이미 장착된 아이템을 선택한 경우, 장착 해제
+            for (int i = 0; i < EquipList.Count; i++)
             {
-                equippedItem = EquipList[i];
-                break;
+                if (EquipList[i].Name == item.Name)
+                {
+                    EquipList.RemoveAt(i);
+                    break;
+                }
             }
         }
-        if (equippedItem != null)
+        else
         {
-            EquipList.Remove(equippedItem);
-            if (equippedItem.Type == 0)
-                ExtraAtk -= equippedItem.Value;
-            else
-                ExtraDef -= equippedItem.Value;
+            // 동일한 타입의 아이템이 이미 장착되어 있으면 해제
+            Item equippedItem = null;
+            for (int i = 0; i < EquipList.Count; i++)
+            {
+                if (EquipList[i].Type == item.Type)
+                {
+                    equippedItem = EquipList[i];
+                    break;
+                }
+            }
+
+            if (equippedItem != null)
+            {
+                EquipList.Remove(equippedItem);
+            }
+
+            EquipList.Add(item);
         }
 
-        EquipList.Add(item);
-        if (item.Type == 0)
-            ExtraAtk += item.Value;
-        else
-            ExtraDef += item.Value;
-        Program.questDb[1].QuestAddItem(item);
+        UpdateEquipmentStats(); // 장착 상태가 변경되면 스탯 업데이트
+
     }
 
     public bool IsEquipped(Item item)
     {
-        return EquipList.Contains(item);
+        return EquipList.Any(e => e.Name == item.Name);
     }
 
     public void GetItem(Item item)
