@@ -322,6 +322,11 @@ namespace Text_RPG_24Group
 
             player.DisplayInventory(false);
 
+            if ( PotionCount()> 0 )
+            {
+                Console.WriteLine($"{potion.Name} | {potion.Desc} | {potion.Count}개");
+            }
+
             Console.WriteLine();
             Console.WriteLine("1. 장착 관리");
             Console.WriteLine("0. 나가기");
@@ -548,7 +553,7 @@ namespace Text_RPG_24Group
         public static void DiplayPotionUI()
         {
             Console.Clear();
-            Console.WriteLine("회복의 방.");
+            Console.WriteLine("신전");
             Console.WriteLine("\n200골드를 지불하면 HP를 회복할수있습니다."+"(남은골드 :" +player.Gold+")");
             Console.WriteLine("\n0. 나가기");
             Console.WriteLine("1. 회복하기");
@@ -747,6 +752,50 @@ namespace Text_RPG_24Group
 
             if(result == 0)
                 Environment.Exit(0);
+        }
+
+        //맵 초기화 메서드
+        public static void ResetMapDb()
+        {
+            mapDb = new DungeonMap[]
+            {
+                new DungeonMap(new int[,]
+                {
+                    { 1, 3, 1, 1, 1, 1 },
+                    { 1, 0, 0, 0, 0, 1 },
+                    { 1, 1, 1, 1, 0, 1 },
+                    { 1, 2, 0, 1, 0, 1 },
+                    { 1, 0, 0, 2, 0, 1 },
+                    { 1, 1, 1, 1, 1, 1 }
+                }),
+                new DungeonMap(new int[,]
+                {
+                    { 1, 3, 1, 1, 1, 1 },
+                    { 1, 0, 0, 1, 0, 1 },
+                    { 1, 1, 2, 1, 0, 1 },
+                    { 1, 0, 0, 1, 0, 1 },
+                    { 1, 0, 0, 2, 0, 1 },
+                    { 1, 1, 1, 1, 1, 1 }
+                }),
+                new DungeonMap(new int[,]
+                {
+                    { 1, 3, 1, 1, 1, 1 },
+                    { 1, 0, 1, 0, 2, 1 },
+                    { 1, 0, 1, 0, 0, 1 },
+                    { 1, 0, 1, 2, 0, 1 },
+                    { 1, 0, 2, 0, 0, 1 },
+                    { 1, 1, 1, 1, 1, 1 }
+                })
+            };
+        }
+        
+        //포션 접근 제한 문제 관련 메서드들
+        public static int PotionCount() { return potion.Count; }
+        public static string PotionName() { return potion.Name; }
+        public static int PotionValue() { return potion.Value; }
+        public static void UsePotionFromInventory()
+        {
+            if (potion.Count > 0) potion.Count--;
         }
     }
 }

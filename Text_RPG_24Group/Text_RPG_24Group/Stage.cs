@@ -10,12 +10,23 @@ namespace Text_RPG_24Group
     {
         public static int PlayerX { get; private set; } = 1;
         public static int PlayerY { get; private set; } = 1;
+        public static int PreviousPlayerX { get; set; } = 1;
+        public static int PreviousPlayerY { get; set; } = 1;
 
-        //마지막 위치 업데이트메서드
+        //마지막 위치정보 저장 메서드
         public static void SetPlayerPosition(int x, int y)
         {
+            PreviousPlayerX = PlayerX;
+            PreviousPlayerY = PlayerY;
             PlayerX = x;
             PlayerY = y;
+        }
+
+        //직전 위치정보 저장메서드
+        public static void MovePlayerToPreviousPosition()
+        {
+            PlayerX = PreviousPlayerX;
+            PlayerY = PreviousPlayerY;
         }
 
         // 플레이어 이동 메서드
@@ -81,13 +92,13 @@ namespace Text_RPG_24Group
                 }
                 else if (map.GetTile(newPlayerY, newPlayerX) == 2) //적과 컨택 > 전투시작
                 {
-                    map.SetTile(newPlayerY, newPlayerX, 0);
                     SetPlayerPosition(newPlayerX, newPlayerY);
                     DungeonPlay.EncounterUI();
                 }
                 else if (map.GetTile(newPlayerY, newPlayerX) == 3)//마을로 이동
                 {
                     Console.Clear();
+                    DungeonPlay.ResetMap();
                     Program.DisplayMainUI();
                     break;
                 }
