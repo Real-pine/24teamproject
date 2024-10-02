@@ -106,7 +106,7 @@ namespace Text_RPG_24Group
                     break;
             }
         }
-
+        //스테이지선택UI메서드
         public static void ChooseStage()
         {
             Console.Clear();
@@ -134,7 +134,7 @@ namespace Text_RPG_24Group
                     break;
             }
         }
-
+        //난이도에 따른 스테이지 선택메서드
         private static void StartStage(Difficulty difficulty)
         {
             currentDifficulty = difficulty; //난이도설정
