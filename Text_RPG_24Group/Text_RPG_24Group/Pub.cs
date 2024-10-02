@@ -12,7 +12,7 @@ namespace Text_RPG_24Group
         public static void PubMainUI()
         {
         Console.Clear();
-            Console.WriteLine("\n\r선술집에 오신 것을 환영합니다!(메인홀)\n\r");
+            Console.WriteLine("\n\r마을중앙에 들어섰다. 원하는 행동을 선택하자!(메인홀)\n\r");
             Console.WriteLine("원하시는 기능을 선택해주세요>");
             Console.WriteLine("1. 숙박");
             Console.WriteLine("2. 도박");
@@ -24,6 +24,8 @@ namespace Text_RPG_24Group
             Console.WriteLine("0. 뒤로가기");
             //회복에방, 퀘스트
             int input = Program.CheckInput(0, 6);
+            Program.BGMManager.PlayBGM(Program.BGMManager, Program.BGMManager.SoundVillage, 45);
+
             switch (input)
             {
                 case 0:
@@ -56,8 +58,9 @@ namespace Text_RPG_24Group
             Console.Clear();
             Console.WriteLine("\n\r숙박시설에 오신 것을 환영합니다!\n\r");
             Console.WriteLine($"\n현재 채력 : {Program.player.Hp}, 소지금 : {Program.player.Gold}\n");
+            Console.WriteLine("\n\r한번 이용할때마다 행동력을 1소모합니다!\n\r");
             Console.WriteLine("원하시는 기능을 선택해주세요>");
-            Console.WriteLine("1. 노숙    (20골드 HP 10회복)");
+            Console.WriteLine("1. 노숙    ( 0골드 HP 10회복)");
             Console.WriteLine("2. 일반 방 (50골드 HP 30회복)");
             Console.WriteLine("3. 고급 방 (60골드 HP 50회복)");
             Console.WriteLine("0. 뒤로가기");
@@ -80,11 +83,12 @@ namespace Text_RPG_24Group
                     }
                     else
                     {
-                        Console.WriteLine("20골드로 체력을 10 회복하였다. ");
-                        Program.player.Gold -= 20;
+                        Console.WriteLine("무료로 체력을 10 회복하였다.");
+                        Program.player.Gold -= 0;
                         Program.player.Hp += 10;
                         if (Program.player.Hp >Program.player.MaxHp) Program.player.Hp = Program.player.MaxHp;
-                        Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundClear);
+                        Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundSelect);
+                        Program.player.AgeUP();
                     }
                     break;
                 case 2:
@@ -100,7 +104,8 @@ namespace Text_RPG_24Group
                         Program.player.Gold -= 50;
                         Program.player.Hp += 30;
                         if (Program.player.Hp > Program.player.MaxHp) Program.player.Hp = Program.player.MaxHp;
-                        Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundClear);
+                        Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundSelect);
+                        Program.player.AgeUP();
 
                     }
                     break;
@@ -117,7 +122,8 @@ namespace Text_RPG_24Group
                         Program.player.Gold -= 60;
                         Program.player.Hp += 50;
                         if (Program.player.Hp > Program.player.MaxHp) Program.player.Hp = Program.player.MaxHp;
-                        Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundClear);
+                        Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundSelect);
+                        Program.player.AgeUP();
                     }
                     break;
                 default:
@@ -133,6 +139,7 @@ namespace Text_RPG_24Group
         {
             Console.Clear();
             Console.WriteLine("\n\r도박장에 오신 것을 환영합니다!\n\r");
+            Console.WriteLine("\n\r한번 이용할때마다 행동력을 1소모합니다!\n\r");
             Console.WriteLine($"\n소지금 : {Program.player.Gold}\n");
             Console.WriteLine("원하시는 기능을 선택해주세요(딜러비용 20G)>");
             Console.WriteLine("1. 코인플립");
@@ -141,33 +148,34 @@ namespace Text_RPG_24Group
             Console.WriteLine("0. 뒤로가기");
             int input = Program.CheckInput(0, 3);
             if (Program.player.Gold <= 20 && input != 0)
-            { 
-            input = 0;
+            {
+                input = 0;
                 Console.Clear();
                 Console.WriteLine("골드가 없어서 돌아갑니다...!");
                 Console.WriteLine("0. 뒤로가기");
                 Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHurt);
                 input = Program.CheckInput(0, 0);
-            } 
+            }
             else
             {
                 Program.player.Gold -= 20;
-            }
-            switch (input)
-            {
-                case 0:
-                    break;
-                case 1:
-                    CoinFlip();
-                    break;
-                case 2:
-                    HorseRide();
-                    break;
-                case 3:
-                    BlackJack();
-                    break;
-                default:
-                    break;
+                Program.player.AgeUP();
+                switch (input)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        CoinFlip();
+                        break;
+                    case 2:
+                        HorseRide();
+                        break;
+                    case 3:
+                        BlackJack();
+                        break;
+                    default:
+                        break;
+                }
             }
             PubMainUI();
         }
@@ -331,6 +339,7 @@ namespace Text_RPG_24Group
         {
             Console.Clear();
             Console.WriteLine("\n\r어떤 술을 드시겠습니까?\n\r");
+            Console.WriteLine("\n\r한번 이용할때마다 행동력을 1소모합니다!\n\r");
             Console.WriteLine($"\n소지금 : {Program.player.Gold}\n");
             Console.WriteLine($"\n마나   : {Program.player.Mp}\n");
             Console.WriteLine("원하시는 술을 선택해주세요>");
@@ -361,9 +370,15 @@ namespace Text_RPG_24Group
         {
             if (Program.player.Gold < gold)
             {
-             Console.Clear();
-             Console.WriteLine("돈이 없어서 돌아갑니다!");
-             Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHurt);
+                Console.Clear();
+                Console.WriteLine("돈이 없어서 돌아갑니다!");
+                Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHurt);
+            }
+            else if(Program.player.Mp == Program.player.MaxMp)
+            {
+                Console.Clear();
+                Console.WriteLine("마나가 가득 차서 먹을 필요가 없습니다.");
+                Console.WriteLine("술에 취해서 더 못먹는다!");
             }
             else
             {
@@ -372,6 +387,8 @@ namespace Text_RPG_24Group
                 Console.WriteLine($"{mana}만큼 마나를 회복합니다!");
                 Program.player.Gold -= gold;
                 Program.player.Mp += mana;
+                Program.player.AgeUP();
+
                 if (Program.player.Mp > Program.player.MaxMp) Program.player.Mp = Program.player.MaxMp;
                 Console.WriteLine($"\n소지금 : {Program.player.Gold}\n");
                 Console.WriteLine($"\n마나   : {Program.player.Mp}\n");

@@ -68,7 +68,11 @@ namespace Text_RPG_24Group
                 {
                     Console.WriteLine($"1. 수락\r\n2. 거절\r\n원하시는 행동을 입력해주세요.\r\n>>");
                     input = Program.CheckInput(1, 2);
-                    if (input == 1) quest.QuestStart = true;
+                    if (input == 1)
+                    {
+                        quest.QuestStart = true;
+                        Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundSelect);
+                    }
                 }
                 else if (quest.QuestStart == true)
                 {
@@ -84,6 +88,7 @@ namespace Text_RPG_24Group
                         if (input == 1)
                         {
                             QuestReward(quest, num, itemNum);//보상을 받는 로직 구현
+                            Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundClear);
                         }
                     }
                 }

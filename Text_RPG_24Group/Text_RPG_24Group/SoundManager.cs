@@ -23,8 +23,11 @@ namespace Text_RPG_24Group
         public  bool SoundBGMPlaying { get; set; }
         public  bool SoundBGMUserSet { get; set; }
         public  bool SoundEffectUserSet { get; set; }
+        public bool SoundBGMIsPlaying { get; set; }
 
         public float SoundSize { get; set; }
+        public int SoundPlayTime { get; set; }
+
 
 
         public SoundManager(string userLocation)
@@ -39,16 +42,15 @@ namespace Text_RPG_24Group
             SoundSelect = @"\Sound\select-system-notification.mp3";
             SoundSkill = @"\Sound\skill-camera-flash.mp3";
             SoundBGMUserSet = true;
+            SoundBGMIsPlaying = false;
             SoundEffectUserSet = true;
-            SoundSize = 1f;
-
+            SoundSize = 1;
+            SoundPlayTime = 0;
 
         }
-
-        public async Task PlayBGM(string soundBGM,SoundManager soundManager, int playTime)
+        public async Task PlayBGM(SoundManager soundManager,string soundBGM, int playTime)
         {
-            while (true)
-            {
+                if (soundManager == null || soundManager.SoundBGMUserSet == false|| SoundBGMIsPlaying==true) return;
                 string audioFileLocation = @$"{UserLocation}{soundBGM}";// 경로 설정
                 await Task.Run(() =>
                 {
@@ -60,6 +62,7 @@ namespace Text_RPG_24Group
                         outputDevice.Play();
                         //Console.WriteLine("사운드 재생 중...");
 
+                        Program.BGMManager.SoundBGMIsPlaying = true;
                         // 사운드가 재생되는 동안 대기
                         while (outputDevice.PlaybackState == PlaybackState.Playing)
                         {
@@ -67,9 +70,10 @@ namespace Text_RPG_24Group
                         }
                     }
                 });
-            }
-            
+                        Program.BGMManager.SoundBGMIsPlaying = false;
         }
+
+
         public async Task PlaySoundEffect(string soundEffect)
         {
             if(SoundEffectUserSet)

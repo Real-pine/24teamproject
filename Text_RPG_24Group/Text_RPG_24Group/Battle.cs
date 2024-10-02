@@ -65,10 +65,15 @@ namespace Text_RPG_24Group
                 damage = damageCalculation;
 
                 if (isCritical)
-                    Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}] - 치명적 공격!!");
+                {
+                Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}] - 치명적 공격!!");
+                Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundDie);
+                }
                 else
-                    Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}]");
-
+                {
+                Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}]");
+                Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHit);
+                }
                 // 몬스터 클래스에서  curHp 변수를 만들고
                 // curHp = MonsterHP;
 
@@ -149,7 +154,7 @@ namespace Text_RPG_24Group
                 isCritical = false;
 
             damage = damageCalculation;
-
+            Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundSkill);
             if (isCritical)
                 Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}] - 치명적 공격!!");
             else
@@ -189,9 +194,15 @@ namespace Text_RPG_24Group
                 damage = damageCalculation;
 
                 if (isCritical)
+                {
                     Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 :{damage}] - 치명적 공격!!");
+                    Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundDie);
+                }
                 else
+                {
                     Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 :{damage}]");
+                    Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHurt);
+                }
 
                 Console.WriteLine("\n");
                 Console.Write($"HP {player.Hp} -> ");
@@ -218,6 +229,7 @@ namespace Text_RPG_24Group
             Console.WriteLine($"Lv. {player.Level} {player.Name}");
             Console.WriteLine($"HP {playerHp} -> {player.Hp}");
             Console.WriteLine("\n");
+            Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundClear);
         }
 
         public void ResultLose() // 결과 - 패배 출력 메서드
@@ -231,6 +243,7 @@ namespace Text_RPG_24Group
             Console.WriteLine($"Lv. {player.Level} {player.Name}");
             Console.WriteLine($"HP {playerHp} -> {player.Hp}");
             Console.WriteLine("\n");
+            Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundDie);
         }
 
         public int damageCalculation // 데미지 계산 변수

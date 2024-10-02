@@ -23,12 +23,11 @@ namespace Text_RPG_24Group
         public static DungeonMap[] mapDb;
         public static SoundManager BGMManager;
         public static SoundManager SoundEffectManager;
-        private static Pub pub;  
+        private static Pub pub;
         static void Main(string[] args)
         {
             SetData();
             DungeonPlay.player = player; //DungeonPlay클래스의 player필드에 설정
-            Program.BGMManager.PlayBGM(Program.BGMManager.SoundVillage, BGMManager, 45); //사운드(BGM)//(string형 사운드파일,int형 플레이 초)
             DisplayMainUI();
         }
 
@@ -53,8 +52,9 @@ namespace Text_RPG_24Group
             }
             player = new CharacterCustom(characterName, selectedJob);
             pub = new Pub();
-
-            herbDb = new Herb[]
+            BGMManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
+            SoundEffectManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
+        herbDb = new Herb[]
 
             {
                 new Herb("나무 뿌리", "10개 합치면 포션",0),
@@ -62,9 +62,6 @@ namespace Text_RPG_24Group
             };
 
             potion = new Poition("빨간포션", 30, "HP를 30 회복합니다.", 3);
-
-            BGMManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
-            SoundEffectManager = new SoundManager(@"C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group");
             //주소 예시//C:\Users\BaekSeungWoo\Documents\GitHub\24teamproject\Text_RPG_24Group//뒤에 @꼭 붙히세요
             itemDb = new Item[]//string name, int type, int value, string desc, int price
             {
@@ -122,6 +119,7 @@ namespace Text_RPG_24Group
         }        
         public static void DisplayMainUI()
         {
+            BGMManager.PlayBGM(BGMManager, BGMManager.SoundVillage, 45);
             Console.Clear();
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
@@ -133,15 +131,16 @@ namespace Text_RPG_24Group
             Console.WriteLine("5. 허브산");
             Console.WriteLine("6. 저장하기");
             Console.WriteLine("7. 환경설정");
+            Console.WriteLine("8. 게임종료");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
-            int result = CheckInput(1, 7);
+            int result = CheckInput(1, 8);
+            BGMManager.PlayBGM(BGMManager, BGMManager.SoundVillage, 45);
             switch (result)
             {
                 case 1:
                     DisplayStatUI();
-
                     break;
                 case 2:
                     DisplayInventoryUI();
@@ -160,6 +159,9 @@ namespace Text_RPG_24Group
                     break;
                 case 7:
                     UserSettings();
+                    break;
+                case 8:
+                    ExitGame();
                     break;
                 default:
                     break;
@@ -302,10 +304,12 @@ namespace Text_RPG_24Group
                 }
                 potion.Count++;
                 Console.WriteLine("포션이 제작되었습니다!");
+                SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundSelect);
             }
             else
             {
                 Console.WriteLine("재료가 부족합니다.");
+                SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundHurt);
             }
 
             Console.ReadLine();
@@ -457,6 +461,7 @@ namespace Text_RPG_24Group
                         Console.WriteLine("장착된 아이템입니다. 판매불가!");
                         Console.WriteLine("Enter 를 눌러주세요.");
                         Console.ReadLine();
+                        SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundHurt);
                     }
                     else if (player.HasItem(targetItem))// 이미 구매한 아이템이라면?
                     {
@@ -465,12 +470,14 @@ namespace Text_RPG_24Group
                         player.RemoveItem(targetItem);
                         Console.WriteLine("Enter 를 눌러주세요.");
                         Console.ReadLine();
+                        SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundSelect);
                     }
                     else // 아이템이 없을 때
                     {
                         Console.WriteLine("없는 아이템입니다.");
                         Console.WriteLine("Enter 를 눌러주세요.");
                         Console.ReadLine();
+                        SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundHurt);
                     }
 
                     DisplaySellUI();
@@ -529,12 +536,14 @@ namespace Text_RPG_24Group
                             Console.WriteLine("구매를 완료했습니다.");
                             player.Gold -= targetItem.Price;
                             player.GetItem(targetItem);
+                            SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundSelect);
                         }
                         else
                         {
                             Console.WriteLine("골드가 부족합니다.");
                             Console.WriteLine("Enter 를 눌러주세요.");
                             Console.ReadLine();
+                            SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundHurt);
                         }
 
                         //   소지금이 부족핟
@@ -571,12 +580,14 @@ namespace Text_RPG_24Group
                         player.Hp = player.MaxHp;
                         Console.WriteLine("\nHP가 최대로 회복되었습니다.");
                         Console.ReadLine();
+                        SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundSelect);
                         DiplayPotionUI();
                     }
-
                     else
-
+                    {
                     Console.WriteLine("골드가 부족합니다");
+                        SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundHurt);
+                    }
                     Console.ReadLine();
                     DiplayPotionUI();
 
@@ -660,6 +671,7 @@ namespace Text_RPG_24Group
         {
             SaveLoadSystem.ListSaves();
             Console.ReadLine();
+            SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundSelect);
             SaveUI();
 
         }
@@ -670,6 +682,7 @@ namespace Text_RPG_24Group
             string saveName = Console.ReadLine();
             SaveLoadSystem.SaveCharacter(player, saveName);
             Console.ReadLine();
+            SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundSelect);
             SaveUI();
         }
 
@@ -677,9 +690,9 @@ namespace Text_RPG_24Group
         {
             Console.Write("불러올 파일 이름을 입력하세요: ");
             string saveName = Console.ReadLine();
-            player = SaveLoadSystem.LoadCharacter(saveName);
-         
+            player = SaveLoadSystem.LoadCharacter(saveName);       
             Console.ReadLine();
+            SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundSelect);
             SaveUI();
         }
 
@@ -689,9 +702,9 @@ namespace Text_RPG_24Group
             string saveName = Console.ReadLine();
             SaveLoadSystem.DeleteSaveFile(saveName);
             Console.ReadLine();
+            SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundSelect);
             SaveUI();
         }
-
         static void UserSettings()
         {
             Console.Clear();
@@ -707,15 +720,16 @@ namespace Text_RPG_24Group
                 case 1:
                     if (Program.BGMManager.SoundBGMUserSet == true)
                     {
+                        SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundSelect);
                         Console.WriteLine("\n배경음이 OFF 되었습니다. 일정 시간이 지나면 꺼집니다.");
-                       Program.BGMManager.SoundSize = 0f;
+                        Program.BGMManager.SoundBGMUserSet = false;
                     }
                     else if (Program.BGMManager.SoundBGMUserSet == false)
                     {
+                        SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundSelect);
                         Console.WriteLine("\n배경음이 ON 되었습니다. 일정 시간이 지나면 켜집니다.");
-                        Program.BGMManager.SoundSize = 1f;
+                        Program.BGMManager.SoundBGMUserSet = true;
                     }
-                    Program.BGMManager.SoundBGMUserSet = !Program.BGMManager.SoundBGMUserSet;
                     Console.WriteLine("0. 돌아가기\n\r");
                     int result1 = CheckInput(0, 0);
                     break;
@@ -745,8 +759,18 @@ namespace Text_RPG_24Group
             int result = CheckInput(0, 0);
             // 게임 종료
 
-            if(result == 0)
+            if (result == 0)
                 Environment.Exit(0);
+        }
+        public static void ExitGame()
+        {
+            Console.Clear();
+            Console.WriteLine("...");
+            Console.WriteLine("게임을 종료하시겠습니까?");
+            Console.WriteLine("0. Yes\n1. No");
+            int result = CheckInput(0, 1);
+            if (result == 0)return;
+            else if (result == 1) DisplayMainUI();
         }
     }
 }
