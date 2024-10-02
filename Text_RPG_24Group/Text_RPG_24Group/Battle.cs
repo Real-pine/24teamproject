@@ -67,9 +67,6 @@ namespace Text_RPG_24Group
                 else
                     Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}]");
 
-                // 몬스터 클래스에서  curHp 변수를 만들고
-                // curHp = MonsterHP;
-
                 Console.WriteLine("\n");
                 Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName}");
                 Console.Write($"HP {monster.curHp} -> ");
@@ -201,34 +198,6 @@ namespace Text_RPG_24Group
                 Console.WriteLine(player.Hp);
                 Console.WriteLine("\n");
             }
-        }
-
-        public void ResultWin(int monsterCount) // 결과 - 승리 출력 메서드
-        {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Battle!! - Result");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("\n");
-            Console.WriteLine("Victory");
-            Console.WriteLine("\n");
-            Console.WriteLine($"던전에서 몬스터 {monsterCount}마리를 잡았습니다.");
-            Console.WriteLine("\n");
-            Console.WriteLine($"Lv. {player.Level} {player.Name}");
-            Console.WriteLine($"HP {playerHp} -> {player.Hp}");
-            Console.WriteLine("\n");
-        }
-
-        public void ResultLose() // 결과 - 패배 출력 메서드
-        {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Battle!! - Result");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("\n");
-            Console.WriteLine("You Lose");
-            Console.WriteLine("\n");
-            Console.WriteLine($"Lv. {player.Level} {player.Name}");
-            Console.WriteLine($"HP {playerHp} -> {player.Hp}");
-            Console.WriteLine("\n");
         }
 
         private const float defRate = 0.5f;
