@@ -45,8 +45,6 @@ namespace Text_RPG_24Group
             int avoid = random.Next(0, 100);
             isAvoid = avoid <= 10 ? true : false;
 
-            Console.WriteLine(avoid);
-
             if (isAvoid)
             { // 회피시 회피 출력 후 종료
                 Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 공격했지만 아무일도 일어나지 않았습니다.");
@@ -70,12 +68,16 @@ namespace Text_RPG_24Group
                 Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundDie);
                 }
                 else
+<<<<<<< HEAD
                 {
                 Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}]");
                 Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHit);
                 }
                 // 몬스터 클래스에서  curHp 변수를 만들고
                 // curHp = MonsterHP;
+=======
+                    Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}]");
+>>>>>>> (Feat)Battle02
 
                 Console.WriteLine("\n");
                 Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName}");
@@ -216,6 +218,7 @@ namespace Text_RPG_24Group
             }
         }
 
+<<<<<<< HEAD
         public void ResultWin(int monsterCount) // 결과 - 승리 출력 메서드
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -245,6 +248,9 @@ namespace Text_RPG_24Group
             Console.WriteLine("\n");
             Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundDie);
         }
+=======
+        private const float defRate = 0.5f;
+>>>>>>> (Feat)Battle02
 
         public int damageCalculation // 데미지 계산 변수
         {
@@ -260,9 +266,11 @@ namespace Text_RPG_24Group
                     outDamage = (int)Math.Round((Atk + errDamage) * 1.6f) ;
                 else
                     outDamage = Atk + errDamage ;
-                Double DeductedDamage = 100 / (Def + 100) * 100;
-                //Console.WriteLine($"받는 데미지 : {outDamage}");
-                return (int)(outDamage * (1 - DeductedDamage));
+
+                int deductedDamage = (int)(outDamage * ((Def * defRate)/100));
+
+                //Console.WriteLine($"줄어든 데미지 : {deductedDamage} 받는 데미지 : {outDamage}");
+                return outDamage - deductedDamage;
             }
         }
     }

@@ -134,17 +134,17 @@ public class CharacterCustom
                 Atk = 10;
                 Def = 15;
                 MaxHp = 140;
-                MaxMp = 10;
+                MaxMp = 50;
                 break;
             case JobType.Mage:
-                Atk = 15;
-                Def = 8;
+                Atk = 20;
+                Def = 5;
                 MaxHp = 100;
                 MaxMp = 70;
                 break;
             case JobType.Rogue:
-                Atk = 12;
-                Def = 12;
+                Atk = 15;
+                Def = 10;
                 MaxHp = 120;
                 MaxMp = 55;
                 break;
@@ -173,7 +173,8 @@ public class CharacterCustom
 
         Atk += 1;
         Def += 1;
-        MaxHp += 20;
+        MaxHp += 15;
+        MaxMp += 5;
     }
     //현재 레벨에서 다음 레벨까지 필요한 경험치 
     public int GetExpToNextLev()
@@ -190,7 +191,7 @@ public class CharacterCustom
 
     public void AgeUP() // 나이 기능 메서드
     {
-        Program.GameEnd(age);
+        Program.Ending(age);
 
         act -= 1;
 

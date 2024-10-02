@@ -163,7 +163,7 @@ namespace Text_RPG_24Group
             Console.WriteLine("\n\n{내정보}");
             Console.WriteLine($"LV.{player.Level} {player.Name}");
             Console.WriteLine($"HP : {player.Hp}/{player.MaxHp}");
-            //Console.WriteLine($"MP : {player.MP}/{player.MaxMP}"); <<마나
+            Console.WriteLine($"MP : {player.Mp}/{player.MaxMp}");
 
             Console.WriteLine("\n\n원하시는 행동을 입력해주세요");
             Console.WriteLine("1. 전투시작");
@@ -196,7 +196,7 @@ namespace Text_RPG_24Group
             Console.WriteLine("\n\n{내정보}");
             Console.WriteLine($"LV.{player.Level} {player.Name}");
             Console.WriteLine($"HP : {player.Hp}/{player.MaxHp}");
-            //Console.WriteLine($"MP : {player.MP}/{player.MaxMP}"); <<마나
+            Console.WriteLine($"MP : {player.Mp}/{player.MaxMp}");
 
             Console.WriteLine("\n\n원하시는 행동을 입력해주세요");
             Console.WriteLine("1. 기본공격하기");
@@ -235,7 +235,7 @@ namespace Text_RPG_24Group
             Console.WriteLine("\n\n{내정보}");
             Console.WriteLine($"LV.{player.Level} {player.Name}");
             Console.WriteLine($"HP : {player.Hp}/{player.MaxHp}");
-            //Console.WriteLine($"MP : {player.MP}/{player.MaxMP}"); <<마나
+            Console.WriteLine($"MP : {player.Mp}/{player.MaxMp}");
             Console.WriteLine("공격할 몬스터를 선택하세요.");
             int target = Program.CheckInput(1, activeMonster.Count) - 1;
             Monster targetMonster = activeMonster[target];
