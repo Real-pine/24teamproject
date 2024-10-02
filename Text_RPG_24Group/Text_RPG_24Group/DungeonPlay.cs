@@ -382,11 +382,20 @@ namespace Text_RPG_24Group
             player.Gold += totlaGold;
             Console.WriteLine($"Gold: {oldGold} -> {player.Gold} (+{totlaGold})");
             //랜덤 상점 아이템 드롭(15프로 이하)
-            if (random.Next(100) < 15)
+            if (random.Next(100) < 101)//15
             {
-                Item droppedItem = GetRandomItem();
-                player.GetItem(droppedItem);
-                Console.WriteLine($"아이템 획득: {droppedItem.Name}");
+                    Item droppedItem = GetRandomItem();
+                if (Program.player.HasItem(droppedItem))
+                {
+                    Console.WriteLine($"{droppedItem.Name} 아이템이 이미 있어서 버립니다");
+                }
+                else
+                {
+                    //Console.WriteLine($"아이템 획득 : {targetItem.Name}");
+                    //Program.player.GetItem(targetItem);
+                    player.GetItem(droppedItem);
+                    Console.WriteLine($"아이템 획득: {droppedItem.Name}");
+                }            
             }
 
             Console.WriteLine($"0. 다음");
