@@ -163,6 +163,7 @@ namespace Text_RPG_24Group
                     player.age = 40;
                     player.Gold = 30000;
                     player.Level = 20;
+                    DisplayMainUI();
                     break;
                 default:
                     break;
@@ -785,7 +786,7 @@ namespace Text_RPG_24Group
             Console.WriteLine("0. 엔딩 크레딧");
             result = CheckInput(0, 0);
             Console.Clear();
-            Console.WriteLine("---- END ----\n\n엔딩크레딧\n만든이박참솔\n김준식\n백승우\n임찬\n");
+            Console.WriteLine("---- END ----\n\n엔딩크레딧\n만든이\n박참솔\n김준식\n백승우\n임찬\n");
             Console.WriteLine("사용한 C#기능\nusing Newtonsoft.Json\nusing NAudio.Wave\n");
             Console.WriteLine("사용한 다른 것\nGitHub\n\n");
             Console.WriteLine("--이상 플레이 해주셔서 감사합니다!--");
