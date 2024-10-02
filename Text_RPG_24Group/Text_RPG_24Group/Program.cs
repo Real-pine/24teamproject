@@ -237,7 +237,6 @@ namespace Text_RPG_24Group
             Console.ReadLine();
             HerbUI();
         }
-
         static void ShowHerbBag()
         {
             Console.Clear();
@@ -501,7 +500,6 @@ namespace Text_RPG_24Group
             for (int i = 0; i < itemDb.Length; i++)
             {
                 Item curItem = itemDb[i];
-
                 string displayPrice = (player.HasItem(curItem) ? "구매완료" : $"{curItem.Price} G");
                 Console.WriteLine($"- {i + 1} {curItem.ItemInfoText()}  |  {displayPrice}");
             }
@@ -530,9 +528,9 @@ namespace Text_RPG_24Group
                         Console.WriteLine("Enter 를 눌러주세요.");
                         Console.ReadLine();
                     }
-                    else // 구매가 가능할떄
+                    else // 구매가 가능할 때
                     {
-                        //   소지금이 충분하다
+                        // 소지금이 충분하다
                         if (player.Gold >= targetItem.Price)
                         {
                             Console.WriteLine("구매를 완료했습니다.");
@@ -547,8 +545,6 @@ namespace Text_RPG_24Group
                             Console.ReadLine();
                             SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundHurt);
                         }
-
-                        //   소지금이 부족핟
                     }
 
                     DisplayBuyUI();
@@ -638,7 +634,6 @@ namespace Text_RPG_24Group
             Console.WriteLine("\n0.나가기");
             Console.WriteLine("\n원하시는 행동을 입력해주세요.");
 
-
             int result = CheckInput(0, 3);
 
             switch (result)
@@ -664,10 +659,7 @@ namespace Text_RPG_24Group
                     DeleteSave();
 
                     break;
-
             }
-
-
         }        
        
         static void ListSaves()

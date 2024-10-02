@@ -26,8 +26,12 @@ namespace Text_RPG_24Group
             {
                 string json = File.ReadAllText(filePath);
                 CharacterCustom character = JsonConvert.DeserializeObject<CharacterCustom>(json);
-                character.UpdateEquipmentStats(); // 장착 아이템의 스텟 업데이트
+                character.UpdateEquipmentStats();
                 Console.WriteLine($"캐릭터 데이터를 {saveName}에서 불러왔습니다.");
+
+                // 인벤토리 상태 출력 (디버깅 용)
+                character.DisplayInventory(true);
+
                 return character;
             }
             else
