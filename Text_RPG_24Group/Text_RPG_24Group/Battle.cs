@@ -30,7 +30,7 @@ namespace Text_RPG_24Group
 
         private string[] skillName1 = { "", "깊게 베기", "폭발", "암습" };
         private string[] skillName2 = { "", "휩쓸기", "전기 사슬", "수리검 던지기" };
-
+        private const float defRate = 0.5f;
         public void BasicAttack(Monster monster) // 기본 공격 메서드
         { // 타겟이 된 몬스터 정보 받아오기
             if(monster.curHp <= 0)
@@ -68,17 +68,10 @@ namespace Text_RPG_24Group
                 Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundDie);
                 }
                 else
-<<<<<<< HEAD
                 {
                 Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}]");
                 Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundHit);
                 }
-                // 몬스터 클래스에서  curHp 변수를 만들고
-                // curHp = MonsterHP;
-=======
-                    Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName} 을(를) 맞췄습니다. [데미지 :{damage}]");
->>>>>>> (Feat)Battle02
-
                 Console.WriteLine("\n");
                 Console.WriteLine($"Lv.{monster.MonsterLev} {monster.MonsterName}");
                 Console.Write($"HP {monster.curHp} -> ");
@@ -217,41 +210,6 @@ namespace Text_RPG_24Group
                 Console.WriteLine("\n");
             }
         }
-
-<<<<<<< HEAD
-        public void ResultWin(int monsterCount) // 결과 - 승리 출력 메서드
-        {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Battle!! - Result");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("\n");
-            Console.WriteLine("Victory");
-            Console.WriteLine("\n");
-            Console.WriteLine($"던전에서 몬스터 {monsterCount}마리를 잡았습니다.");
-            Console.WriteLine("\n");
-            Console.WriteLine($"Lv. {player.Level} {player.Name}");
-            Console.WriteLine($"HP {playerHp} -> {player.Hp}");
-            Console.WriteLine("\n");
-            Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundClear);
-        }
-
-        public void ResultLose() // 결과 - 패배 출력 메서드
-        {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Battle!! - Result");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("\n");
-            Console.WriteLine("You Lose");
-            Console.WriteLine("\n");
-            Console.WriteLine($"Lv. {player.Level} {player.Name}");
-            Console.WriteLine($"HP {playerHp} -> {player.Hp}");
-            Console.WriteLine("\n");
-            Program.SoundEffectManager.PlaySoundEffect(Program.SoundEffectManager.SoundDie);
-        }
-=======
-        private const float defRate = 0.5f;
->>>>>>> (Feat)Battle02
-
         public int damageCalculation // 데미지 계산 변수
         {
             get
