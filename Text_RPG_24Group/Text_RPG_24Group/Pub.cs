@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -12,14 +13,15 @@ namespace Text_RPG_24Group
         public static void PubMainUI()
         {
         Console.Clear();
-            Console.WriteLine("\n\r마을중앙에 들어섰다. 원하는 행동을 선택하자!(메인홀)\n\r");
+            Console.WriteLine("\n\r마을중앙에 들어섰다. 원하는 행동을 선택하자!(메인홀)");
+            Console.WriteLine($"\n현재 나이: {Program.player.age} 행동력: {Program.player.act}\n");
             Console.WriteLine("원하시는 기능을 선택해주세요>");
-            Console.WriteLine("1. 숙박");
-            Console.WriteLine("2. 도박");
-            Console.WriteLine("3. 술마시기");
-            Console.WriteLine("4. 상점");
-            Console.WriteLine("5. 신전");
-            Console.WriteLine("6. 퀘스트");
+            Console.WriteLine("1. 숙박    (HP회복)");
+            Console.WriteLine("2. 도박    (Gold)");
+            Console.WriteLine("3. 술마시기(MP회복)");
+            Console.WriteLine("4. 상점    (무기구매/판매)");
+            Console.WriteLine("5. 신전    (부활장소/HP대량회복)");
+            Console.WriteLine("6. 퀘스트  ");
 
             Console.WriteLine("0. 뒤로가기");
             //회복에방, 퀘스트
@@ -56,9 +58,10 @@ namespace Text_RPG_24Group
         static void PubGoToBed()
         {
             Console.Clear();
-            Console.WriteLine("\n\r숙박시설에 오신 것을 환영합니다!\n\r");
-            Console.WriteLine($"\n현재 채력 : {Program.player.Hp}, 소지금 : {Program.player.Gold}\n");
-            Console.WriteLine("\n\r한번 이용할때마다 행동력을 1소모합니다!\n\r");
+            Console.WriteLine("\n숙박시설에 오신 것을 환영합니다!\n");
+            Console.WriteLine("한번 이용할때마다 행동력을 1소모합니다!\n");
+            Console.WriteLine($"현재 나이: {Program.player.age} 행동력: {Program.player.act}");
+            Console.WriteLine($"현재 채력 : {Program.player.Hp}, 소지금 : {Program.player.Gold}\n");
             Console.WriteLine("원하시는 기능을 선택해주세요>");
             Console.WriteLine("1. 노숙    ( 0골드 HP 10회복)");
             Console.WriteLine("2. 일반 방 (50골드 HP 30회복)");
@@ -139,9 +142,11 @@ namespace Text_RPG_24Group
         {
             Console.Clear();
             Console.WriteLine("\n\r도박장에 오신 것을 환영합니다!\n\r");
-            Console.WriteLine("\n\r한번 이용할때마다 행동력을 1소모합니다!\n\r");
-            Console.WriteLine($"\n소지금 : {Program.player.Gold}\n");
-            Console.WriteLine("원하시는 기능을 선택해주세요(딜러비용 20G)>");
+            Console.WriteLine("한번 이용할때마다 행동력을 1소모합니다!\n");
+            Console.WriteLine("입장시 딜러에게 20골드를 지급해야 합니다!\n");
+            Console.WriteLine($"현재 나이: {Program.player.age} 행동력: {Program.player.act}");
+            Console.WriteLine($"현재 채력 : {Program.player.Hp}, 소지금 : {Program.player.Gold}\n");
+            Console.WriteLine("원하시는 기능을 선택해주세요>");
             Console.WriteLine("1. 코인플립");
             Console.WriteLine("2. 경마");
             Console.WriteLine("3. 미니블랙잭");
@@ -158,19 +163,23 @@ namespace Text_RPG_24Group
             }
             else
             {
-                Program.player.Gold -= 20;
-                Program.player.AgeUP();
                 switch (input)
                 {
                     case 0:
                         break;
                     case 1:
+                        Program.player.Gold -= 20;
+                        Program.player.AgeUP();
                         CoinFlip();
                         break;
                     case 2:
+                        Program.player.Gold -= 20;
+                        Program.player.AgeUP();
                         HorseRide();
                         break;
                     case 3:
+                        Program.player.Gold -= 20;
+                        Program.player.AgeUP();
                         BlackJack();
                         break;
                     default:
@@ -339,13 +348,14 @@ namespace Text_RPG_24Group
         {
             Console.Clear();
             Console.WriteLine("\n\r어떤 술을 드시겠습니까?\n\r");
-            Console.WriteLine("\n\r한번 이용할때마다 행동력을 1소모합니다!\n\r");
-            Console.WriteLine($"\n소지금 : {Program.player.Gold}\n");
-            Console.WriteLine($"\n마나   : {Program.player.Mp}\n");
+            Console.WriteLine("한번 이용할때마다 행동력을 1소모합니다!\n");
+            Console.WriteLine($"현재 나이: {Program.player.age} 행동력: {Program.player.act}");
+            Console.WriteLine($"현재 채력 : {Program.player.Hp}, 소지금 : {Program.player.Gold}");
+            Console.WriteLine($"마나   : {Program.player.Mp}\n");
             Console.WriteLine("원하시는 술을 선택해주세요>");
-            Console.WriteLine("1. 맥주(50g)(마나 5)");
+            Console.WriteLine("1. 맥주  (50g) (마나 5)");
             Console.WriteLine("2. 과일주(150g)(마나 20)");
-            Console.WriteLine("3. 와인(250g)(마나 50)");
+            Console.WriteLine("3. 와인  (250g)(마나 50)");
             Console.WriteLine("0. 뒤로가기");
             int input = Program.CheckInput(0, 3);
             switch (input)

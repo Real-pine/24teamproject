@@ -115,6 +115,7 @@ namespace Text_RPG_24Group
             Console.Clear();
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
+            Console.WriteLine($"\n현재 나이: {Program.player.age} 행동력: {Program.player.act}\n");
             Console.WriteLine();
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 인벤토리");
