@@ -287,24 +287,58 @@ namespace Text_RPG_24Group
             user[0] = random.Next(1,14);
             computer[0] = random.Next(1,14);
             Console.Clear();
-            Console.WriteLine($"유저의 수{user[0]}\n상대방의 수{computer[0]}");
-            Console.WriteLine($"카드를 더 드시겠습니까?\n(카드는 1부터 13까지)(21초과시 패배)\n1.예\n2.아니오");
+            Console.WriteLine($"유저의 첫번째 카드 {user[0]}\n상대방의 첫번째 카드 {computer[0]}");
+            Console.WriteLine($"카드를 더 드시겠습니까?\n(카드는 1부터 13까지)\n1.예\n2.아니오");
+
             int input = Program.CheckInput(1, 2);
-            if (input == 1)
+            int computerInput = random.Next(1, 3);
+
+            if (input == 1 && computerInput == 1)
             {
-                while (user[1] != user[0])
+                Console.WriteLine($"상대가 승부를 받았습니다.");
+                do
                 {
-                user[1] = random.Next(1, 14);
-                }
-            }
-            computer[1] = random.Next(1, 3);
-            if(computer[1] ==1)
-            {
-                while (computer[1] != computer[0])
+                    user[1] = random.Next(1, 14);
+                    //Console.WriteLine($"1반 카드 {user[0]} 2번 카드 {user[1]}");
+                } while (user[1] == user[0]);
+
+                do
                 {
                     computer[1] = random.Next(1, 14);
+                    //Console.WriteLine($"1번 카드 {computer[0]} 2번 카드 {computer[1]}");
+                } while (computer[1] == computer[0]);
+
+                Console.WriteLine($"유저의 두번째 카드 {user[1]}\n상대방의 두번째 카드 {computer[1]}");
+            }
+            else
+            {
+                Console.WriteLine($"상대가 승부를 거절했습니다.");
+            }
+            Console.WriteLine($"게임 종료");
+
+            for (int i = 0; i < user.Length; i++)
+            {
+                switch (user[i])
+                {
+                    case 11:
+                    case 12:
+                    case 13:
+                        user[i] = 10;
+                        break;
                 }
             }
+            for (int i = 0; i < computer.Length; i++)
+            {
+                switch (computer[i])
+                {
+                    case 11:
+                    case 12:
+                    case 13:
+                        computer[i] = 10;
+                        break;
+                }
+            }
+
             Console.WriteLine($"유저수의 합 : {user[0]+ user[1]}\n상대방수의 합{computer[0]+ computer[1]}");
             if (user[0] + user[1] > 21 && computer[0] + computer[1] > 21)
             { 
